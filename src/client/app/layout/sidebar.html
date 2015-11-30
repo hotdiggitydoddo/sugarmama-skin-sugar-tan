@@ -1,0 +1,20 @@
+<div id="side-bar" ng-controller="Sidebar as vm">
+	<div class="inner-wrapper">
+		<div id="side-inner">
+			<div class="row">
+				<div id="logo-wrapper">
+					<a href="/"><img src="images/logo.png" alt="SugarMaMa"></a>
+				</div>
+			</div>
+			<div class="row">
+				<div id="side-contents">
+					<ul id="navigation" class="list-hover">
+						<li ng-class="vm.isCurrent(r)" ng-repeat="r in vm.navRoutes">
+							<a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
+						</li>
+					</ul>	
+				</div>
+			</div>		
+		</div>
+	</div>
+</div>

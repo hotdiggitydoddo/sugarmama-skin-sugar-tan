@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html ng-app="sugarMamaApp">
+<html ng-app="app">
     <head>
+        <title ng-bind="title"></title>
+        <base href='/'>
         <!-- bower:css -->
         <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
         <!-- endbower -->
@@ -23,9 +25,39 @@
             <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
             <script src="/bower_components/toastr/toastr.js"></script>
             <script src="/bower_components/angular-animate/angular-animate.js"></script>
+            <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
             <!-- endbower -->
     
             <!-- inject:js -->
+           
+            <script src="/src/client/app/app.module.js"></script>
+           
+            <script src="/src/client/app/core/core.module.js"></script>
+           
+            <script src="/src/client/app/layout/layout.module.js"></script>
+           
+            <script src="/src/client/app/spa-services/services.module.js"></script>
+           
+            <script src="/src/client/app/blocks/logger/logger.module.js"></script>
+           
+            <script src="/src/client/app/blocks/router/router.module.js"></script>
+           
+            <script src="/src/client/app/core/config.js"></script>
+           
+            <script src="/src/client/app/core/constants.js"></script>
+           
+            <script src="/src/client/app/layout/shell.controller.js"></script>
+           
+            <script src="/src/client/app/layout/sidebar.controller.js"></script>
+           
+            <script src="/src/client/app/spa-services/services.controller.js"></script>
+           
+            <script src="/src/client/app/spa-services/services.route.js"></script>
+           
+            <script src="/src/client/app/blocks/logger/logger.js"></script>
+           
+            <script src="/src/client/app/blocks/router/router-helper.provider.js"></script>
+           
             <!-- endinject -->
         </footer>
     </body>
