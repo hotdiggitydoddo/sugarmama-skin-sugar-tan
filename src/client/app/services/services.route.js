@@ -15,12 +15,12 @@
 				state: 'services',
 				config: {
 					url: '/services',
-					templateUrl: 'app/spa-services/services.html',
+					templateUrl: 'app/services/services.html',
 					controller: 'Services',
 					controllerAs: 'vm',
-					title: 'services',
+					title: 'Services',
 					settings: {
-						nav: 2,
+						nav: 1,
 						content: 'services'
 					}
 				}

@@ -12,9 +12,22 @@
 						<li ng-class="vm.isCurrent(r)" ng-repeat="r in vm.navRoutes">
 							<a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
 						</li>
-					</ul>	
+					</ul>
 				</div>
-			</div>		
+			</div>
+			<div class="row">
+				<ul class="social-icons">
+					<li><a href="https://www.facebook.com/sugarmamaskinsugartan" target="_blank"><i class="fa fa-facebook fa-lg"></i></a></li>
+					<li><a href="http://instagram.com/sugarmamaskinsugartan" target="_blank"><i class="fa fa-instagram fa-lg"></i></a></li>
+					<li><a href="http://www.yelp.com/biz/sugar-mama-stanton" target="_blank"><i class="fa fa-yelp fa-lg"></i></a></li>
+				</ul>
+			</div>
+			<div class="row">
+				<span style="color: rgb(236, 209, 151)">12362 beach blvd<br />suite 19<br />stanton, ca 90680<br />562.484.8653</span>
+				<div id="copyright" style="margin-bottom: 25px !important;">
+					<!--@Html.Partial("_LoginPartial")-->
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

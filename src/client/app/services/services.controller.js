@@ -8,7 +8,7 @@
 	function Services($state, logger) {
 		var vm = this;
 		vm.services = [];
-		vm.gotoService = gotoService;
+		//vm.gotoService = gotoService;
 		vm.title = 'services';
 
 		activate();
@@ -17,8 +17,8 @@
 			logger.info('Activated Services View');
 		}
 
-		function gotoService(s) {
-			$state.go('service.detail', {id: s.id});
-		}
+		// function gotoService(s) {
+		// 	$state.go('service.detail', {id: s.id});
+		// }
 	}
 })();
