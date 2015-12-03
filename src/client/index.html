@@ -15,7 +15,7 @@
     <!-- endinject -->
 </head>
 
-<body class="dark-sidebar">
+<body resizer class="dark-sidebar">
     <div ng-include="'app/layout/shell.html'"></div>
 
 
@@ -27,6 +27,33 @@
     <footer>
         <!-- bower:js -->
         <script src="/bower_components/jquery/dist/jquery.js"></script>
+        <script>
+            (function(e) {
+                var t = e.event,
+                    n, r;
+                n = t.special.debouncedresize = {
+                    setup: function() {
+                        e(this).on("resize", n.handler)
+                    },
+                    teardown: function() {
+                        e(this).off("resize", n.handler)
+                    },
+                    handler: function(e, i) {
+                        var s = this,
+                            o = arguments,
+                            u = function() {
+                                e.type = "debouncedresize";
+                                t.dispatch.apply(s, o)
+                            };
+                        if (r) {
+                            clearTimeout(r)
+                        }
+                        i ? u() : r = setTimeout(u, n.threshold)
+                    },
+                    threshold: 150
+                }
+            })(jQuery)
+        </script>
         <script src="/bower_components/angular/angular.js"></script>
         <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="/bower_components/moment/moment.js"></script>
@@ -40,25 +67,25 @@
         <!-- inject:js -->
         <script src="/src/client/app/app.module.js"></script>
         <script src="/src/client/app/core/core.module.js"></script>
-        <script src="/src/client/app/home/home.module.js"></script>
         <script src="/src/client/app/layout/layout.module.js"></script>
+        <script src="/src/client/app/home/home.module.js"></script>
         <script src="/src/client/app/services/services.module.js"></script>
         <script src="/src/client/app/blocks/logger/logger.module.js"></script>
         <script src="/src/client/app/blocks/router/router.module.js"></script>
         <script src="/src/client/app/core/config.js"></script>
         <script src="/src/client/app/core/constants.js"></script>
-        <script src="/src/client/app/home/home.controller.js"></script>
-        <script src="/src/client/app/home/home.route.js"></script>
         <script src="/src/client/app/layout/shell.controller.js"></script>
         <script src="/src/client/app/layout/sidebar.controller.js"></script>
+        <script src="/src/client/app/home/home.controller.js"></script>
+        <script src="/src/client/app/home/home.route.js"></script>
         <script src="/src/client/app/services/services.controller.js"></script>
         <script src="/src/client/app/services/services.route.js"></script>
         <script src="/src/client/app/blocks/logger/logger.js"></script>
         <script src="/src/client/app/blocks/router/router-helper.provider.js"></script>
         <!-- endinject -->
-         <script src="/src/client/js/imagesloaded.pkgd.min.js"></script>
-          <script src="/src/client/js/jquery.owwwlab-kenburns.js"></script>
-          
+        <script src="/src/client/js/imagesloaded.pkgd.min.js"></script>
+        <script src="/src/client/js/jquery.owwwlab-kenburns.js"></script>
+
     </footer>
 </body>
 

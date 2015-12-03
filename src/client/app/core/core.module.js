@@ -26,5 +26,18 @@
 					}
 				}
 			}
+		})
+		.directive("resizer", function($window) {
+			return {
+				restrict: 'A',
+				link: function(scope, elem, attrs) {
+					$($window).on("debouncedresize", function() {
+						var e = $(".page-wrapper");
+						if (e.parents("#main-content.abs").length == 0) {
+							e.css("min-height", $(window).height())
+						}
+					})
+				}
+			}
 		});
 })();
