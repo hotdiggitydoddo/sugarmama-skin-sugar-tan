@@ -9,6 +9,7 @@
 		var vm = this;
 
 		vm.title = config.appTitle;
+		vm.isInTransit = false;
 
 	}
 })();

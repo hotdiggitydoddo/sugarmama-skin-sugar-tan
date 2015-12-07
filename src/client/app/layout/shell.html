@@ -1,10 +1,10 @@
 <div ng-controller="Shell as vm">
 	<section id="content">
-		<a href="#" id="menu-toggle-wrapper" class="">
+		<a href="#" id="menu-toggle-wrapper" ng-click="vm.isInTransit = !vm.isInTransit" class="">
 			<div id="menu-toggle"></div>
 		</a>
 		<!-- inner bar wrapper -->
-		<a href="#" id="inner-bar">
+		<a href="#" class="mini-sidebar" ng-click="vm.isInTransit = !vm.isInTransit" ng-hide="vm.isInTransit" id="inner-bar">
 			<!-- Small logo -->
 			<div class="logo-alt">
 				<img src="images/sugarMamaBanner.png" alt="logo-mini">
