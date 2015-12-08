@@ -688,7 +688,7 @@ ul.list-items .list-des {
   z-index: 5;
   text-align: center;
   background-color: #fafaf5;
-  box-shadow: 1px 0 4px -4px #000;
+  box-shadow: 5px 0 4px -4px #000;
 }
 #menu-toggle-wrapper {
   position: fixed;
