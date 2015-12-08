@@ -14,7 +14,8 @@
 		 */
 		 'app.layout',
 		 'app.services',
-		 'app.home'
+		 'app.home',
+		 'app.about'
 		 
 	]);
 
