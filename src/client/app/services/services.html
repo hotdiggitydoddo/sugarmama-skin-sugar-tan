@@ -1,4 +1,4 @@
-<section>
+<section ui-view="content">
     <style>
     .tj-hover-3 .tj-overlay .title {
         font-size: 28px;
@@ -27,7 +27,7 @@
                         <h3 class="title">hair removal</h3>
                         <h4 class="subtitle">warm, lucious, organic sugar.</h4>
                         <br>
-                        <a href="/services/hairremoval" class="btn btn-transparent">learn more</a>
+                        <a ng-click="vm.gotoService('hairremoval')" class="btn btn-transparent">learn more</a>
                     </div>
                 </div>
                 <!-- /Item Overlay -->
@@ -43,7 +43,7 @@
                     <h3 class="title">facials</h3>
                     <h4 class="subtitle">skin stimulation + topical nourishment = healthy skin.</h4>
                     <br>
-                    <a href="/services/facials" class="btn btn-transparent">learn more</a>
+                    <a ng-click="vm.gotoService('facials')" class="btn btn-transparent">learn more</a>
                 </div>
             </div>
             <!-- /Item Overlay -->

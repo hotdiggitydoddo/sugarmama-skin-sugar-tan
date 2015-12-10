@@ -24,7 +24,33 @@
 						content: 'services'
 					}
 				}
-			}
+			},
+			{
+                state: 'services.hairremoval',
+                config: {
+                    url: '/hairremoval',
+                    
+                    controller: 'Services',
+                    controllerAs: 'vm',
+                    title: 'hair removal',
+                    views: {
+                    	"content": {templateUrl: 'app/services/hairremoval.html'}
+                    } 
+                }
+            },
+            {
+                state: 'services.facials',
+                config: {
+                    url: '/facials',
+                    
+                    controller: 'Services',
+                    controllerAs: 'vm',
+                    title: 'facials and microderms',
+                    views: {
+                    	"content": {templateUrl: 'app/services/facials.html'}
+                    } 
+                }
+            }
 		];
 	}
 })();
