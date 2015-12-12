@@ -24,6 +24,7 @@
     "toastr": "~2.1.2",
     "angular-animate": "~1.4.8",
     "angular-sanitize": "~1.4.8",
-    "gsap": "~1.18.0"
+    "gsap": "~1.18.0",
+    "angular-messages": "~1.4.8"
   }
 }

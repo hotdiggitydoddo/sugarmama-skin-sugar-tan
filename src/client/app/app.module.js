@@ -15,7 +15,8 @@
 		 'app.layout',
 		 'app.services',
 		 'app.home',
-		 'app.about'
+		 'app.about',
+		 'app.accounts'
 		 
 	]);
 

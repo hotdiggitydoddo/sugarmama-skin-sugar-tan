@@ -19,11 +19,19 @@
 
         var service = {
             getServices: getServices,
+            getUsers: getUsers,
            // getCustomers: getCustomers,
             ready: ready
         };
         
         return service;
+
+        function getUsers() {
+            return $http.get('http://45.55.5.48:1337/user')
+            .then(function(data, status, headers, config) {
+                return data.data;
+            })
+        }
 
         function getCustomer(id) {
             return $http.get('/api/customer/' + id)
