@@ -12,22 +12,36 @@
             hairRemoval : [{name: "Lip", price: 10.00}, {name: "Arm", price: 25.00}],
             facials: [{name: "face1", price: 12.00}, {name: "face2", price: 23.00}],
         };
-        
-        
-        
+
+
+
         var readyPromise;
 
         var service = {
             getServices: getServices,
             getUsers: getUsers,
+            postSignUp: postSignUp,
            // getCustomers: getCustomers,
             ready: ready
         };
-        
+
         return service;
 
+        function postSignUp(userData) {
+            return $http.post('http://localhost:1337/user', {
+                user: userData
+            })
+            .then(function(data, status, headers, config) {
+                return data.data;
+            })
+            .catch(function(message) {
+                exception.catcher('XHR Failed for createUser')(message);
+                //$location.url('/');
+            })
+        }
+
         function getUsers() {
-            return $http.get('http://45.55.5.48:1337/user')
+            return $http.get('http://localhost:1337/user')
             .then(function(data, status, headers, config) {
                 return data.data;
             })
@@ -45,7 +59,7 @@
                 return data.data;
             }
         }
-        
+
         function getServices(type) {
             switch (type) {
                 case "hairRemoval":
@@ -53,9 +67,9 @@
                 case "facials":
                     return services.facials;
             }
-            
-                
-            
+
+
+
             // return $http.get('/api/customers')
             //     .then(getCustomersComplete)
             //     .catch(function(message) {

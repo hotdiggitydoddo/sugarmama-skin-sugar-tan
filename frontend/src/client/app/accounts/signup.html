@@ -6,6 +6,20 @@
                     <form ng-submit="vm.submitSignUpForm()" id="signUpForm" name="signUpForm" novalidate>
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="form-group" ng-class="{ 'has-error': vm.signUpForm.formSubmitted && signUpForm.firstName.$invalid || signUpForm.firstName.$touched && signUpForm.firstName.$invalid }">
+                                    <label for="firstName">first name</label>
+                                    <input type="text" class="form-control" ng-model="vm.signUpForm.firstName" ng-minlength="2" ng-maxlength="25" required name="firstName" title="Please enter your first name" />
+                                    <div class="help-block" ng-messages="signUpForm.firstName.$error" ng-if="signUpForm.firstName.$touched || vm.signUpForm.formSubmitted">
+                                        <div ng-messages-include="/error-messages.html"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error': vm.signUpForm.formSubmitted && signUpForm.lastName.$invalid || signUpForm.lastName.$touched && signUpForm.lastName.$invalid }">
+                                    <label for="lastName">first name</label>
+                                    <input type="text" class="form-control" ng-model="vm.signUpForm.lastName" ng-minlength="2" ng-maxlength="25" required name="lastName" title="Please enter your last name" />
+                                    <div class="help-block" ng-messages="signUpForm.lastName.$error" ng-if="signUpForm.lastName.$touched || vm.signUpForm.formSubmitted">
+                                        <div ng-messages-include="/error-messages.html"></div>
+                                    </div>
+                                </div>
                                 <div class="form-group" ng-class="{ 'has-error': vm.signUpForm.formSubmitted && signUpForm.email.$invalid || signUpForm.email.$touched && signUpForm.email.$invalid }">
                                     <label for="email">email</label>
                                     <input type="email" class="form-control" ng-model="vm.signUpForm.email" ng-minlength="6" ng-maxlength="40" required name="email" title="Please enter a valid email address" />

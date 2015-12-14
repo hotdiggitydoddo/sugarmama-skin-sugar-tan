@@ -7,8 +7,10 @@
 
 	function Signup($scope, $state, logger, dataservice) {
 		var vm = this;
-		
+
 		vm.signUpForm = {
+			firstName: "",
+			lastName: "",
 		    email: "",
 		    password: "",
 		    confirmPassword: "",
@@ -21,27 +23,32 @@
 		activate();
 
 		function activate() {
-		    var users = dataservice.getUsers().then(function(data) {
-		    vm.email = data[0].emailAddress;
-		    //vm.email = data  
-		    });
-		    
+		    //var users = dataservice.getUsers().then(function(data) {
+		    //vm.email = data[0].emailAddress;
+		    //vm.email = data
+		    //});
+
 			logger.info('Activated Signup View');
 		}
-        
+
         function submitSignUpForm() {
         	 vm.signUpForm.formSubmitted = true;
         	 $scope.$broadcast('show-errors-check-validity');
         	 if ($scope.signUpForm.$invalid)
             	return;
 
-        	 vm.signUpForm.loading = true;
-        	
-        	
+        	vm.signUpForm.loading = true;
+        	dataservice.postSignUp(vm.signUpForm).then(function(data) {
+				console.log(data);
+				vm.signUpForm.loading = false;
+			// }).finally(function() {
+			// 	vm.signUpForm.loading = false;
+			})
+
             console.log('hello');
             console.log(vm.signUpForm);
         }
-        
+
 // 		function getServices() {
 // 			vm.services.hairRemoval = dataservice.getServices("hairRemoval");
 // 			vm.services.facial = dataservice.getServices("facials");

@@ -6,14 +6,21 @@
  */
 
 module.exports = {
-	hello: function(req, res) {
-	    
-	    Appointment.findOneById(1).populateAll().populate('esthetician.user').exec(function(err, appt) {
-	        console.log(appt);
-	         res.send(appt);
-	    })
-	   
-	   
-	}
-};
+  signup: function(req, res) {
+    var Passwords = require('machinepack-passwords');
 
+    // Encrypt a string using the BCrypt algorithm.
+    Passwords.encryptPassword({
+      password: 'l0lcatzz',
+    }).exec({
+      // An unexpected error occurred.
+      error: function(err) {
+
+      },
+      // OK.
+      success: function(result) {
+
+      },
+    });
+  }
+};
