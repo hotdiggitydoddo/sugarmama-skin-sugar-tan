@@ -20,10 +20,10 @@
                                         <div ng-messages-include="/error-messages.html"></div>
                                     </div>
                                 </div>
-                                <div class="form-group" ng-class="{ 'has-error': vm.signUpForm.formSubmitted && signUpForm.email.$invalid || signUpForm.email.$touched && signUpForm.email.$invalid }">
-                                    <label for="email">email</label>
-                                    <input type="email" class="form-control" ng-model="vm.signUpForm.email" ng-minlength="6" ng-maxlength="40" required name="email" title="Please enter a valid email address" />
-                                    <div class="help-block" ng-messages="signUpForm.email.$error" ng-if="signUpForm.email.$touched || vm.signUpForm.formSubmitted">
+                                <div class="form-group" ng-class="{ 'has-error': vm.signUpForm.formSubmitted && signUpForm.emailAddress.$invalid || signUpForm.emailAddress.$touched && signUpForm.emailAddress.$invalid }">
+                                    <label for="emailAddress">email</label>
+                                    <input type="email" class="form-control" ng-model="vm.signUpForm.emailAddress" ng-minlength="6" ng-maxlength="40" required name="emailAddress" title="Please enter a valid email address" />
+                                    <div class="help-block" ng-messages="signUpForm.email.$error" ng-if="signUpForm.emailAddress.$touched || vm.signUpForm.formSubmitted">
                                         <div ng-messages-include="/error-messages.html"></div>
                                     </div>
                                 </div>
@@ -34,10 +34,10 @@
                                         <div ng-messages-include="/error-messages.html"></div>
                                     </div>
                                 </div>
-                                <div class="form-group" ng-class="{ 'has-error': vm.signUpForm.formSubmitted && signUpForm.confirmPassword.$invalid || signUpForm.confirmPassword.$touched && signUpForm.confirmPassword.$invalid }">
-                                    <label for="confirmPassword">confirm password</label>
-                                    <input type="password" class="form-control" ng-model="vm.signUpForm.confirmPassword" validate-equals="vm.signUpForm.password" required name="confirmPassword" title="Please enter a valid email address" />
-                                    <div class="help-block" ng-messages="signUpForm.confirmPassword.$error" ng-if="signUpForm.confirmPassword.$touched || vm.signUpForm.formSubmitted">
+                                <div class="form-group" ng-class="{ 'has-error': vm.signUpForm.formSubmitted && signUpForm.passwordConfirmation.$invalid || signUpForm.passwordConfirmation.$touched && signUpForm.passwordConfirmation.$invalid }">
+                                    <label for="passwordConfirmation">confirm password</label>
+                                    <input type="password" class="form-control" ng-model="vm.signUpForm.passwordConfirmation" validate-equals="vm.signUpForm.password" required name="passwordConfirmation" title="Please confirm your password" />
+                                    <div class="help-block" ng-messages="signUpForm.passwordConfirmation.$error" ng-if="signUpForm.passwordConfirmation.$touched || vm.signUpForm.formSubmitted">
                                         <div ng-messages-include="/error-messages.html"></div>
                                     </div>
                                 </div>

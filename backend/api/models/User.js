@@ -7,11 +7,11 @@
 
 module.exports = {
 
-  types: {
-    password: function(password) {
-      return password === this.passwordConfirmation
-    }
-  },
+  // types: {
+  //   password: function(password) {
+  //     return password === this.passwordConfirmation
+  //   }
+  // },
 
   attributes: {
     firstName: {
@@ -21,7 +21,7 @@ module.exports = {
       maxLength: 25,
       alpha: true
     },
-    
+
     lastName: {
       type: 'string',
       required: 'true',
@@ -29,29 +29,22 @@ module.exports = {
       maxLength: 25,
       alpha: true
     },
-    
+
     emailAddress: {
       type: 'email',
       required: true,
       maxLength: 50,
       unique: true
     },
-    
+
     password: {
       type: 'string',
-      password: true,
       protected: true
     },
-    
-    passwordConfirmation: {
-      type: 'string',
-      protected: true
-    },
-    
+
     roles: {
       collection: 'Role',
       via: 'users'
     }
   }
 };
-

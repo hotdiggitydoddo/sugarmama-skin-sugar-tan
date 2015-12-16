@@ -28,9 +28,7 @@
         return service;
 
         function postSignUp(userData) {
-            return $http.post('http://localhost:1337/user', {
-                user: userData
-            })
+            return $http.post('http://localhost:1337/user/signup', userData)
             .then(function(data, status, headers, config) {
                 return data.data;
             })

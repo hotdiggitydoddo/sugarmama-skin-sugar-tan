@@ -11,9 +11,9 @@
 		vm.signUpForm = {
 			firstName: "",
 			lastName: "",
-		    email: "",
+		    emailAddress: "",
 		    password: "",
-		    confirmPassword: "",
+		    passwordConfirmation: "",
 		    formSubmitted: false,
 		    loading: false
 		};
