@@ -7,35 +7,26 @@
 
 module.exports = {
   signup: function(req, res) {
+      var userVm = req.body;
 
-    var Passwords = require('machinepack-passwords');
+      UserService.createUser(userVm)
+      .then(function(success) {
+          res.ok(success);
+      })
+      .catch(function(err) {
+          res.negotiate(err);
+      })
+  },
 
-    // Encrypt a string using the BCrypt algorithm.
-    Passwords.encryptPassword({
-      password: req.body.password,
-	  difficulty: 10,
-    }).exec({
-      // An unexpected error occurred.
-      error: function(err) {
-		  res.negotiate(err);
-      },
-      // OK.
-      success: function(encryptedPassword) {
-		  User.create({
-			  firstName: req.body.firstName,
-			  lastName: req.body.lastName,
-			  emailAddress: req.body.emailAddress,
-			  password: encryptedPassword
-		  }, function userCreated(err, newUser) {
-			  if (err) {
-				  return res.negotiate(err);
-			  }
-			  console.log(newUser.id);
-			  return res.json({
-				  id: newUser.id
-			  });
-		  });
-	  }
-    });
+  login: function(req, res) {
+      var userVm = req.body;
+
+      UserService.loginUser(userVm, req.host)
+      .then(function(success) {
+          res.ok(success);
+      })
+      .catch(function(err) {
+          res.negotiate(err);
+      })
   }
 };
