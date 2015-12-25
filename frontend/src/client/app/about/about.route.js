@@ -22,6 +22,9 @@
 					settings: {
 						nav: 2,
 						content: 'about'
+					},
+					data: {
+						authRequired: true
 					}
 				}
 			}

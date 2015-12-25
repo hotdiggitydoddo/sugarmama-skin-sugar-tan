@@ -5,16 +5,13 @@
         .module('app.core')
         .factory('dataservice', dataservice);
 
-    dataservice.$inject = ['$http', '$location', '$q', 'exception', 'logger'];
+    dataservice.$inject = ['$http', '$location', '$q', 'exception', 'logger', 'localStorageService'];
     /* @ngInject */
     function dataservice($http, $location, $q, exception, logger) {
         var services = {
             hairRemoval : [{name: "Lip", price: 10.00}, {name: "Arm", price: 25.00}],
             facials: [{name: "face1", price: 12.00}, {name: "face2", price: 23.00}],
         };
-
-
-
         var readyPromise;
 
         var service = {
@@ -22,7 +19,7 @@
             getUsers: getUsers,
             postSignUp: postSignUp,
            // getCustomers: getCustomers,
-            ready: ready
+            ready: ready,
         };
 
         return service;

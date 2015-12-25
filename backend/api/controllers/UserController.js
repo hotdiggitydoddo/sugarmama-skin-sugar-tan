@@ -18,15 +18,5 @@ module.exports = {
       })
   },
 
-  login: function(req, res) {
-      var userVm = req.body;
-
-      UserService.loginUser(userVm, req.host)
-      .then(function(success) {
-          res.ok(success);
-      })
-      .catch(function(err) {
-          res.negotiate(err);
-      })
-  }
+ 
 };

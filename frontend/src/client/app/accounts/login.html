@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 center-block" style="float: none; padding: 25px; background: rgba(0,0,0,.05)">
+            <div class="row mb-medium">
+                <div class="col-md-12">
+                    <form ng-submit="vm.submitLoginForm()" id="loginForm" name="loginForm" novalidate>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" ng-class="{ 'has-error': vm.loginForm.formSubmitted && loginForm.emailAddress.$invalid || loginForm.emailAddress.$touched && loginForm.emailAddress.$invalid }">
+                                    <label for="emailAddress">email</label>
+                                    <input type="email" class="form-control" ng-model="vm.loginForm.emailAddress" ng-minlength="6" ng-maxlength="40" required name="emailAddress" title="Please enter a valid email address" />
+                                    <div class="help-block" ng-messages="loginForm.emailAddress.$error" ng-if="loginForm.emailAddress.$touched || vm.loginForm.formSubmitted">
+                                        <div ng-messages-include="/error-messages.html"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error': vm.loginForm.formSubmitted && loginForm.password.$invalid || loginForm.password.$touched && loginForm.password.$invalid }">
+                                    <label for="password">password</label>
+                                    <input type="password" class="form-control" ng-model="vm.loginForm.password" ng-minlength="6" ng-maxlength="40" required name="password" title="Please enter your password" />
+                                    <div class="help-block" ng-messages="loginForm.password.$error" ng-if="loginForm.password.$touched || vm.loginForm.formSubmitted">
+                                        <div ng-messages-include="/error-messages.html"></div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-lg btn-primary" ng-disabled="vm.loginForm.loading">
+                                    <span ng-show="!vm.loginForm.loading">Submit</span>
+                                    <span ng-show="vm.loginForm.loading">Please wait...</span>
+                                </button>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

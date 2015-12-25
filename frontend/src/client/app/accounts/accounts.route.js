@@ -20,6 +20,16 @@
 					controllerAs: 'vm',
 					title: 'Sign up',
 				}
+			},
+			{
+				state: 'login',
+				config: {
+					url: '/login',
+					templateUrl: 'app/accounts/login.html',
+					controller: 'Auth',
+					controllerAs: 'vm',
+					title: 'Login'
+				}
 			}
 		];
 	}
