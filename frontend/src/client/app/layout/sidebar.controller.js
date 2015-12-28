@@ -14,24 +14,24 @@
 		activate();
 
 		function activate() {
-			console.log(authService.isAuthenticated);
 			getNavRoutes();
-		//	getAuthRoutes();
+			if (authService.isAuthenticated)
+				getAuthRoutes();
 		}
 
 		function getNavRoutes() {
 			vm.navRoutes = states.filter(function(r) {
-				return r.settings && r.settings.nav;
+				return r.settings && r.settings.nav && !r.data;
 			}).sort(function(r1, r2) {
 				return r1.settings.nav - r2.settings.nav;
 			});
 		}
 
-		// function getAuthRoutes() {
-		// 	vm.authRoutes = states.filter(function(r) {
-		// 		return r.data && r.data.authRequired;
-		// 	});
-		// }
+		function getAuthRoutes() {
+			vm.authRoutes = states.filter(function(r) {
+				return r.data && r.data.authRequired;
+			});
+		}
 
 		function isAuthenticated() {
 			return authService.isAuthenticated();

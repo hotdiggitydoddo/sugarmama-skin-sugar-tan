@@ -8,20 +8,21 @@
 			</div>
 			<div class="row">
 				<div id="side-contents">
-					<ul id="navigation" class="list-hover">
+					<ul ng-if="vm.isAuthenticated()" id="navigation" class="list-hover">
+						<li ng-class="vm.isCurrent(r)" ng-repeat="r in vm.authRoutes">
+							<a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
+						</li>
+					</ul>
+					<ul ng-if="!vm.isAuthenticated()" id="navigation" class="list-hover">
 						<li ng-class="vm.isCurrent(r)" ng-repeat="r in vm.navRoutes">
 							<a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
 						</li>
-						<!-- <li ng-show="vm.isAuthenticated()" ng-class="vm.isCurrent(r)" ng.repeat="r in vm.authRoutes">
-							<a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
-						</li> -->
-
 					</ul>
 				</div>
 			</div>
 			<div class="row">
 				<span ng-show="vm.isAuthenticated()"><a href="/" ng-click="vm.logOut()">logout</a></span>
-
+				<span ng-show="!vm.isAuthenticated()"><a href="/login">login</a></span>
 				<ul class="social-icons">
 					<li><a href="https://www.facebook.com/sugarmamaskinsugartan" target="_blank"><i class="fa fa-facebook fa-lg"></i></a></li>
 					<li><a href="http://instagram.com/sugarmamaskinsugartan" target="_blank"><i class="fa fa-instagram fa-lg"></i></a></li>
