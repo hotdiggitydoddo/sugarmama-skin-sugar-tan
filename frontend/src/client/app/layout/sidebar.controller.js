@@ -29,7 +29,7 @@
 
 		function getAuthRoutes() {
 			vm.authRoutes = states.filter(function(r) {
-				return r.data && r.data.authRequired;
+				return r.settings && r.settings.nav && r.data && r.data.authRequired;
 			});
 		}
 

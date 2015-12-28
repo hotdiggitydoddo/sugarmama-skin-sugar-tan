@@ -1,9 +1,9 @@
 (function() {
-	
+
 	'use strict';
 
 	angular.module('app', [
-		
+
 		/*
 		 * Common access for all other modules
 		 */
@@ -16,8 +16,9 @@
 		 'app.services',
 		 'app.home',
 		 'app.about',
-		 'app.accounts'
-		 
+		 'app.accounts',
+		 'app.admin.estheticians'
+
 	]);
 
 })();

@@ -12,6 +12,11 @@
             hairRemoval : [{name: "Lip", price: 10.00}, {name: "Arm", price: 25.00}],
             facials: [{name: "face1", price: 12.00}, {name: "face2", price: 23.00}],
         };
+
+        var estheticians = {
+          
+        }
+
         var readyPromise;
 
         var service = {
