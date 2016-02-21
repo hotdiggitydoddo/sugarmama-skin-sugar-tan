@@ -14,7 +14,7 @@
         };
 
         var estheticians = {
-          
+
         }
 
         var readyPromise;
@@ -23,11 +23,23 @@
             getServices: getServices,
             getUsers: getUsers,
             postSignUp: postSignUp,
+            getBusinessDays: getBusinessDays,
            // getCustomers: getCustomers,
             ready: ready,
         };
 
         return service;
+
+        function getBusinessDays() {
+            return $http.get('http://localhost:1337/businessday')
+            .then(function(res, status, headers, config) {
+                return res.data;
+            })
+            .catch(function(message) {
+                exception.catcher('XHR Failed for getBusinessDays')(message);
+                //$location.url('/');
+            })
+        }
 
         function postSignUp(userData) {
             return $http.post('http://localhost:1337/user/signup', userData)
