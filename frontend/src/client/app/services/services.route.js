@@ -29,7 +29,6 @@
                 state: 'services.hairremoval',
                 config: {
                     url: '/hairremoval',
-                    
                     controller: 'Services',
                     controllerAs: 'vm',
                     title: 'hair removal',
@@ -42,7 +41,6 @@
                 state: 'services.facials',
                 config: {
                     url: '/facials',
-                    
                     controller: 'Services',
                     controllerAs: 'vm',
                     title: 'facials and microderms',

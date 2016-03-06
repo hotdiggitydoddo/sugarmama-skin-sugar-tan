@@ -1,1 +1,50 @@
-<h1>hello world</h1>
+<style>
+    .double-title {
+        font-family: ralewayregular;
+    }
+    
+    li {
+        list-style: none;
+    }
+</style>
+
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">home</a></li>
+        <li class="active">estheticians</li>
+    </ol>
+    <h2 class="section-title double-title">
+        <span>manage</span>
+        estheticians
+    </h2>
+
+    <div class="row mb-small">
+        <div class="col-md-12">
+            <a ng-click="vm.openAddModal()" class="btn btn-toranj pull-right">Add New Esthetician...</a>
+        </div>
+    </div>
+
+    <div class="row mb-small">
+        <div class="col-md-12">
+            <ul>
+                <li ng-repeat="esthetician in vm.estheticians">
+                    <a ui-sref="estheticians.detail({id : esthetician.id })">
+                        <div class="supervisor">
+                            <div class="sv-avatar">
+                                <i class="fa fa-user" ng-style="{'font-size':'60px', 'color':'#'+esthetician.color}"></i>
+                            </div>
+                            <div class="sv-detail">
+                                <h3 class="sv-name">{{esthetician.firstName}} {{esthetician.lastName}}</h3>
+                                <div>Esthetician</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class=col-md-12>
+            <ui-view></ui-view>
+        </div>
+    </div>
+</div>

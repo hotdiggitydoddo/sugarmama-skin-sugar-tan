@@ -20,12 +20,16 @@
 	core.config(configure);
 
     configure.$inject = ['$compileProvider', '$logProvider',
-                         'routerHelperProvider'];
+                         'routerHelperProvider', '$httpProvider'];
     /* @ngInject */
     function configure ($compileProvider, $logProvider,
-                         routerHelperProvider) {
+                         routerHelperProvider, $httpProvider) {
+        
         $compileProvider.debugInfoEnabled(false);
-
+        
+        
+        $httpProvider.interceptors.push('authInterceptor');
+       
         // turn debugging off/on (no info or warn)
         if ($logProvider.debugEnabled) {
             $logProvider.debugEnabled(true);

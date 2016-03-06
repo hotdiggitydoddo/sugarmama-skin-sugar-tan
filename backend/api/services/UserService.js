@@ -28,5 +28,21 @@ module.exports = {
             }
         })
         return deferred.promise;
+    },
+    
+    getUserById: function(id) {
+        var q = require('q');
+        var deferred = q.defer();
+        
+        User.findOne()
+        .where({ id: id }) 
+        .then(function(user) {
+            deferred.resolve(user);
+        })
+        .catch(function(err) {
+            deferred.reject(err);
+        })
+       
+        return deferred.promise;
     }
 }

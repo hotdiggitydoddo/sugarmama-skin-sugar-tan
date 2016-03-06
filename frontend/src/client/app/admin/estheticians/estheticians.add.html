@@ -1,0 +1,60 @@
+<style>
+    .double-title {
+        font-family: ralewayregular;
+    }
+</style>
+
+<div class="modal-header">
+    <h3 class="modal-title">add new esthetician</h3>
+</div>
+<div class="modal-body">
+    <form ng-submit="vm.submitAddForm()" id="addEsthetcianForm" name="addEstheticianForm" novalidate>
+        <div class="row mb-small">
+            <div class="col-md-6">
+                <div class="form-group" ng-class="{ 'has-error': vm.addEstheticianForm.formSubmitted && addEstheticianForm.firstName.$invalid || addEstheticianForm.firstName.$touched && addEstheticianForm.firstName.$invalid }">
+                    <label for="firstName">first name</label>
+                    <input type="text" class="form-control" ng-model="vm.addEstheticianForm.firstName" ng-minlength="2" ng-maxlength="25" required name="firstName" title="Please enter your first name" />
+                    <div class="help-block" ng-messages="addEstheticianForm.firstName.$error" ng-if="addEstheticianForm.firstName.$touched || vm.addEstheticianForm.formSubmitted">
+                        <div ng-messages-include="/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" ng-class="{ 'has-error': vm.addEstheticianForm.formSubmitted && addEstheticianForm.lastName.$invalid || addEstheticianForm.lastName.$touched && addEstheticianForm.lastName.$invalid }">
+                    <label for="lastName">last name</label>
+                    <input type="text" class="form-control" ng-model="vm.addEstheticianForm.lastName" ng-minlength="2" ng-maxlength="25" required name="lastName" title="Please enter your last name" />
+                    <div class="help-block" ng-messages="addEstheticianForm.lastName.$error" ng-if="addEstheticianForm.lastName.$touched || vm.addEstheticianForm.formSubmitted">
+                        <div ng-messages-include="/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group" ng-class="{ 'has-error': vm.addEstheticianForm.formSubmitted && addEstheticianForm.emailAddress.$invalid || addEstheticianForm.emailAddress.$touched && addEstheticianForm.emailAddress.$invalid }">
+                    <label for="emailAddress">email address</label>
+                    <input type="email" class="form-control" ng-model="vm.addEstheticianForm.emailAddress" ng-minlength="6" ng-maxlength="40" required name="emailAddress" title="Please enter a valid email address" />
+                    <div class="help-block" ng-messages="addEstheticianForm.emailAddress.$error" ng-if="addEstheticianForm.emailAddress.$touched || vm.addEstheticianForm.formSubmitted">
+                        <div ng-messages-include="/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success" ng-disabled="vm.addEstheticianForm.loading">
+                <span ng-show="!vm.addEstheticianForm.loading">Submit</span>
+                <span ng-show="vm.addEstheticianForm.loading">Please wait...</span>
+            </button>
+            <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<!--
+<div class="container">
+    <h2 class="section-title double-title">
+        <span>add</span>
+        esthetician
+    </h2>
+    
+</div>-->

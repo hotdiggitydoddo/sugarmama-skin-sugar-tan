@@ -1,11 +1,11 @@
 (function () {
     'use strict';
 
-    angular.module('app.accounts').controller('Auth', Auth);
+    angular.module('app.accounts').controller('Login', Login);
 
-    Auth.$inject = ['$scope', '$state', 'logger', 'authService'];
+    Login.$inject = ['$scope', '$state', 'logger', 'authService'];
 
-    function Auth($scope, $state, logger, authService) {
+    function Login($scope, $state, logger, authService) {
         var vm = this;
 
         vm.loginForm = {

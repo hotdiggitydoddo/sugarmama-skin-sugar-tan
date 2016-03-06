@@ -16,9 +16,6 @@
 		function activate() {
 			logger.info('Activated Services View');
 			getServices();
-			dataservice.getUsers().then(function(data) {
-				console.log(data);				
-			})
 		}
 
 		function getServices() {

@@ -26,7 +26,7 @@
 				config: {
 					url: '/login',
 					templateUrl: 'app/accounts/login.html',
-					controller: 'Auth',
+					controller: 'Login',
 					controllerAs: 'vm',
 					title: 'Login'
 				}

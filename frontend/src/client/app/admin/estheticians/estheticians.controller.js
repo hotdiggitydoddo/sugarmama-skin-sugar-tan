@@ -1,38 +1,50 @@
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	angular.module('app.admin.estheticians').controller('Estheticians', Estheticians);
+    angular.module('app.admin.estheticians').controller('Estheticians', Estheticians);
 
-	Estheticians.$inject = ['$state', 'logger', 'dataservice'];
+    Estheticians.$inject = ['$state', '$uibModal', 'logger', 'estheticianService'];
 
-	function Estheticians($state, logger, dataservice) {
-		var vm = this;
-		vm.estheticians = [];
-		vm.gotoEsthetician = gotoEsthetician;
-		vm.title = 'estheticians';
+    function Estheticians($state, $uibModal, logger, estheticianService) {
+        var vm = this;
+        vm.estheticians = [];
+        vm.gotoEsthetician = gotoEsthetician;
+        vm.title = 'estheticians';
+        vm.openAddModal = openAddModal;
 
-		activate();
+        activate();
 
-		function activate() {
-			logger.info('Activated Estheticians View');
-			getEstheticians();
-			//dataservice.getUsers().then(function(data) {
-			//	console.log(data);
-			//})
-		}
+        function activate() {
+            logger.info('Activated Estheticians View');
+            getEstheticians();
+        }
 
-		function getEstheticians() {
-			vm.estheticians = dataservice.getEstheticians();
-			//vm.services.facial = dataservice.getServices("facials");
-			// return dataservice.getServices().then(function(data) {
-			// 	vm.services = data;
-			// 	return vm.services;
-			// });
-		}
+        function getEstheticians() {
+            return estheticianService.getEstheticians()
+                .then(function (data) {
+                    vm.estheticians = data;
+                    return vm.estheticians;
+                });
+        }
 
+        function gotoEsthetician(s) {
+            $state.go('estheticians.' + s);
+        }
 
-		function gotoEsthetician(s) {
-			$state.go('estheticians.' + s);
-		}
-	}
+        function openAddModal() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/admin/estheticians/estheticians.add.html',
+                controller: 'AddEsthetician',
+                controllerAs: 'vm',
+            });
+
+            modalInstance.result.then(function (esthetician) {
+                console.log(esthetician);
+                vm.estheticians.push(esthetician);
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+    }
 })();

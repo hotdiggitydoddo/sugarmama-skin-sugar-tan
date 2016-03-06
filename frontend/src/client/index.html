@@ -6,6 +6,7 @@
     <base href='/'>
     <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
     <!-- endbower -->
 
@@ -30,6 +31,7 @@
         <script src="/bower_components/gsap/src/uncompressed/TweenMax.js"></script>
         <script src="/bower_components/angular-messages/angular-messages.js"></script>
         <script src="/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+        <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <!-- endbower -->
         <script>
             (function(e) {
@@ -75,10 +77,13 @@
         <script src="/src/client/app/accounts/accounts.route.js"></script>
         <script src="/src/client/app/accounts/login.controller.js"></script>
         <script src="/src/client/app/accounts/signup.controller.js"></script>
+        <script src="/src/client/app/core/authInterceptor.js"></script>
         <script src="/src/client/app/core/authService.js"></script>
+        <script src="/src/client/app/core/authToken.js"></script>
         <script src="/src/client/app/core/config.js"></script>
         <script src="/src/client/app/core/constants.js"></script>
         <script src="/src/client/app/core/dataservice.js"></script>
+        <script src="/src/client/app/core/estheticianService.js"></script>
         <script src="/src/client/app/home/home.controller.js"></script>
         <script src="/src/client/app/home/home.route.js"></script>
         <script src="/src/client/app/layout/layout.animations.js"></script>
@@ -86,6 +91,8 @@
         <script src="/src/client/app/layout/sidebar.controller.js"></script>
         <script src="/src/client/app/services/services.controller.js"></script>
         <script src="/src/client/app/services/services.route.js"></script>
+        <script src="/src/client/app/admin/estheticians/esthetician.detail.controller.js"></script>
+        <script src="/src/client/app/admin/estheticians/estheticians.add.controller.js"></script>
         <script src="/src/client/app/admin/estheticians/estheticians.controller.js"></script>
         <script src="/src/client/app/admin/estheticians/estheticians.route.js"></script>
         <script src="/src/client/app/blocks/exception/exception-handler.provider.js"></script>

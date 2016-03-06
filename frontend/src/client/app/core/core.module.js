@@ -10,6 +10,7 @@
 
 			/* 3rd party modules */
 			'ui.router',
+            'ui.bootstrap',
 
 			/* Reusable cross-app modules */
 			'blocks.logger',

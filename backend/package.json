@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "crypto": "0.0.3",
     "include-all": "~0.1.3",
     "machinepack-jwt": "^0.1.14",
     "machinepack-passwords": "^2.3.0",
