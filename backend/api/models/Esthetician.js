@@ -11,17 +11,6 @@ module.exports = {
         user: {
             model: 'User'
         },
-<<<<<<< HEAD
-        color: {
-            type: 'string'
-        },
-        appointments: {
-            collection: 'Appointment',
-            via: 'esthetician'
-        }
-    }
-};
-=======
 
         appointments: {
             collection: 'Appointment',
@@ -38,4 +27,3 @@ module.exports = {
         }
     }
 };
->>>>>>> 4e39c953f3da28b6c97cc1fe3014e3ffd69d0885
