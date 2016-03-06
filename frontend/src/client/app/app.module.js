@@ -17,7 +17,8 @@
 		 'app.home',
 		 'app.about',
 		 'app.accounts',
-		 'app.admin.estheticians'
+		 'app.admin.estheticians',
+		 'app.admin.businessDays'
 
 	]);
 

@@ -4923,3 +4923,6 @@ blockquote {
 .inner-wrapper {
   overflow-x: hidden;
 }
+.business-hours {
+  text-align: center;
+}
