@@ -12,6 +12,7 @@
         var service = {
             getEstheticians: getEstheticians,
             createEsthetician: createEsthetician,
+            updateEsthetician: updateEsthetician,
             getById: getById
         };
 
@@ -39,6 +40,17 @@
 
         function createEsthetician(estheticianData) {
             return $http.post('http://localhost:1337/esthetician/create', estheticianData)
+                .then(function (data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function (message) {
+                    exception.catcher('XHR Failed for createEsthetician')(message);
+                    //$location.url('/');
+                })
+        }
+        
+        function updateEsthetician(estheticianData) {
+           return $http.post('http://localhost:1337/esthetician/update', estheticianData)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })

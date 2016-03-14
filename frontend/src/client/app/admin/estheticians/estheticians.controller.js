@@ -8,13 +8,12 @@
     function Estheticians($state, $uibModal, logger, estheticianService) {
         var vm = this;
         vm.estheticians = [];
-        vm.gotoEsthetician = gotoEsthetician;
         vm.title = 'estheticians';
         vm.openAddModal = openAddModal;
-
         activate();
 
         function activate() {
+           
             logger.info('Activated Estheticians View');
             getEstheticians();
         }
@@ -25,10 +24,6 @@
                     vm.estheticians = data;
                     return vm.estheticians;
                 });
-        }
-
-        function gotoEsthetician(s) {
-            $state.go('estheticians.' + s);
         }
 
         function openAddModal() {

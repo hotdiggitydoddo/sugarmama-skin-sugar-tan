@@ -9,6 +9,7 @@
         var vm = this;
         vm.esthetician = {}
         vm.title = 'add esthetician';
+      
         activate();
 
         function activate() {

@@ -27,16 +27,15 @@
                 }
             }
         }, {
-            state: 'estheticians.detail',
+            state: 'estheticians_detail',
             config: {
-                url: '/:id',
-                templateUrl: '/app/admin/estheticians/estheticians.detail.html',
+                url: '/admin/estheticians/:id',
+                templateUrl: '/app/admin/estheticians/estheticians_detail.html',
                 controller: 'EstheticianDetail',
                 controllerAs: 'vm',
-                title: '',
+                title: 'blah',
                 data: {
                     id: ':id',
-                    authRequired: true
                 }
             }
         }];

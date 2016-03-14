@@ -12,14 +12,31 @@
 <div class="container">
     <ol class="breadcrumb">
         <li><a href="/">home</a></li>
-        <li><a href="/estheticians">estheticians</a></li>
-        <li class="active">{{esthetician.firstName + ' ' + esthetician.lastName}}</li>
+        <li><a ui-sref="estheticians">estheticians</a></li>
+        <li class="active">{{vm.esthetician.firstName + ' ' + vm.esthetician.lastName}}</li>
     </ol>
-    <h2 class="section-title double-title">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="section-title double-title">
         <span>{{vm.esthetician.firstName}}</span>
-        {{esthetician.lastName}}
+        {{vm.esthetician.lastName}}
     </h2>
+        </div>
+    </div>
 
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="ib-boxed">
+                <dl class="dl-horizontal">
+                    <dt>email</dt>
+                    <dd>{{vm.esthetician.email}}</dd>
+                    <dt>phone</dt>
+                    <dd>714.555.1212</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
     <!--
     <div class="row mb-small">
     <div class="col-md-12">
