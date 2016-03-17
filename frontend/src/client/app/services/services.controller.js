@@ -14,6 +14,9 @@
 		activate();
 
 		function activate() {
+              angular.element(document).ready(function () {
+       $("#menu-toggle-wrapper").trigger('click');
+    });
 			logger.info('Activated Services View');
 			getServices();
 		}

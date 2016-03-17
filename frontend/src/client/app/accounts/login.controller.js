@@ -19,6 +19,9 @@
         activate();
 
         function activate() {
+             angular.element(document).ready(function () {
+                $("#menu-toggle-wrapper").trigger('click');
+            });
             //var users = dataservice.getUsers().then(function(data) {
             //vm.email = data[0].emailAddress;
             //vm.email = data

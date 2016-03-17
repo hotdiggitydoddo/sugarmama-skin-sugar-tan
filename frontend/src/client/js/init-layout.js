@@ -55,6 +55,7 @@ function initLayout() {
                     r = 1
                 }
             });
+            
             $(window).on("debouncedresize", function() {
                 t.setMobileFlag();
                 t.prepare();
@@ -62,6 +63,15 @@ function initLayout() {
                     n.$menuToggle.trigger("click")
                 }
             });
+            
+           $("#side-contents a").on("click", function(){
+                t.setMobileFlag();
+                t.prepare();
+                if (n.sideFlag && !n.mobileFlag) {
+                    n.$menuToggle.trigger("click")
+                }
+            });
+            
             n.$sideContents.find("li a").on("click", function(t) {
                 if (!n.menuFlag) {
                     n.menuFlag = true;

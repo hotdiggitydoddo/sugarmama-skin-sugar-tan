@@ -1,22 +1,25 @@
-(function() {
-	'use strict';
+(function () {
+    'use strict';
 
-	angular.module('app.about').controller('About', About);
+    angular.module('app.about').controller('About', About);
 
-	About.$inject = ['$state', 'logger'];
+    About.$inject = ['$state', 'logger'];
 
-	function About($state, logger) {
-		var vm = this;
-		
+    function About($state, logger) {
+        var vm = this;
 
-		activate();
 
-		function activate() {
-			logger.info('Activated About View');
-		}
+        activate();
 
-		// function gotoService(s) {
-		// 	$state.go('service.detail', {id: s.id});
-		// }
-	}
+        function activate() {
+            angular.element(document).ready(function () {
+                $("#menu-toggle-wrapper").trigger('click');
+            });
+            logger.info('Activated About View');
+        }
+
+        // function gotoService(s) {
+        // 	$state.go('service.detail', {id: s.id});
+        // }
+    }
 })();
