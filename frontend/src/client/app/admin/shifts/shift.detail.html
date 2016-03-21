@@ -1,0 +1,52 @@
+<style>
+    .uib-timepicker .btn {
+        border: none;
+        padding: 6px 12px;
+    }
+    
+    .uib-timepicker input {
+        font-size: 18px;
+    }
+    
+    .am-pm {
+        border: 1px solid #F2F2F2;
+    }
+    
+    .am-pm .btn {
+        font-size: 18px;
+    }
+</style>
+
+<div class="modal-header">
+    <h4 class="bordered" style="margin-bottom:0px; margin-top: 10px;">add/edit shift</h3>
+</div>
+<div class="modal-body">
+     <div class="row mb-small">
+        <div class="col-md-6">
+            <h5 class="lined">start</h5>
+            <uib-timepicker ng-model="vm.shift.startTime" hour-step="1" minute-step="15" show-meridian="true"></uib-timepicker>
+        </div>
+        <div class="col-md-6">
+            <h5 class="lined">end</h5>
+            <uib-timepicker ng-model="vm.shift.endTime" hour-step="1" minute-step="15" show-meridian="true"></uib-timepicker>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+           <h5 class="lined">day</h5>
+           <select ng-model="vm.shift.day"  ng-options="day.id as day.value for day in vm.daysOfWeek" class="form-control">
+                 <option value="" disabled selected="true">select a day...</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+           <h5 class="lined">location</h5>
+           <select ng-model="vm.shift.location"  ng-options="location.id as location.value for location in vm.locations" class="form-control">
+                 <option value="" disabled selected="true">select a location...</option>
+            </select>
+        </div>
+    </div>
+</div>
+ <div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="vm.save()">Save</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>

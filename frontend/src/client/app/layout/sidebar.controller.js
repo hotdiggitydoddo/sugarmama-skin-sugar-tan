@@ -18,7 +18,6 @@
 			if (authService.isAuthenticated)
 				getAuthRoutes();
                  angular.element(document).ready(function () {
-       debugger;
     });
 		}
 

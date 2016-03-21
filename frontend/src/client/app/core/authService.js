@@ -20,14 +20,20 @@
         return service;
 
         function login(loginData) {
-            return $http.post('http://localhost:1337/auth/login', loginData)
+            return $http.post('http://192.168.1.11:1337/auth/login', loginData)
             .then(function(data, status, headers, config) {
                 authToken.setToken(data.data.token);
                 _userName = data.userName;
                 logger.success('Logged in!');
+                
             })
             .catch(function(message) {
-                logger.error(message.data);
+                if (message.status === -1) {
+                        logger.error("Unable to communicate with the server.  Please notify tech support.")
+                    } else {
+                        logger.error(message.data);
+                    }
+                //throw({});
             })
         }
 

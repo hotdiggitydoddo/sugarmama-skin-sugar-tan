@@ -9,19 +9,13 @@ module.exports = {
 
   attributes: {
       startTime: {
-        type: 'datetime',
-        unique: true,
-        required: true,
-        datetime: true,
-        unique: true
+        type: 'time',
+        required: true
       },
 
       endTime: {
-        type: 'datetime',
-        unique: true,
-        required: true,
-        datetime: true,
-        unique: true
+        type: 'time',
+        required: true
       },
 
       esthetician: {
@@ -30,6 +24,12 @@ module.exports = {
 
       businessDay : {
           model: 'BusinessDay'
+      },
+      
+      location : {
+          type: 'string',
+          enum: ['stanton', 'brea'],
+          required: true
       }
   }
 };

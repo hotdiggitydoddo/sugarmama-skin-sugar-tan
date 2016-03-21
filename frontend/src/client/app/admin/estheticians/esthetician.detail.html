@@ -1,0 +1,85 @@
+<style>
+    .double-title {
+        font-family: ralewayregular;
+    }
+    
+    li {
+        list-style: none;
+    }
+    
+    .section-title {
+        margin-bottom: 55px;
+    }
+</style>
+
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">home</a></li>
+        <li><a ui-sref="estheticians">estheticians</a></li>
+        <li class="active">{{vm.esthetician.firstName + ' ' + vm.esthetician.lastName}}</li>
+    </ol>
+
+    <h2 class="section-title double-title">
+        <div style="display: inline">
+            <i class="fa fa-user" ng-style="{'font-size':'60px', 'color':'#'+vm.esthetician.color}"></i>
+        </div>
+        <div style="display: inline-block">
+            <span>{{vm.esthetician.firstName}}</span>{{vm.esthetician.lastName}}
+        </div> 
+    </h2>
+
+    <div class="row mb-xlarge">
+        <div class="col-md-6">
+            <div class="icon-box ib-center ib-boxed">
+                <i class="ib-icon fa fa-user"></i>
+                <h4 class="title">info</h4>
+                <div class="contents">
+                    <dl class="dl-horizontal">
+                        <dt>email</dt>
+                        <dd>{{vm.esthetician.email}}</dd>
+                        <dt>phone</dt>
+                        <dd>714.555.1212</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="icon-box ib-center ib-boxed">
+                <i class="ib-icon fa fa-calendar"></i>
+                <h4 class="title">work schedule</h4>
+                <div class="contents">
+                    
+                    <ui-view></ui-view>
+                    <!--<div class="row">
+                        <div class="col-md-12">
+                            <a ng-click="vm.openAddModal()" class="btn btn-toranj pull-right">add shift...</a>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-small">
+        <div class="col-md-12">
+            <!--
+            <ul>
+    <li ng-repeat="esthetician in vm.estheticians">
+        <a href="#">
+            <div class="supervisor">
+                <div class="sv-avatar">
+                    <i class="fa fa-user" ng-style="{'font-size':'60px', 'color':'#'+esthetician.color}"></i>
+                </div>
+                <div class="sv-detail">
+                    <h3 class="sv-name">{{esthetician.firstName}} {{esthetician.lastName}}</h3>
+                    <div>Esthetician</div>
+                </div>
+            </div>
+        </a>
+    </li>
+</ul>
+-->
+        </div>
+    </div>
+</div>

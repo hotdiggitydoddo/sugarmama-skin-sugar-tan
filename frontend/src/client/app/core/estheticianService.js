@@ -13,7 +13,9 @@
             getEstheticians: getEstheticians,
             createEsthetician: createEsthetician,
             updateEsthetician: updateEsthetician,
-            getById: getById
+            getById: getById,
+            getShifts: getShifts,
+            saveShift: saveShift
         };
 
         return service;
@@ -56,6 +58,28 @@
                 })
                 .catch(function (message) {
                     exception.catcher('XHR Failed for createEsthetician')(message);
+                    //$location.url('/');
+                })
+        }
+        
+        function getShifts(id) {
+             return $http.get('http://localhost:1337/shift/getByEsthetician?id=' + id)
+                .then(function (data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function (message) {
+                    logger.error(message.data);
+                })
+        }
+        
+        function saveShift(shiftData) {
+            debugger;
+            return $http.post('http://localhost:1337/shift/save', shiftData)
+                .then(function(data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function (message) {
+                    exception.catcher('XHR Failed for saveShift')(message);
                     //$location.url('/');
                 })
         }

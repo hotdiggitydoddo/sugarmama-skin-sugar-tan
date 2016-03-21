@@ -13,6 +13,7 @@
         activate();
 
         function activate() {
+            $state.go('shifts', {id: $state.params.id });
             return getEsthetician($state.params.id);
         }
 
@@ -23,5 +24,7 @@
                     return vm.esthetician;
                 })
         }
+        
+       
     }
 })();

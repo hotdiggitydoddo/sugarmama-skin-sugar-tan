@@ -66,7 +66,7 @@ module.exports = {
                     firstName: esthetician.user.firstName,
                     lastName: esthetician.user.lastName,
                     email: esthetician.user.emailAddress,
-                    color: esthetician.color
+                    color: esthetician.color,
                 };
                 deferred.resolve(result);
             })

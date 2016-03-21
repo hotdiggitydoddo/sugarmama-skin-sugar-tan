@@ -30,7 +30,7 @@
             state: 'estheticians_detail',
             config: {
                 url: '/admin/estheticians/:id',
-                templateUrl: '/app/admin/estheticians/estheticians_detail.html',
+                templateUrl: '/app/admin/estheticians/esthetician.detail.html',
                 controller: 'EstheticianDetail',
                 controllerAs: 'vm',
                 title: 'blah',

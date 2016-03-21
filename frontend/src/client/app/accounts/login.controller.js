@@ -46,6 +46,13 @@
                     // }).finally(function() {
                     // 	vm.signUpForm.loading = false;
                 })
+                .catch(function(error) {
+                    if (error.status === -1) {
+                        logger.error("Unable to communicate with the server.  Please notify tech support.")
+                    } else {
+                        logger.error(error.message);
+                    }
+                })
                 .finally(function () {
                     vm.loginForm.loading = false;
                 })

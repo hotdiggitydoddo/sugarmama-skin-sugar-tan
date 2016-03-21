@@ -40,7 +40,7 @@
                 console.log(esthetician);
                 vm.estheticians.push(esthetician);
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+               // $log.info('Modal dismissed at: ' + new Date());
             });
         };
     }
