@@ -25,11 +25,5 @@ module.exports = {
       businessDay : {
           model: 'BusinessDay'
       },
-      
-      location : {
-          type: 'string',
-          enum: ['stanton', 'brea'],
-          required: true
-      }
   }
 };

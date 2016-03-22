@@ -19,11 +19,11 @@
         }
 
         function getShifts(id) {
-            return estheticianService.getShifts(id)
-                .then(function (data) {
-                    vm.shifts = data;
-                    return vm.shifts;
-                });
+            // return estheticianService.getShifts(id)
+            //     .then(function (data) {
+            //         vm.shifts = data;
+            //         return vm.shifts;
+            //     });
         }
 
         function openAddModal() {

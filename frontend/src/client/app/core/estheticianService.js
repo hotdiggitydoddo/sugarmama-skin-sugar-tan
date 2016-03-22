@@ -73,13 +73,15 @@
         }
         
         function saveShift(shiftData) {
-            debugger;
             return $http.post('http://localhost:1337/shift/save', shiftData)
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
                 .catch(function (message) {
-                    exception.catcher('XHR Failed for saveShift')(message);
+                    debugger;
+                    if (message.data)
+                    //exception.catcher(message.data)(message);
+                    throw(message);
                     //$location.url('/');
                 })
         }

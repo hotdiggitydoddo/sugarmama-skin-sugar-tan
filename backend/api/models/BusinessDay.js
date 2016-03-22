@@ -13,22 +13,39 @@ module.exports = {
             type: 'string',
             enum: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
             required: true,
-            unique: true
         },
 
         openingTime: {
-            type: 'datetime',
+            type: 'time',
             required: true
         },
 
         closingTime: {
-            type: 'datetime',
-            required: 'true'
+            type: 'time',
+            required: true
         },
 
         shifts: {
             collection: 'Shift',
             via: 'businessDay'
+        },
+        
+        location: {
+            type: 'string',
+            enum: ['stanton', 'brea'],
+            required: true
         }
+        
+    },
+    
+    afterValidate: function (values, cb) {
+        BusinessDay.findOne({
+            location: values.location,
+            dayOfWeek: values.dayOfWeek
+        }).exec(function(err, itemInDb){
+            if(err) return cb(err);
+            if(itemInDb) return cb('Not unique');
+            cb(null, values);
+        });
     }
 };

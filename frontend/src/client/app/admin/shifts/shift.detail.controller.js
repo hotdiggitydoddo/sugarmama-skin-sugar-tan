@@ -19,33 +19,33 @@
         vm.cancel = cancel;
         vm.save = save;
         vm.daysOfWeek = [{
-            id: 0,
+            id: 'sunday',
             value: 'sunday'
         }, {
-            id: 1,
+            id: 'monday',
             value: 'monday'
         }, {
-            id: 2,
+            id: 'tuesday',
             value: 'tuesday'
         }, {
-            id: 3,
+            id: 'wednesday',
             value: 'wednesday'
         }, {
-            id: 4,
+            id: 'thursday',
             value: 'thursday'
         }, {
-            id: 5,
+            id: 'friday',
             value: 'friday'
         }, {
-            id: 6,
+            id: 'saturday',
             value: 'saturday'
         }];
         
         vm.locations = [{
-            id: 0,
+            id: 'stanton',
             value: 'stanton'
         }, {
-            id: 1,    
+            id: 'brea',    
             value: 'brea'
         }];
         
@@ -68,10 +68,14 @@
         function save() {
             return estheticianService.saveShift(vm.shift)
                 .then(function (data) {
+                    debugger;
                     console.log(data);
                     //vm.addEstheticianForm.loading = false;
                     $uibModalInstance.close(data);
                 })
+                .catch(function(err) {
+                    
+                });
         }
         
         function cancel() {
