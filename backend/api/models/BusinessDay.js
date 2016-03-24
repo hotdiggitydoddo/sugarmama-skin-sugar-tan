@@ -16,12 +16,12 @@ module.exports = {
         },
 
         openingTime: {
-            type: 'time',
+            type: 'datetime',
             required: true
         },
 
         closingTime: {
-            type: 'time',
+            type: 'datetime',
             required: true
         },
 
@@ -31,8 +31,7 @@ module.exports = {
         },
         
         location: {
-            type: 'string',
-            enum: ['stanton', 'brea'],
+            model: 'Location',
             required: true
         }
         

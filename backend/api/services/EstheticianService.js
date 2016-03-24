@@ -1,10 +1,8 @@
 module.exports = {
-
+   
     createEsthetician: function(newUser) {
-        var q = require('q');
-        var deferred = q.defer();
+        var deferred = sails.q.defer();
 
-        console.log('create esth service: ' + newUser)
         Esthetician.create({
             user: newUser,
             color: UtilityService.getRandomHexValue(6)
@@ -27,8 +25,7 @@ module.exports = {
     },
 
     getEstheticians: function() {
-        var q = require('q');
-        var deferred = q.defer();
+        var deferred = sails.q.defer();
         var results = [];
         Esthetician.find().populate('user')
             .then(function(estheticians) {
@@ -51,8 +48,7 @@ module.exports = {
     },
 
     getEstheticianById: function(id) {
-        var q = require('q');
-        var deferred = q.defer();
+        var deferred = sails.q.defer();
         var result = {};
         console.log('getting est with id: ' + id);
 
@@ -79,49 +75,38 @@ module.exports = {
 
     saveShift: function(shift) {
         var self = this;
-        var moment = require('moment');
-        var q = require('q');
-        var deferred = q.defer();
+        var deferred = sails.q.defer();
         var result = {};
-        
-        console.log('finding bd');
+
         BusinessDay.findOne({
             location: shift.location,
             dayOfWeek: shift.day
         }).populate('shifts')
             .then(function(businessDay) {
-                //console.log(businessDay);
                 if (businessDay.shifts.length == 0) {
-                    self.getEstheticianById(shift.estheticianId)
-                    .then(function(esthetician) {
-                        console.log('----------creating with this:');
-                        
-                        var start = moment(shift.startTime.format('HH:mm:ss'), 'HH:mm:ss').format('HH:mm:ss');
-                        var end =  moment(shift.endTime.format('HH:mm:ss'), 'HH:mm:ss').format('HH:mm:ss');
-                        console.log(start);
-                        console.log(end);
-                        
-                        Shift.create({
-                            startTime: start,
-                            endTime: end,
-                            businessDay: businessDay,
-                            esthetician: esthetician
+                    return self.getEstheticianById(shift.estheticianId)
+                        .then(function(esthetician) {
+                            var start = new Date(shift.startTime);
+                            var end = new Date(shift.endTime);
+
+                            Shift.create({
+                                startTime: start,
+                                endTime: end,
+                                businessDay: businessDay,
+                                esthetician: esthetician
+                            })
+                                .then(function(newShift) {
+                                    result = newShift;
+                                    deferred.resolve(result);
+                                })
+                                .catch(function(err) {
+                                    console.log(err);
+                                    deferred.reject(err);
+                                });
                         })
-                        .then(function(newShift) {
-                           result = newShift;
-                           console.log('CREATED!')
-                           console.log(result);
-                           deferred.resolve(result);
-                        })
-                        .catch(function(err) {
-                           console.log(err);
-                           deferred.reject(err); 
-                        });
-                    })
                 }
             });
 
         return deferred.promise;
     }
-
 }

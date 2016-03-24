@@ -9,8 +9,8 @@
         var vm = this;
     
         vm.shift = {
-            startTime: moment('0900', 'hmm'),
-            endTime: moment('1800', 'hmm'),
+            startTime: moment('2000-01-01 09:00'),
+            endTime: moment('2000-01-01 18:00'),
             day: {},
             location: {},
             estheticianId: parseInt($state.params.id),

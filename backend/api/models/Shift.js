@@ -9,12 +9,12 @@ module.exports = {
 
   attributes: {
       startTime: {
-        type: 'time',
+        type: 'datetime',
         required: true
       },
 
       endTime: {
-        type: 'time',
+        type: 'datetime',
         required: true
       },
 

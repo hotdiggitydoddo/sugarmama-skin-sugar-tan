@@ -28,10 +28,13 @@ module.exports = {
         if (!shift.startTime.isBefore(shift.endTime))
             return res.status(400).send('End time can\'t be before start time.');
         
-        EstheticianService.saveShift(shift);
-        
-        return res.send(200);
-        
+        EstheticianService.saveShift(shift)
+            .then(function(shift) {
+                return res.json(shift);
+            })
+            .catch(function(err) {
+                return res.negotiate(err);
+            })
     }
 
 };

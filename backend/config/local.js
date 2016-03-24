@@ -69,7 +69,8 @@ module.exports = {
         password: '$ugar4U',
         pool: 5,
         database: 'sugarmama',
-        ssl: false
+        ssl: false,
+        timezone: 'utc'
       }      
   }
 

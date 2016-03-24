@@ -10,14 +10,12 @@ module.exports = {
   attributes: {
     startTime: {
       type: 'datetime',
-      unique: true,
       required: true,
       datetime: true
     },
     
     endTime: {
       type: 'datetime',
-      unique: true,
       required: true,
       datetime: true
     },
@@ -47,7 +45,10 @@ module.exports = {
       float: true
     },
     
-    
+    location: {
+        model: 'Location',
+        required: true
+    },
     
     duration: function(startTime) {
       return this.endTime - startTime;
