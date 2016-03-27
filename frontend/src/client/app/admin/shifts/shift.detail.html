@@ -47,14 +47,13 @@
     </div>
 </div>
  <div class="modal-footer">
-            <button class="btn btn-success" type="button"  ng-click="vm.save()" ng-disabled="vm.savingShift">
-                <span ng-show="!vm.savingShift">Save</span>
-                <span ng-show="vm.savingShift">Please wait...</span>
-            </button>
-             <button class="btn btn-danger" type="button"  ng-click="vm.deleteShift()" ng-disabled="vm.savingShift">
-                <span ng-show="!vm.savingShift">Delete</span>
-                <span ng-show="vm.savingShift">Please wait...</span>
-            </button>
-            <button class="btn btn-default" type="button" ng-click="vm.cancel()">Cancel</button>
-        </div>
- 
+    <button class="btn btn-success" type="button"  ng-click="vm.save()" ng-disabled="vm.savingShift">
+        <span ng-show="!vm.savingShift">Save</span>
+        <span ng-show="vm.savingShift">Please wait...</span>
+    </button>
+        <button class="btn btn-danger" type="button"  ng-click="vm.deleteShift()" ng-disabled="vm.savingShift">
+        <span ng-show="!vm.savingShift">Delete</span>
+        <span ng-show="vm.savingShift">Please wait...</span>
+    </button>
+    <button class="btn btn-default" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>

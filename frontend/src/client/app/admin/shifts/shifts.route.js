@@ -13,16 +13,11 @@
         return [{
             state: 'shifts',
             config: {
-                //url: '/admin/estheticians',
                 templateUrl: '/app/admin/shifts/shifts.html',
                 controller: 'Shifts',
                 controllerAs: 'vm',
                 parent: 'estheticians_detail',
-                //title: 'Shif',
-                // settings: {
-                //     nav: 1,
-                //     content: 'estheticians'
-                // },
+                title: 'Details',
                 data: {
                     authRequired: true
                 }

@@ -48,8 +48,6 @@
                 vm.shift.businessDay = shift.businessDay;
                 return vm.shift;
             }
-
-            logger.info('Activated Shift Detail View');
         }
 
         function getEstheticians() {
