@@ -88,6 +88,11 @@
         }
 
         function deleteShift() {
+            if (!confirm("Are you sure you wish to delete this shift?")) {
+                 $uibModalInstance.dismiss('cancel');
+                 return;
+            }
+            
             vm.savingShift = true;
             return estheticianService.deleteShift(vm.shift.id)
                 .then(function(data) {
