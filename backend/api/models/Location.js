@@ -11,6 +11,16 @@ module.exports = {
       name: {
           type: 'string'
       },
+      
+      appointments: {
+          collection: 'Appointment',
+          via: 'location'
+      },
+      
+      businessDays: {
+          collection: 'BusinessDay',
+          via: 'location'  
+      }
   }
 };
 

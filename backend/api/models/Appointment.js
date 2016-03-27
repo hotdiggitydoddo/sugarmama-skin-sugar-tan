@@ -53,6 +53,10 @@ module.exports = {
     duration: function(startTime) {
       return this.endTime - startTime;
     }
+  },
+  
+  beforeCreate: function(values, cb) {
+      Appointment.find({ location: values.location, startTime: {} })
   }
 };
 

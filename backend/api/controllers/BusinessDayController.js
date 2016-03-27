@@ -6,5 +6,15 @@
  */
 
 module.exports = {
-	
+	  get: function (req, res) {
+        console.log('getting businessDays')
+
+        BusinessDayService.getAll()
+            .then(function (businessDays) {
+                return res.json(businessDays);
+            })
+            .catch(function (err) {
+                res.send(500);
+            });
+    },
 };

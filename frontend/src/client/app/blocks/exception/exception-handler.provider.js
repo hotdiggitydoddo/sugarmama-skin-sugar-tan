@@ -52,7 +52,7 @@
         return function(exception, cause) {
             var appErrorPrefix = exceptionHandler.config.appErrorPrefix || '';
             var errorData = {exception: exception, cause: cause};
-            exception.message = appErrorPrefix + exception.message;
+            exception.message = appErrorPrefix + exception.data;
             $delegate(exception, cause);
             /**
              * Could add the error to a service's collection,

@@ -1,101 +1,110 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('app.admin.shifts').controller('ShiftDetail', ShiftDetail);
 
-    ShiftDetail.$inject = ['$state', '$uibModalInstance', 'logger', 'estheticianService'];
+    ShiftDetail.$inject = ['$state', '$uibModalInstance', 'logger', 'estheticianService', 'shift', 'businessDays'];
 
-    function ShiftDetail($state, $uibModalInstance, logger, estheticianService) {
+    function ShiftDetail($state, $uibModalInstance, logger, estheticianService, shift, businessDays) {
         var vm = this;
-    
+
         vm.shift = {
+            id: -1,
             startTime: moment('2000-01-01 09:00'),
             endTime: moment('2000-01-01 18:00'),
-            day: {},
+            businessDay: {},
             location: {},
-            estheticianId: parseInt($state.params.id),
+            esthetician: parseInt($state.params.id),
         };
-        
+
         vm.cancel = cancel;
         vm.save = save;
-        vm.daysOfWeek = [{
-            id: 'sunday',
-            value: 'sunday'
-        }, {
-            id: 'monday',
-            value: 'monday'
-        }, {
-            id: 'tuesday',
-            value: 'tuesday'
-        }, {
-            id: 'wednesday',
-            value: 'wednesday'
-        }, {
-            id: 'thursday',
-            value: 'thursday'
-        }, {
-            id: 'friday',
-            value: 'friday'
-        }, {
-            id: 'saturday',
-            value: 'saturday'
-        }];
-        
-        vm.locations = [{
-            id: 'stanton',
-            value: 'stanton'
-        }, {
-            id: 'brea',    
-            value: 'brea'
-        }];
-        
-      //  vm.openAddModal = openAddModal;
-        activate();
+        vm.deleteShift = deleteShift;
+        vm.savingShift = false;
+        vm.daysOfWeek = [];
+        vm.locations = [];
 
-        function activate() {
+        activate(shift);
+
+        function activate(shift) {
+            businessDays.forEach(function(day) {
+                if (vm.daysOfWeek.find(function(day) {
+                    day.dayOfWeek === day.id
+                }) === undefined) {
+                    vm.daysOfWeek.push({ id: day.id, value: day.dayOfWeek });
+                }
+
+                if (vm.locations.find(function(loc) {
+                    loc.id === day.location.id
+                }) === undefined) {
+                    vm.locations.push({ id: day.location.id, value: day.location.name })
+                }
+            });
+
+            if (shift) {
+                vm.shift.id = shift.id;
+                vm.shift.startTime = moment(shift.startTime).format('YYYY-MM-DD HH:mm');
+                vm.shift.endTime = moment(shift.endTime).format('YYYY-MM-DD HH:mm');
+                vm.shift.businessDay = shift.businessDay;
+                return vm.shift;
+            }
+
             logger.info('Activated Shift Detail View');
-          //  getEstheticians();
         }
 
         function getEstheticians() {
             return estheticianService.getEstheticians()
-                .then(function (data) {
+                .then(function(data) {
                     vm.estheticians = data;
                     return vm.estheticians;
                 });
         }
-        
+
         function save() {
+            var daysent = businessDays.find(function(day) {
+                return day.id === vm.shift.businessDay.id && day.location.id === vm.shift.businessDay.location.id
+            });
+            if (daysent === undefined) {
+                logger.error('Selected location is not open on selected day.')
+                return;
+            }
+
+            vm.savingShift = true;
+
             return estheticianService.saveShift(vm.shift)
-                .then(function (data) {
-                    debugger;
-                    console.log(data);
-                    //vm.addEstheticianForm.loading = false;
+                .then(function(data) {
+                    if (vm.shift.id > 0)
+                        logger.success('Shift updated!')
+                    else
+                        logger.success('Shift added!')
                     $uibModalInstance.close(data);
                 })
                 .catch(function(err) {
-                    
+
+                })
+                .finally(function() {
+                    vm.savingShift = false;
                 });
         }
-        
+
+        function deleteShift() {
+            vm.savingShift = true;
+            return estheticianService.deleteShift(vm.shift.id)
+                .then(function(data) {
+                    logger.success('Shift deleted.')
+                    data.isDeleted = true;
+                    $uibModalInstance.close(data);
+                })
+                .catch(function(err) {
+
+                })
+                .finally(function() {
+                    vm.savingShift = false;
+                });
+        }
+
         function cancel() {
             $uibModalInstance.dismiss('cancel');
         }
-        
-        // function openAddModal() {
-        //     var modalInstance = $uibModal.open({
-        //         animation: true,
-        //         templateUrl: 'app/admin/estheticians/estheticians.add.html',
-        //         controller: 'AddEsthetician',
-        //         controllerAs: 'vm',
-        //     });
-
-        //     modalInstance.result.then(function (esthetician) {
-        //         console.log(esthetician);
-        //         vm.estheticians.push(esthetician);
-        //     }, function () {
-        //        // $log.info('Modal dismissed at: ' + new Date());
-        //     });
-        // };
     }
 })();

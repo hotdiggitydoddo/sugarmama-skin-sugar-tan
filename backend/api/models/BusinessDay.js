@@ -37,7 +37,7 @@ module.exports = {
         
     },
     
-    afterValidate: function (values, cb) {
+    beforeCreate: function (values, cb) {
         BusinessDay.findOne({
             location: values.location,
             dayOfWeek: values.dayOfWeek

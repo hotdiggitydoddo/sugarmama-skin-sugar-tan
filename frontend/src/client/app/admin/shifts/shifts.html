@@ -1,7 +1,38 @@
-<div>shifts</div>
+<div class="row mb-medium">
+    <div ng-show="vm.shifts.length === 0" class="col-md-12">
+        <span>No shifts yet.</span>
+    </div>
+    <div ng-show="vm.shifts.length > 0" class="col-md-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>day</th>
+                    <th>start</th>
+                    <th>end</th>
+                    <th>location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="shift in vm.shifts" ng-click="vm.selectShift(shift, $index)" style="cursor: pointer;">
+                    <td>{{ shift.businessDay.dayOfWeek }}</td>
+                    <td>{{ shift.startTime | amPmTime }}</td>
+                    <td>{{ shift.endTime | amPmTime }}</td>
+                    <td>{{ shift.businessDay.location.name }}</td>                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
  <div class="row">
         <div class="col-md-12">
-            <a ng-click="vm.openAddModal()" class="btn btn-toranj pull-right">add new shift...</a>
+            <a ng-click="vm.addNewShift()" class="btn btn-toranj pull-right">add new shift...</a>
         </div>
     </div>
+<!--<br><br><br><br><br>
+<div ng-repeat="day in vm.businessDays">
+    <p>bd id: {{day.id}}</p>
+    <p>bd day: {{day.dayOfWeek}}</p>
+    <p>bd loc id: {{day.location.id}}</p>
+    <p>bd loc name: {{day.location.name}}</p>
+</div>-->
