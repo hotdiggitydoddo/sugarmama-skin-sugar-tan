@@ -16,6 +16,10 @@ module.exports = function() {
         client: client,
         css: temp + 'styles.css',
         fonts: './bower_components/font-awesome/fonts/**/*.*',
+        customFonts: client + 'fonts/*.*',
+        errorMessages: client + 'error-messages.html',
+        html: clientApp + '**/*.html',
+        htmltemplates: clientApp + '**/*.html',
         images: client + 'images/**/*.*',
         index: client + 'index.html',
         
@@ -28,6 +32,18 @@ module.exports = function() {
         less: client + 'styles/styles.less',
         server: server,
         temp: temp,
+
+        /**
+         * template cache
+         */     
+        templateCache: {
+            file: 'templates.js',
+            options: {
+                module: 'app.core',
+                standAlone: false,
+                root: 'app/'
+            }
+        },
 
         /**
          * browser sync

@@ -44,7 +44,7 @@ gulp.task('fonts', ['clean-fonts'], function() {
     log('Copying fonts')
 
     return gulp
-        .src(config.fonts)
+        .src([config.fonts, config.customFonts])
         .pipe(gulp.dest(config.build + 'fonts'));
 });
 
@@ -53,7 +53,7 @@ gulp.task('images', ['clean-images'], function() {
 
     return gulp
         .src(config.images)
-        .pipe($.imagemin({optimization: 4}))
+        .pipe($.imagemin({ optimization: 4 }))
         .pipe(gulp.dest(config.build + 'images'));
 });
 
@@ -67,7 +67,7 @@ gulp.task('clean-fonts', function(done) {
 });
 
 gulp.task('clean-images', function(done) {
-    clean(config.build + 'images/**/*.*', done); 
+    clean(config.build + 'images/**/*.*', done);
 });
 
 gulp.task('clean-styles', function(done) {
@@ -87,6 +87,19 @@ gulp.task('less-watcher', function() {
     gulp.watch([config.less], ['styles']);
 });
 
+gulp.task('templatecache', ['clean-code'], function() {
+    log('Creating AngularJS $templateCache');
+
+    return gulp
+        .src(config.htmltemplates)
+        .pipe($.minifyHtml({ empty: true }))
+        .pipe($.angularTemplatecache(
+            config.templateCache.file,
+            config.templateCache.options
+        ))
+        .pipe(gulp.dest(config.temp));
+});
+
 gulp.task('wiredep', function() {
     log('Wire up the bower css and js and our app js into the html');
     var options = config.getWiredepDefaultOptions();
@@ -99,7 +112,7 @@ gulp.task('wiredep', function() {
         .pipe(gulp.dest(config.client));
 });
 
-gulp.task('inject', ['wiredep', 'styles'], function() {
+gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
     log('Wire up the app css into the html, and call wiredep');
 
     return gulp
@@ -108,8 +121,39 @@ gulp.task('inject', ['wiredep', 'styles'], function() {
         .pipe(gulp.dest(config.client));
 });
 
+gulp.task('optimize', ['inject', 'copy-error-messages'], function() {
+    log('Optimizing the javascript, css, html');
+
+    var templateCache = config.temp + config.templateCache.file;
+
+    return gulp
+        .src(config.index)
+        .pipe($.plumber())
+        .pipe($.inject(gulp.src(templateCache, { read: false }), {
+            starttag: '<!-- inject:templates:js -->'
+        }))
+        // .pipe($.useref({ searchPath: './' }))
+        .pipe(gulp.dest(config.build));
+});
+
+gulp.task('serve-build', ['optimize'], function() {
+    serve(false);
+});
+
 gulp.task('serve-dev', ['inject'], function() {
-    var isDev = true;
+    serve(true);
+});
+
+gulp.task('copy-error-messages', function() {
+    return gulp
+        .src(config.errorMessages)
+        .pipe(gulp.dest(config.build));
+});
+
+/////////////////////// 
+
+function serve(isDev) {
+    var isDev = isDev;
 
     var nodeOptions = {
         script: config.nodeServer,
@@ -127,12 +171,12 @@ gulp.task('serve-dev', ['inject'], function() {
             log('files changed on restart:\n' + ev);
             setTimeout(function() {
                 browserSync.notify('reloading now...');
-                browserSync.reload({stream: false});
+                browserSync.reload({ stream: false });
             }, config.browserReloadDelay);
         })
         .on('start', function() {
             log('*** nodemon started ***');
-            startBrowserSync();
+//startBrowserSync(isDev);
         })
         .on('crash', function() {
             log('*** nodemon crashed: script crashed for some reason')
@@ -140,28 +184,38 @@ gulp.task('serve-dev', ['inject'], function() {
         .on('exit', function() {
             log('*** nodemon exited cleanly ***');
         });
-});
-
-/////////////////////// 
+}
 
 function changeEvent(event) {
     var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
-    log ('File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
+    log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
 }
 
-function startBrowserSync() {
+function startBrowserSync(isDev) {
     if (args.nosync || browserSync.active) {
         return;
     }
 
     log('Starting browser-sync on port ' + port);
 
-    gulp.watch([config.less], ['styles']).on('change', function(event) { changeEvent(event); });
-    gulp.watch([config.client + '**/*.*', '!' + config.less]).on('change', browserSync.reload);
-    
+    if (isDev) {
+        gulp.watch([config.less], ['styles'])
+            .on('change', function(event) { changeEvent(event); });
+        // gulp.watch([config.client + '**/*.*', '!' + config.less])
+        //     .on('change', browserSync.reload);
+    } else {
+        gulp.watch([config.less, config.js, config.html], ['optimize', browserSync.reload])
+            .on('change', function(event) { changeEvent(event); });
+    }
+
     var options = {
         proxy: 'localhost:' + port,
         port: 3000,
+        files: isDev ? [
+            config.client + '**/*.*',
+            '!' + config.less,
+            config.temp + '**/*.css'
+        ] : [],
         ghostMode: {
             clicks: true,
             forms: true,
@@ -184,7 +238,7 @@ function clean(path, done) {
 }
 
 function log(msg) {
-    if (typeof(msg) === 'object') {
+    if (typeof (msg) === 'object') {
         for (var item in msg) {
             if (msg.hasOwnProperty(item)) {
                 $.util.log($.util.colors.blue(msg[item]));

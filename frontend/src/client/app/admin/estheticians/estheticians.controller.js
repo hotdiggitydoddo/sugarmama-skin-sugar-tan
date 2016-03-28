@@ -16,11 +16,12 @@
             angular.element(document).ready(function () {
                 $("#menu-toggle-wrapper").trigger('click');
             });
-            logger.info('Activated Estheticians View');
+           logger.info('Activated Estheticians View');
             getEstheticians();
         }
 
         function getEstheticians() {
+            debugger;
             return estheticianService.getEstheticians()
                 .then(function (data) {
                     vm.estheticians = data;
