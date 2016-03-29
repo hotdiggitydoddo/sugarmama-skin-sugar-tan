@@ -14,7 +14,7 @@
             state: 'estheticians',
             config: {
                 url: '/admin/estheticians',
-                templateUrl: '/app/admin/estheticians/estheticians.html',
+                templateUrl: 'app/admin/estheticians/estheticians.html',
                 controller: 'Estheticians',
                 controllerAs: 'vm',
                 title: 'Estheticians',
@@ -30,7 +30,7 @@
             state: 'estheticians_detail',
             config: {
                 url: '/admin/estheticians/:id',
-                templateUrl: '/app/admin/estheticians/esthetician.detail.html',
+                templateUrl: 'app/admin/estheticians/esthetician.detail.html',
                 controller: 'EstheticianDetail',
                 controllerAs: 'vm',
                 title: 'blah',

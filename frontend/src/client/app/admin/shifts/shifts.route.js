@@ -13,7 +13,7 @@
         return [{
             state: 'shifts',
             config: {
-                templateUrl: '/app/admin/shifts/shifts.html',
+                templateUrl: 'app/admin/shifts/shifts.html',
                 controller: 'Shifts',
                 controllerAs: 'vm',
                 parent: 'estheticians_detail',

@@ -44,7 +44,7 @@ gulp.task('fonts', ['clean-fonts'], function() {
     log('Copying fonts')
 
     return gulp
-        .src([config.fonts, config.customFonts])
+        .src([config.fonts, config.fonts_bootstrap, config.fonts_custom])
         .pipe(gulp.dest(config.build + 'fonts'));
 });
 
@@ -132,7 +132,7 @@ gulp.task('optimize', ['inject', 'copy-error-messages'], function() {
         .pipe($.inject(gulp.src(templateCache, { read: false }), {
             starttag: '<!-- inject:templates:js -->'
         }))
-        // .pipe($.useref({ searchPath: './' }))
+        .pipe($.useref({ searchPath: './' }))
         .pipe(gulp.dest(config.build));
 });
 
@@ -176,7 +176,7 @@ function serve(isDev) {
         })
         .on('start', function() {
             log('*** nodemon started ***');
-//startBrowserSync(isDev);
+            startBrowserSync(isDev);
         })
         .on('crash', function() {
             log('*** nodemon crashed: script crashed for some reason')
