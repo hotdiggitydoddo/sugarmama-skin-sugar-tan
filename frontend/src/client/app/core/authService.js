@@ -20,7 +20,7 @@
         return service;
 
         function login(loginData) {
-            return $http.post('http://192.168.1.11:1337/auth/login', loginData)
+            return $http.post('http://localhost:1337/auth/login', loginData)
             .then(function(data, status, headers, config) {
                 authToken.setToken(data.data.token);
                 _userName = data.userName;
