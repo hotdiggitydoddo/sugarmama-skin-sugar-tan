@@ -21,7 +21,6 @@
         }
 
         function getEstheticians() {
-            debugger;
             return estheticianService.getEstheticians()
                 .then(function (data) {
                     vm.estheticians = data;

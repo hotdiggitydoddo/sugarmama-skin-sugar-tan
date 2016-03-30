@@ -8,12 +8,11 @@
     function EstheticianDetail($state, logger, estheticianService) {
         var vm = this;
         vm.esthetician = {}
-        vm.title = 'add esthetician';
       
         activate();
 
         function activate() {
-            $state.go('shifts', {id: $state.params.id });
+           //$state.go('shifts', {id: $state.params.id });
             return getEsthetician($state.params.id);
         }
 

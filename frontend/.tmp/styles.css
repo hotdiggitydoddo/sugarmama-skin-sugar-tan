@@ -401,6 +401,9 @@ a:hover {
   border-color: #e6ae4f;
   color: #fff;
 }
+.btn-danger {
+  border-color: #d43f3a;
+}
 .btn-transparent {
   color: #fff;
 }

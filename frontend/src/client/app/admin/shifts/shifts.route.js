@@ -17,7 +17,6 @@
                 controller: 'Shifts',
                 controllerAs: 'vm',
                 parent: 'estheticians_detail',
-                title: 'Details',
                 data: {
                     authRequired: true
                 }
