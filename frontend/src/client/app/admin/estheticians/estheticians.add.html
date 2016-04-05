@@ -29,12 +29,21 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-small">
             <div class="col-md-6">
                 <div class="form-group" ng-class="{ 'has-error': vm.addEstheticianForm.formSubmitted && addEstheticianForm.emailAddress.$invalid || addEstheticianForm.emailAddress.$touched && addEstheticianForm.emailAddress.$invalid }">
                     <label for="emailAddress">email address</label>
                     <input type="email" class="form-control" ng-model="vm.addEstheticianForm.emailAddress" ng-minlength="6" ng-maxlength="40" required name="emailAddress" title="Please enter a valid email address" />
                     <div class="help-block" ng-messages="addEstheticianForm.emailAddress.$error" ng-if="addEstheticianForm.emailAddress.$touched || vm.addEstheticianForm.formSubmitted">
+                        <div ng-messages-include="/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group" ng-class="{ 'has-error': vm.addEstheticianForm.formSubmitted && addEstheticianForm.emailAddress.$invalid || addEstheticianForm.phoneNumber.$touched && addEstheticianForm.phoneNumber.$invalid }">
+                    <label for="phoneNumber">phone number</label>
+                    <input type="text" class="form-control" ng-model="vm.addEstheticianForm.phoneNumber" ui-mask="999.999.9999" ui-mask-placeholder ui-mask-placeholder-char="_" required name="phoneNumber" title="Please enter a valid phone number." />
+                    <div class="help-block" ng-messages="addEstheticianForm.phoneNumber.$error" ng-if="addEstheticianForm.phoneNumber.$touched || vm.addEstheticianForm.formSubmitted">
                         <div ng-messages-include="/error-messages.html"></div>
                     </div>
                 </div>

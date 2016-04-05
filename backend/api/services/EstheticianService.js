@@ -59,10 +59,12 @@ module.exports = {
                 console.log(esthetician);
                 result = {
                     id: esthetician.id,
+                    userId: esthetician.user.id,
+                    phone: esthetician.user.phoneNumber,
                     firstName: esthetician.user.firstName,
                     lastName: esthetician.user.lastName,
                     email: esthetician.user.emailAddress,
-                    color: esthetician.color,
+                    color: esthetician.color
                 };
                 deferred.resolve(result);
             })
@@ -70,6 +72,36 @@ module.exports = {
                 deferred.reject(err);
             });
 
+        return deferred.promise;
+    },
+
+    deleteEsthetician: function(estheticianInfo) {
+        var self = this;
+        var deferred = sails.q.defer();
+        var result = null;
+
+        Shift.destroy({ esthetician: estheticianInfo.id })
+            .exec(function(err) {
+                if (err) {
+                    deferred.reject(err);
+                }
+
+                Esthetician.destroy({ id: estheticianInfo.id })
+                    .exec(function(err) {
+                        if (err) {
+                            deferred.reject(err);
+                        }
+
+                        User.destroy({ id: estheticianInfo.userId })
+                            .exec(function(err) {
+                                if (err) {
+                                    deferred.reject(err);
+                                }
+
+                                deferred.resolve(estheticianInfo);
+                            })
+                    })
+            })
         return deferred.promise;
     },
 

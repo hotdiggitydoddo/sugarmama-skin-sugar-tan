@@ -13,6 +13,7 @@
             getEstheticians: getEstheticians,
             createEsthetician: createEsthetician,
             updateEsthetician: updateEsthetician,
+            deleteEsthetician: deleteEsthetician,
             getById: getById,
             getShift: getShift,
             getShifts: getShifts,
@@ -63,7 +64,20 @@
                     //$location.url('/');
                 })
         }
-
+        
+        function deleteEsthetician(estheticianInfo) {
+              return $http.post('http://localhost:1337/esthetician/delete', { estheticianInfo: estheticianInfo })
+                .then(function(data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function(message) {
+                     if (message.data)
+                        //    exception.catcher(message.data)(message);
+                        throw (message);
+                    //$location.url('/');
+                })
+        }
+        
         function getShift(shiftId) {
             return $http.get('http://localhost:1337/shift/getShift?shiftId=' + shiftId)
                 .then(function(data, status, headers, config) {

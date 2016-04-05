@@ -11,6 +11,7 @@
             firstName: "",
             lastName: "",
             emailAddress: "",
+            phoneNumber: "",
             formSubmitted: false,
             loading: false,
         }

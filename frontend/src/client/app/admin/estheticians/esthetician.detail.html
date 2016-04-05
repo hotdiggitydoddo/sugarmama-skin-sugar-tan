@@ -10,6 +10,7 @@
     .section-title {
         margin-bottom: 55px;
     }
+    
     .icon-box .title {
         color: #674015
     }
@@ -33,24 +34,49 @@
     </h2>
 
     <div class="row">
-        <div class="col-md-6  mb-xlarge">
+        <div class="col-md-6 mb-xlarge">
             <div class="row col-md-12 mb-xlarge">
                 <div class="icon-box ib-center ib-boxed">
                     <i class="ib-icon fa fa-user"></i>
                     <h4 class="title">info</h4>
-                    <div class="contents">
+                    <div ng-hide="vm.editMode" class="contents">
                         <dl class="dl-horizontal">
                             <dt>email</dt>
                             <dd>{{vm.esthetician.email}}</dd>
                             <dt>phone</dt>
-                            <dd>714.555.1212</dd>
+                            <dd >{{vm.esthetician.phone | phoneNumber}}</dd>
                         </dl>
                         <div class="row">
                             <div class="col-xs-12">
-                                <a href="#" class="btn btn-toranj">update...</a>
-                                <a href="#" class="btn btn-danger pull-right">delete</a>
+                                <button ng-hide="vm.editMode" ng-click="vm.toggleEditMode()" class="btn btn-toranj">update...</button>
+                                <button class="btn btn-danger pull-right" ng-click="vm.destroy()">delete</button>
                             </div>
                         </div>
+                    </div>
+                    <div ng-show="vm.editMode" class="contents">
+                        <form class="form-horizontal" name="update-esthetician-form">
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="email" ng-model="vm.editableEsth.email" placeholder="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="col-sm-2 control-label">phone</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="phone" ng-model="vm.editableEsth.phone" ui-mask="999.999.9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" ng-click="vm.save()" class="btn btn-success" ng-disabled="vm.updating">
+                                        <span ng-show="!vm.updating">save</span>
+                                        <span ng-show="vm.updating">please wait...</span>
+                                    </button>
+                                    <button ng-click="vm.toggleEditMode()" class="btn btn-default">cancel</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -78,7 +104,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <div class="row mb-small">

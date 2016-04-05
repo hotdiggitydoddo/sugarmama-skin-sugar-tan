@@ -20,7 +20,6 @@
         function activate() {
             getShifts(vm.estheticianId);
             getBusinessDays();
-            logger.info("shifts");
         }
 
         function getShifts(id) {

@@ -11,6 +11,7 @@
         /* 3rd party modules */
         'ui.router',
         'ui.bootstrap',
+        'ui.mask',
 
         /* Reusable cross-app modules */
         'blocks.logger',
@@ -86,6 +87,15 @@
         .filter('dayOfWeek', function() {
             return function(input) {
                 return moment.weekdays()[input]
+            }
+        })
+        .filter('phoneNumber', function() {
+            return function(input) {
+                if (!input) return;
+                var ac = input.substring(0, 3);
+                var prefix = input.substring(3, 6);
+                var suffix = input.substring(6, 10);
+                return ac + '.' + prefix + '.' + suffix;
             }
         });
 })();

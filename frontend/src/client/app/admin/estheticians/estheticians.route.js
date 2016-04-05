@@ -14,7 +14,7 @@
             {
                 state: 'estheticians',
                 config: {
-                    url: '/admin/estheticians',
+                    url: '/admin/estheticians/',
                     templateUrl: 'app/admin/estheticians/estheticians.html',
                     controller: 'Estheticians',
                     controllerAs: 'vm',
@@ -22,6 +22,9 @@
                     settings: {
                         nav: 1,
                         content: 'estheticians'
+                    },
+                    params: {
+                        deletedId: null
                     },
                     data: {
                         authRequired: true
@@ -34,7 +37,7 @@
                     title: 'Details',
                     data: {
                         id: ':id',
-                         authRequired: true
+                        authRequired: true
                     },
                     views: {
                         '@': {

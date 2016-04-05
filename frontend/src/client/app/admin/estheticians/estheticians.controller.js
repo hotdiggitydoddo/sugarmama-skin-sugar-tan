@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular.module('app.admin.estheticians').controller('Estheticians', Estheticians);
@@ -10,19 +10,23 @@
         vm.estheticians = [];
         vm.title = 'estheticians';
         vm.openAddModal = openAddModal;
+        
+        if ($state.params.deletedId) {
+            logger.success('Esthetician succesfully deleted.')
+        }
         activate();
 
         function activate() {
-            angular.element(document).ready(function () {
-                $("#menu-toggle-wrapper").trigger('click');
-            });
-           logger.info('Activated Estheticians View');
+            // angular.element(document).ready(function() {
+            //     $("#menu-toggle-wrapper").trigger('click');
+            // });
+            // logger.info('Activated Estheticians View');
             getEstheticians();
         }
 
         function getEstheticians() {
             return estheticianService.getEstheticians()
-                .then(function (data) {
+                .then(function(data) {
                     vm.estheticians = data;
                     return vm.estheticians;
                 });
@@ -36,11 +40,11 @@
                 controllerAs: 'vm',
             });
 
-            modalInstance.result.then(function (esthetician) {
+            modalInstance.result.then(function(esthetician) {
                 console.log(esthetician);
                 vm.estheticians.push(esthetician);
-            }, function () {
-               // $log.info('Modal dismissed at: ' + new Date());
+            }, function() {
+                // $log.info('Modal dismissed at: ' + new Date());
             });
         };
     }

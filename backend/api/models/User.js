@@ -7,44 +7,44 @@
 
 module.exports = {
 
-  // types: {
-  //   password: function(password) {
-  //     return password === this.passwordConfirmation
-  //   }
-  // },
+    attributes: {
+        firstName: {
+            type: 'string',
+            required: 'true',
+            minLength: 2,
+            maxLength: 25,
+            alpha: true
+        },
 
-  attributes: {
-    firstName: {
-      type: 'string',
-      required: 'true',
-      minLength: 2,
-      maxLength: 25,
-      alpha: true
-    },
+        lastName: {
+            type: 'string',
+            required: 'true',
+            minLength: 2,
+            maxLength: 25,
+            alpha: true
+        },
 
-    lastName: {
-      type: 'string',
-      required: 'true',
-      minLength: 2,
-      maxLength: 25,
-      alpha: true
-    },
+        emailAddress: {
+            type: 'email',
+            required: true,
+            maxLength: 50,
+            unique: true
+        },
+        
+        password: {
+            type: 'string',
+            protected: true
+        },
 
-    emailAddress: {
-      type: 'email',
-      required: true,
-      maxLength: 50,
-      unique: true
-    },
+        phoneNumber: {
+            type: 'string',
+            size: 10,
+            numeric: true
+        },
 
-    password: {
-      type: 'string',
-      protected: true
-    },
-
-    roles: {
-      collection: 'Role',
-      via: 'users'
+        roles: {
+            collection: 'Role',
+            via: 'users'
+        }
     }
-  }
 };
