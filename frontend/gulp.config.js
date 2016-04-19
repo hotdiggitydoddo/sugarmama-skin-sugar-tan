@@ -19,6 +19,7 @@ module.exports = function() {
         fonts_custom: client + 'fonts/*.*',
         fonts_bootstrap: './bower_components/bootstrap/dist/fonts/*.*',
         errorMessages: client + 'error-messages.html',
+        scheduler: client + '/app/admin/appointments/scheduler.html',
         html: clientApp + '**/*.html',
         htmltemplates: clientApp + '**/*.html',
         images: client + 'images/**/*.*',

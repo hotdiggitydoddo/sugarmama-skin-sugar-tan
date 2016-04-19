@@ -55,8 +55,8 @@ module.exports = {
     }
   },
   
-  beforeCreate: function(values, cb) {
-      Appointment.find({ location: values.location, startTime: {} })
-  }
+//   beforeCreate: function(values, cb) {
+//       //Appointment.find({ location: values.location, startTime: {} })
+//   }
 };
 

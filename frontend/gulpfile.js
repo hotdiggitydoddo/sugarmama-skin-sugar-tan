@@ -121,7 +121,7 @@ gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
         .pipe(gulp.dest(config.client));
 });
 
-gulp.task('optimize', ['inject', 'copy-error-messages'], function() {
+gulp.task('optimize', ['inject', 'copy-error-messages', 'copy-scheduler'], function() {
     log('Optimizing the javascript, css, html');
 
     var templateCache = config.temp + config.templateCache.file;
@@ -147,6 +147,12 @@ gulp.task('serve-dev', ['inject'], function() {
 gulp.task('copy-error-messages', function() {
     return gulp
         .src(config.errorMessages)
+        .pipe(gulp.dest(config.build));
+});
+
+gulp.task('copy-scheduler', function() {
+    return gulp
+        .src(config.scheduler)
         .pipe(gulp.dest(config.build));
 });
 

@@ -19,8 +19,8 @@
 		 'app.accounts',
 		 'app.admin.estheticians',
 		 'app.admin.businessDays',
-         'app.admin.shifts'
-
+         'app.admin.shifts',
+         'app.admin.appointments'
 	]);
 
 })();
