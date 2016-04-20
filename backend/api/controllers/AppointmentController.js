@@ -32,7 +32,7 @@ module.exports = {
 
     create: function(req, res) {
         var appt = req.query.models[0];
-        EstheticianService.getEstheticianById(parseInt(9))
+        EstheticianService.getEstheticianById(parseInt(appt.estheticianId))
             .then(function(esth) {
                 appt.esthetician = esth;
                 AppointmentService.create(appt)
@@ -52,12 +52,22 @@ module.exports = {
         console.log();
     },
 
-    getEstheticians(req, res) {
-        res.json(200, [
-            { text: "Alicia", value: 1, color: "#ff00ff" },
-            { text: "Bob", value: 2, color: "#51a0ed" },
-            { text: "Charlie", value: 3, color: "#56ca85" }
-        ])
+    getEstheticians: function(req, res) {
+        var results = [];
+        EstheticianService.getEstheticians()
+            .then(function(estheticians) {
+                estheticians.forEach(function(esth) {
+                    results.push({
+                        text: esth.firstName,
+                        value: esth.id,
+                        color: "#" + esth.color
+                    });
+                });
+                return res.json(200, results);
+            })
+            .catch(function(err) {
+                res.send(500);
+            });
     }
 };
 

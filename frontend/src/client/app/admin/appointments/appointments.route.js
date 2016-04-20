@@ -23,9 +23,9 @@
                         nav: 3,
                         content: 'appointments'
                     },
-                    // data: {
-                    //     authRequired: true
-                    // }
+                    data: {
+                        authRequired: true
+                    }
                 }
             }];
     }

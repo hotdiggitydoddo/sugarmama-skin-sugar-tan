@@ -9,7 +9,7 @@ module.exports = {
                     results.push({
                         id: appt.id,
                         title: 'Appt 1',
-                        estheticianId: appt.esthetician,
+                        estheticianId: appt.esthetician.id,
                         services: appt.services,
                         location: appt.location,
                         start: appt.startTime,
@@ -37,11 +37,12 @@ module.exports = {
         });
 
         Appointment.create({
-            startTime: new Date(appt.start),
-            endTime: new Date(appt.end),
-            //esthetician: appt.esthetician,//parseInt(appt.estheticianId),
+            startTime: appt.start,
+            endTime: appt.end,
+            esthetician: appt.esthetician,
             //services: serviceIds,
-            location: 1
+            location: 1,
+            cost: 0
         })
             .then(function(newAppt) {
                 deferred.resolve(newAppt);
