@@ -32,21 +32,56 @@ module.exports = {
 
     create: function(req, res) {
         var appt = req.query.models[0];
+
         EstheticianService.getEstheticianById(parseInt(appt.estheticianId))
             .then(function(esth) {
                 appt.esthetician = esth;
+                return appt;
+            })
+            .then(function(appt) {
+                var serviceIds = [];
+                appt.services.forEach(function(apptSvc) {
+                    serviceIds.push(parseInt(apptSvc.value));
+                })
+
+                SpaServiceService.getWithIds(serviceIds)
+                    .then(function(services) {
+                        appt.services = services;
+                        return appt;
+                    })
+                    return appt;
+
+            })
+            .then(function(appt) {
                 AppointmentService.create(appt)
                     .then(function(newAppt) {
-                        return res.ok(newAppt);
+                        return res.ok();
                     })
                     .catch(function(err) {
                         return res.negotiate(err);
-                    })
-            })
-            .catch(function(err) {
-                return res.negotiate(err);
-            })
+                    });
+            });
+
     },
+
+
+
+
+
+
+
+
+
+
+    // appt.services.forEach(function(apptService) {
+    //     SpaServiceService.getById(apptService.value)
+    //         .then(function(service) {
+    //             apptService = service;
+    //         })
+    //         .catch(function(err) {
+    //             return res.negotiate(err);
+    //         });
+    // });
 
     update: function(req, res) {
         console.log();
