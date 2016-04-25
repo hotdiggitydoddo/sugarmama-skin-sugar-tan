@@ -20,78 +20,66 @@ module.exports = {
     //         isAllDay: false
     //     }])
     // },
-    get: function(req, res) {
+    get: function (req, res) {
         AppointmentService.getAll()
-            .then(function(appointments) {
+            .then(function (appointments) {
                 return res.json(appointments);
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 res.send(500);
             });
     },
 
-    create: function(req, res) {
+    create: function (req, res) {
         var appt = req.query.models[0];
 
         EstheticianService.getEstheticianById(parseInt(appt.estheticianId))
-            .then(function(esth) {
+            .then(function (esth) {
                 appt.esthetician = esth;
                 return appt;
             })
-            .then(function(appt) {
+            .then(function (appt) {
                 var serviceIds = [];
-                appt.services.forEach(function(apptSvc) {
+                appt.services.forEach(function (apptSvc) {
                     serviceIds.push(parseInt(apptSvc.value));
                 })
 
-                SpaServiceService.getWithIds(serviceIds)
-                    .then(function(services) {
+                SpaServiceService.getServices()
+                    .then(function (services) {
                         appt.services = services;
                         return appt;
                     })
-                    return appt;
-
+                return appt;
             })
-            .then(function(appt) {
+            .then(function (appt) {
                 AppointmentService.create(appt)
-                    .then(function(newAppt) {
-                        return res.ok();
+                    .then(function (newAppt) {
+                        return res.json(200, newAppt);
                     })
-                    .catch(function(err) {
+                    .catch(function (err) {
                         return res.negotiate(err);
                     });
             });
 
     },
 
+    update: function (req, res) {
+        var appt = req.query.models[0];
 
-
-
-
-
-
-
-
-
-    // appt.services.forEach(function(apptService) {
-    //     SpaServiceService.getById(apptService.value)
-    //         .then(function(service) {
-    //             apptService = service;
-    //         })
-    //         .catch(function(err) {
-    //             return res.negotiate(err);
-    //         });
-    // });
-
-    update: function(req, res) {
-        console.log();
+        AppointmentService.update(appt)
+            .then(function (updated) {
+                return res.json(200, updated);
+            })
+            .catch(function (err) {
+                return res.negotiate(err);
+            });
     },
 
-    getEstheticians: function(req, res) {
+    getEstheticians: function (req, res) {
         var results = [];
         EstheticianService.getEstheticians()
-            .then(function(estheticians) {
-                estheticians.forEach(function(esth) {
+            .then(function (estheticians) {
+                estheticians.forEach(function (esth) {
                     results.push({
                         text: esth.firstName,
                         value: esth.id,
@@ -100,7 +88,7 @@ module.exports = {
                 });
                 return res.json(200, results);
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 res.send(500);
             });
     }

@@ -12,10 +12,10 @@ module.exports = {
       model: 'User'
     },
     
-    appointments: {
-      collection: 'Appointment',
-      via: 'client'
-    }
+    // appointments: {
+    //   collection: 'Appointment',
+    //   via: 'client'
+    // }
   }
 };
 
