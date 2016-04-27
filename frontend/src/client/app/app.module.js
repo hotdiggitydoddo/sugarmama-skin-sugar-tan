@@ -15,6 +15,7 @@
 		 'app.layout',
 		 'app.services',
 		 'app.home',
+		 'app.appointments',
 		 'app.about',
 		 'app.accounts',
 		 'app.admin.estheticians',

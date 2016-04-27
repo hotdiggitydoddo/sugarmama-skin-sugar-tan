@@ -1,0 +1,292 @@
+<style>
+    hr {
+        border-top: 1px solid black;
+    }
+    
+    .form-group {
+        margin-bottom: 30px;
+    }
+    
+    label {
+        text-transform: lowercase !important;
+    }
+    
+    .accordion .item .body {
+        background: #6F4D31;
+    }
+    
+    .accordion .item .body .contents {
+        padding: 0;
+    }
+    
+    .accordion .head {
+        background: rgb(111, 77, 49);
+    }
+    
+    .accordion .item.active .head a {
+        color: #D3A42A;
+        color: #CCB37A;
+    }
+    
+    .accordion .item .head a {
+        color: #D3A42A;
+        padding: 10px 20px 10px 40px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .accordion .item:focus .head,
+    .accordion .item:hover .head {
+        background: rgb(111, 77, 49);
+    }
+    
+    .accordion .head {
+        background: rgba(103, 50, 11, 0.7);
+        border: 1px solid #ebebeb;
+        position: relative;
+        -webkit-transition: all .25s ease;
+        -moz-transition: all .25s ease;
+        -ms-transition: all .25s ease;
+        -o-transition: all .25s ease;
+        transition: all .25s ease;
+    }
+    
+    .accordion .item .head:after,
+    .accordion .item.active .head:after {
+        color: #CCB37A;
+    }
+    
+    .accordion .item:focus .item:hover .head:after,
+    .accordion .item.active .head:after {
+        color: #CCB37A;
+    }
+    
+    .datepicker {
+        background-color: white;
+    }
+</style>
+<link href="~/Content/datepicker3.css" rel="stylesheet" />
+
+<div class="container">
+    <!-- breadcrumbs -->
+    <ol class="breadcrumb">
+        <li><a href="/">home</a></li>
+        <li class="active">appointments</li>
+    </ol>
+    <!--/ breadcrumbs -->
+    <div style="padding: 5px 30px; background: rgba(0,0,0,.05)">
+        <!-- page title -->
+        <h2 class="section-title" style="margin-top: 20px">
+            <span></span>search for openings...
+        </h2>
+        
+        <div class="row form-group">
+            <div class="col-md-2">
+                <label for="guests">how many guests?</label>
+                <select ng-model="vm.appointmentRequest.selectedGuestCount" ng-options="guestOption.text for guestOption in vm.guestOptions" class="form-control">
+                     <option value="" disabled selected="true">choose...</option>
+                </select>
+                guest: {{vm.title}}
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col-md-12">
+                <label>Select your service(s)</label>
+            </div>
+        </div>
+        <!--<div class="accordion">
+            <div class="item active">
+                <div class="head">
+                    <a href="#">hair removal</a>
+                </div>
+                <div class="body active">
+                    <div class="contents">
+                        <blockquote>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>premium treatments</h4> @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.HairRemovalPremium).ToList())
+                                        {
+                                        <div class="svc">
+                                            <div class="">
+                                                <div class="col-md-6 col-sm-6 checkbox">
+                                                    <label>
+                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
+                                                                <span class="help-block hidden-xs" style="font-weight: normal">@sugarService.Description</span>
+                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
+                                                            </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.HairRemoval).ToList()) {
+                                        <div class="svc">
+                                            <div class="">
+                                                <div class="col-md-4 col-sm-6 checkbox">
+                                                    <label>
+                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
+                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
+                                                            </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="head">
+                    <a href="#">facial</a>
+                </div>
+                <div class="body">
+                    <div class="contents">
+                        <blockquote>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.Facial).ToList()) {
+                                        <div class="svc">
+                                            <div class="">
+                                                <div class="col-md-4 col-sm-6 checkbox">
+                                                    <label>
+                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
+                                                                <span class="help-block hidden-xs" style="font-weight: normal">@sugarService.Description</span>
+                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
+                                                            </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="head">
+                    <a href="#">microderm</a>
+                </div>
+                <div class="body">
+                    <div class="contents">
+                        <blockquote>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.Microderm).ToList()) {
+                                        <div class="svc">
+                                            <div class="">
+                                                <div class="col-md-6 col-sm-6 checkbox">
+                                                    <label>
+                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
+                                                                <span class="help-block hidden-xs" style="font-weight: normal">@sugarService.Description</span>
+                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
+                                                            </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="head">
+                    <a href="#">peel</a>
+                </div>
+                <div class="body">
+                    <div class="contents">
+                        <blockquote>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.ChemicalPeel).ToList()) {
+                                        <div class="svc">
+                                            <div class="">
+                                                <div class="col-md-4 col-sm-6 checkbox">
+                                                    <label>
+                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
+                                                                <span class="help-block hidden-xs" style="font-weight: normal">@sugarService.Description</span>
+                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
+                                                            </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="head">
+                    <a href="#">spray tan</a>
+                </div>
+                <div class="body">
+                    <div class="contents">
+                        <blockquote>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.SprayTan).ToList()) {
+                                        <div class="svc">
+                                            <div class="">
+                                                <div class="col-md-4 col-sm-6 checkbox">
+                                                    <label>
+                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
+                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
+                                                            </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <br />
+        <div>
+            <label style="margin-bottom: 10px !important">When would you like to come?</label>
+        </div>
+        <!--@*
+        <div class="col-md-3">
+            <div class="input-group date">
+                <input type="text" id="Date" placeholder="select a date..." class="form-control" name="Date">
+                <span class="input-group-addon" style="border: none"><i class="fa fa-calendar"></i></span>
+            </div>
+        </div>*@
+        <div id="datepicker" data-date="@((DateTime.UtcNow.ToLocalTime().DayOfWeek == DayOfWeek.Sunday || DateTime.UtcNow.ToLocalTime().DayOfWeek == DayOfWeek.Tuesday)  ? DateTime.Today.AddDays(1).ToShortDateString(): DateTime.Today.ToShortDateString())"></div>
+        <input type="hidden" name="Date" id="Date" /> @*
+        <div class="col-md-3 col-sm-4 col-xs-5">
+            @Html.DropDownListFor(x => x.SelectedTimeOfDay, Model.TimeOfDay, new { @class = "form-control" })
+        </div>*@
+        <br />
+        <input type="submit" name="nextBtn" class="btn btn-default" value="let's rendezvous!" />
+        <br />
+        <br/> }-->
+    </div>
+</div>
