@@ -79,14 +79,14 @@
         <h2 class="section-title" style="margin-top: 20px">
             <span></span>search for openings...
         </h2>
-        
+
         <div class="row form-group">
             <div class="col-md-2">
                 <label for="guests">how many guests?</label>
-                <select ng-model="vm.appointmentRequest.selectedGuestCount" ng-options="guestOption.text for guestOption in vm.guestOptions" class="form-control">
+                <select ng-model="vm.appointmentRequest.selectedGuestCount" ng-options="guestOption.text for guestOption in vm.guestOptions"
+                    class="form-control">
                      <option value="" disabled selected="true">choose...</option>
                 </select>
-                guest: {{vm.title}}
             </div>
         </div>
         <div class="row" style="margin-bottom: 10px">
@@ -94,6 +94,73 @@
                 <label>Select your service(s)</label>
             </div>
         </div>
+        <uib-accordion close-others="oneAtATime">
+            <uib-accordion-group heading="hair removal" is-open="true" is-disabled="false">
+               <div class="contents">
+                        <blockquote>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>premium treatments</h4> @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.HairRemovalPremium).ToList())
+                                        {
+                                        <div class="svc">
+                                            <div class="">
+                                                <div class="col-md-6 col-sm-6 checkbox">
+                                                    <label>
+                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
+                                                                <span class="help-block hidden-xs" style="font-weight: normal">@sugarService.Description</span>
+                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
+                                                            </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.HairRemoval).ToList()) {
+                                        <div class="svc">
+                                            <div class="">
+                                                <div class="col-md-4 col-sm-6 checkbox">
+                                                    <label>
+                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
+                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
+                                                            </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </blockquote>
+                    </div>
+            </uib-accordion-group>
+            <uib-accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+                {{group.content}}
+            </uib-accordion-group>
+            <uib-accordion-group heading="Dynamic Body Content">
+                <p>The body of the uib-accordion group grows to fit the contents</p>
+                <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+                <div ng-repeat="item in items">{{item}}</div>
+            </uib-accordion-group>
+            <uib-accordion-group heading="Custom template" template-url="group-template.html">
+                Hello
+            </uib-accordion-group>
+            <uib-accordion-group heading="Delete account" panel-class="panel-danger">
+                <p>Please, to delete your account, click the button below</p>
+                <button class="btn btn-danger">Delete</button>
+            </uib-accordion-group>
+            <uib-accordion-group is-open="status.open">
+                <uib-accordion-heading>
+                    I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                </uib-accordion-heading>
+                This is just some content to illustrate fancy headings.
+            </uib-accordion-group>
+        </uib-accordion>
         <!--<div class="accordion">
             <div class="item active">
                 <div class="head">
