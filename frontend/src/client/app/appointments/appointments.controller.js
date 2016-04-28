@@ -10,6 +10,9 @@
         vm.title = 'book appointment';
         vm.kewl = 'yes';
         vm.availableServices = [
+            
+            
+            
             {
                 type: 'hairRemoval',
                 name: 'lip',

@@ -25,6 +25,11 @@ module.exports = {
       defaultsTo: false
     },
     
+    premium: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+    
     appointments: {
       collection: 'Appointment',
       via: 'services'
@@ -45,7 +50,7 @@ module.exports = {
     serviceType: {
       type: 'string',
       enum: ['hairRemoval', 'sprayTan', 'facial', 'chemicalPeel', 
-      'hairRemovalPremium', 'microderm', 'tinting']
+      , 'microderm', 'tinting']
     }
   }
 };
