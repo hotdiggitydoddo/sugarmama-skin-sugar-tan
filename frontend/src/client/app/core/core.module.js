@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     'use strict';
 
@@ -18,10 +18,10 @@
         'blocks.router',
         'blocks.exception'
     ])
-        .directive("kbSlider", function() {
+        .directive("kbSlider", function () {
             return {
                 restrict: 'A',
-                link: function(scope, elem, attrs) {
+                link: function (scope, elem, attrs) {
                     $(elem).kenburnIt();
 
                     var e = $(".page-wrapper");
@@ -31,11 +31,11 @@
                 }
             }
         })
-        .directive('showErrors', function() {
+        .directive('showErrors', function () {
             return {
                 restrict: 'A',
                 require: '^form',
-                link: function(scope, el, attrs, formCtrl) {
+                link: function (scope, el, attrs, formCtrl) {
                     // find the text box element, which has the 'name' attribute
                     var inputEl = el[0].querySelector("[name]");
                     // convert the native text box element to an angular element
@@ -49,22 +49,22 @@
                     //     el.toggleClass('has-error', formCtrl[inputName].$invalid);
                     // })
 
-                    scope.$on('show-errors-check-validity', function() {
+                    scope.$on('show-errors-check-validity', function () {
                         el.toggleClass('has-error', formCtrl[inputName].$invalid);
                     });
 
-                    scope.$on('show-errors-reset', function() {
-                        $timeout(function() {
+                    scope.$on('show-errors-reset', function () {
+                        $timeout(function () {
                             el.removeClass('has-error');
                         }, 0, false);
                     });
                 }
             }
         })
-        .directive("validateEquals", function() {
+        .directive("validateEquals", function () {
             return {
                 require: 'ngModel',
-                link: function(scope, elem, attrs, ngModelCtrl) {
+                link: function (scope, elem, attrs, ngModelCtrl) {
                     function validateEqual(value) {
                         var valid = (value === scope.$eval(attrs.validateEquals));
                         ngModelCtrl.$setValidity('equal', valid);
@@ -73,24 +73,24 @@
                     ngModelCtrl.$parsers.push(validateEqual);
                     ngModelCtrl.$formatters.push(validateEqual);
 
-                    scope.$watch(attrs.validateEquals, function() {
+                    scope.$watch(attrs.validateEquals, function () {
                         ngModelCtrl.$setViewValue(ngModelCtrl.$viewValue);
                     })
                 }
             }
         })
-        .filter('amPmTime', function() {
-            return function(input) {
+        .filter('amPmTime', function () {
+            return function (input) {
                 return moment(input).format('h:mm a')
             }
         })
-        .filter('dayOfWeek', function() {
-            return function(input) {
+        .filter('dayOfWeek', function () {
+            return function (input) {
                 return moment.weekdays()[input]
             }
         })
-        .filter('phoneNumber', function() {
-            return function(input) {
+        .filter('phoneNumber', function () {
+            return function (input) {
                 if (!input) return;
                 var ac = input.substring(0, 3);
                 var prefix = input.substring(3, 6);

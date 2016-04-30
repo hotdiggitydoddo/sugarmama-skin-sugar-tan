@@ -30,6 +30,18 @@ module.exports = {
                 res.send(500);
             })
     },
+    
+    getAll: function(req, res) {
+         var results = [];
+        
+        SpaServiceService.getServices()
+            .then(function(services) {
+                return res.json(200, services);
+            })
+            .catch(function(err) {
+                res.send(500);
+            });
+    },
 
     create: function(req, res) {
         var serviceVm = req.body;

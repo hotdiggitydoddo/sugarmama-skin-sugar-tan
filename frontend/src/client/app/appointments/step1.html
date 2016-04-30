@@ -64,6 +64,11 @@
     .datepicker {
         background-color: white;
     }
+    
+    input[type="checkbox"] {
+        outline: 0;
+        height: 13px;
+    }
 </style>
 <link href="~/Content/datepicker3.css" rel="stylesheet" />
 
@@ -94,72 +99,88 @@
                 <label>Select your service(s)</label>
             </div>
         </div>
-        <uib-accordion close-others="oneAtATime">
+        <uib-accordion close-others="true">
             <uib-accordion-group heading="hair removal" is-open="true" is-disabled="false">
-               <div class="contents">
-                        <blockquote>
-                            <div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h4>premium treatments</h4> @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.HairRemovalPremium).ToList())
-                                        {
-                                        <div class="svc">
-                                            <div class="">
-                                                <div class="col-md-6 col-sm-6 checkbox">
-                                                    <label>
-                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
-                                                                <span class="help-block hidden-xs" style="font-weight: normal">@sugarService.Description</span>
-                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
-                                                            </label>
-                                                </div>
-                                            </div>
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>premium treatments</h4>
+                                    <div ng-repeat="service in vm.availableServices.hairRemoval" class="svc">
+                                        <div class="col-md-6 col-sm-6 checkbox" ng-if="service.premium">
+                                            <label>
+                                                <input type="checkbox" ng-model="service.isSelected" /> {{service.name}}
+                                                <span ng-if="service.description" class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
                                         </div>
-                                        }
                                     </div>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        @foreach (var sugarService in Model.AvailableServices.Where(x => x.Type == ServiceType.HairRemoval).ToList()) {
-                                        <div class="svc">
-                                            <div class="">
-                                                <div class="col-md-4 col-sm-6 checkbox">
-                                                    <label>
-                                                                <input type="checkbox" name="SelectedServiceIds" id="SelectedServiceIds@(sugarService.ServiceId)" value="@sugarService.ServiceId" /> @sugarService.Name
-                                                                <span class="help-block" style="font-weight: normal"><em>Price: @sugarService.Price.ToString("C")&nbsp;&nbsp; Duration: @sugarService.Duration minutes</em></span>
-                                                            </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        }
-                                    </div>
-
                                 </div>
                             </div>
-                        </blockquote>
-                    </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.availableServices.hairRemoval" class="svc">
+                                        <div class="col-md-4 col-sm-6 checkbox" ng-if="!service.premium">
+                                            <label>
+                                              <input type="checkbox" ng-model="service.isSelected" /> {{service.name}}
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
             </uib-accordion-group>
-            <uib-accordion-group heading="{{group.title}}" ng-repeat="group in groups">
-                {{group.content}}
+             <uib-accordion-group heading="facial" is-disabled="false">
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.availableServices.facial" class="svc">
+                                        <div class="col-md-4 col-sm-6 checkbox">
+                                            <label>
+                                              <input type="checkbox" ng-model="service.isSelected" /> {{service.name}}
+                                                <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
             </uib-accordion-group>
-            <uib-accordion-group heading="Dynamic Body Content">
-                <p>The body of the uib-accordion group grows to fit the contents</p>
-                <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
-                <div ng-repeat="item in items">{{item}}</div>
+             <uib-accordion-group heading="microderm" is-disabled="false">
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.availableServices.microderm" class="svc">
+                                        <div class="col-md-6 col-sm-6 checkbox">
+                                            <label>
+                                              <input type="checkbox" ng-model="service.isSelected" /> {{service.name}}
+                                                <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
             </uib-accordion-group>
-            <uib-accordion-group heading="Custom template" template-url="group-template.html">
-                Hello
-            </uib-accordion-group>
-            <uib-accordion-group heading="Delete account" panel-class="panel-danger">
-                <p>Please, to delete your account, click the button below</p>
-                <button class="btn btn-danger">Delete</button>
-            </uib-accordion-group>
-            <uib-accordion-group is-open="status.open">
-                <uib-accordion-heading>
-                    I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-                </uib-accordion-heading>
-                This is just some content to illustrate fancy headings.
-            </uib-accordion-group>
+           
         </uib-accordion>
         <!--<div class="accordion">
             <div class="item active">
