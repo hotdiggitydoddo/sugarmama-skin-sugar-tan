@@ -24,11 +24,11 @@ module.exports = {
                         title: apptName,
                         phoneNumber: appt.phoneNumber,
                         estheticianId: appt.esthetician.id,
+                        gender: appt.gender,
                         services: serviceData,
                         locationId: appt.location.id,
                         start: appt.startTime,
                         end: appt.endTime,
-                        numberOfGuests: appt.numberOfGuests,
                         cost: appt.cost
                     });
                 });
@@ -82,6 +82,7 @@ module.exports = {
                     startTime: appt.start,
                     endTime: appt.end,
                     esthetician: appt.esthetician,
+                    gender: appt.gender,
                     services: appt.services,
                     location: appt.location,
                     cost: 0,
@@ -108,9 +109,9 @@ module.exports = {
                             estheticianId: newAppt.esthetician,
                             services: serviceData,
                             locationId: newAppt.location,
+                            gender: appt.gender,
                             start: appt.start,
                             end: appt.end,
-                            numberOfGuests: newAppt.numberOfGuests,
                             cost: newAppt.cost
                         }
                         deferred.resolve(retVal);
@@ -137,6 +138,7 @@ module.exports = {
                 apptInDb.startTime = appt.start;
                 apptInDb.endTime = appt.end;
                 apptInDb.phoneNumber = appt.phoneNumber;
+                apptInDb.gender = appt.gender;
                 return apptInDb;
             })
             .then(function (apptInDb) {
@@ -177,6 +179,8 @@ module.exports = {
                             return apptInDb;
                         })
                 }
+                else
+                    return apptInDb;
             })
             .then(function (apptInDb) {
                 return Appointment.update({ id: apptInDb.id }, apptInDb)
@@ -205,10 +209,10 @@ module.exports = {
                     title: apptName,
                     estheticianId: appt.estheticianId,
                     services: serviceData,
+                    gender: appt.gender, 
                     locationId: appt.locationId,
                     start: appt.start,
                     end: appt.end,
-                    numberOfGuests: updated.numberOfGuests,
                     cost: updated.cost
                 }
                 deferred.resolve(retVal);

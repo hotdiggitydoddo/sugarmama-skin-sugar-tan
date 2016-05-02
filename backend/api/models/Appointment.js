@@ -36,7 +36,8 @@ module.exports = {
     // store client values on the appointment for now
     name: {
       type: 'string',
-      required: true
+      required: true,
+      maxLength: 50
     },
 
     phoneNumber: {
@@ -49,13 +50,13 @@ module.exports = {
       type: 'email',
       maxLength: 50,
     },
-    // end client values
-
-    numberOfGuests: {
-      type: 'integer',
+    
+    gender: {
+      type: 'string',
+      enum: ['female', 'male'],
       required: true,
-      defaultsTo: 1
     },
+    // end client values
 
     cost: {
       type: 'float',

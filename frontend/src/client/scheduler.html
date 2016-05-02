@@ -102,6 +102,13 @@
             <span data-for="phoneNumber" class="k-invalid-msg" style="display: none;"></span>
         </div>
         <div class="k-edit-label">
+            <label for="gender">Gender</label>
+        </div>
+        <div data-container-for="gender" class="k-edit-field">
+            <select id="genderId" data-bind="value:gender" data-role="dropdownlist" data-value-field="value" data-text-field="value">
+            </select>
+        </div>
+        <div class="k-edit-label">
             <label for="services">Services</label>
         </div>
         <div data-container-for="services" class="k-edit-field">
@@ -174,6 +181,7 @@
                                 startTimezone: { from: "startTimezone" },
                                 endTimezone: { from: "endTimezone" },
                                 description: { from: "description" },
+                                gender: { from: 'gender' },
                                 // recurrenceId: { from: "RecurrenceID" },
                                 // recurrenceRule: { from: "RecurrenceRule" },
                                 // recurrenceException: { from: "RecurrenceException" },
@@ -253,6 +261,15 @@
                     template: '<span class="k-scheduler-mark" style="background-color:\#= color \#"></span>\#= text \#',
                     valueTemplate: '<span class="k-scheduler-mark" style="background-color:\#= color \#"></span>\#= text \#',
                     index: 1
+                });
+                
+                $("#genderId").kendoDropDownList({
+                    dataSource: [
+                        { value: "female" },
+                        { value: "male" }
+                    ],
+                    dataTextField: "value",
+                    dataValueField: "value",
                 });
                 
                 $("#locationId").kendoDropDownList({

@@ -51,7 +51,7 @@
             // }
 
             routerHelperProvider.configure({
-                docTitle: 'Gulp: ',
+                docTitle: 'SugarMaMa | ',
                 resolveAlways: true
             });
         }

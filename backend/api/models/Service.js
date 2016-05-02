@@ -22,12 +22,20 @@ module.exports = {
     
     quickService: {
       type: 'boolean',
-      defaultsTo: false
+      defaultsTo: false,
+      required: true
     },
     
     premium: {
       type: 'boolean',
-      defaultsTo: false
+      defaultsTo: false,
+      required: true
+    },
+    
+    unisex: {
+      type: 'boolean',
+      defaultsTo: true,
+      required: true
     },
     
     appointments: {

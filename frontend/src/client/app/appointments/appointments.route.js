@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('app.appointments').run(appRun);
@@ -12,16 +12,38 @@
     function getStates() {
         return [
             {
-                state: 'appointments_step_1',
+                state: 'clientAppointments',
                 config: {
                     url: '/appointments/book',
-                    templateUrl: 'app/appointments/step1.html',
+                    templateUrl: 'app/appointments/appointments.html',
                     controller: 'ClientAppointments',
                     controllerAs: 'vm',
-                    title: 'Find an Opening',
+                    title: 'Book an Appointment',
                     settings: {
                         nav: 1,
                         content: 'appointments'
+                    },
+                }
+            },
+            {
+                state: 'clientAppointments.step1',
+                config: {
+                    templateUrl: 'app/appointments/appointments.step1.html',
+                    controller: 'ClientAppointmentsStepOne',
+                    controllerAs: 'vm',
+                    params: {
+                        appointmentRequest: null
+                    },
+                }
+            },
+            {
+                state: 'clientAppointments.step2',
+                config: {
+                    templateUrl: 'app/appointments/appointments.step2.html',
+                    controller: 'ClientAppointmentsStepTwo',
+                    controllerAs: 'vm',
+                    params: {
+                        appointmentRequest: null
                     },
                 }
             }];
