@@ -188,7 +188,7 @@ module.exports = {
                         updatedAppts[0].services = apptInDb.services;
                         return updatedAppts[0];
                     })
-                    
+
             })
             .then(function (updated) {
                 var serviceData = [];
@@ -209,7 +209,7 @@ module.exports = {
                     title: apptName,
                     estheticianId: appt.estheticianId,
                     services: serviceData,
-                    gender: appt.gender, 
+                    gender: appt.gender,
                     locationId: appt.locationId,
                     start: appt.start,
                     end: appt.end,
@@ -233,5 +233,39 @@ module.exports = {
             })
 
         return deferred.promise;
+    },
+
+    checkOpenings: function (apptRequest) {
+        var deferred = sails.q.defer();
+        var availableOpenings = [];
+        var stdBufferTime = 15;
+
+        var apptReqBufferTime = (apptRequest.selectedServices.length === 1 && apptRequest.selectedServices[0].quickService)
+            ? 0
+            : stdBufferTime;
+        var apptDate = sails.moment(apptRequest.selectedDate);
+        var businessDay = {};
+        
+        BusinessDay.findOne({ location: apptRequest.location, dayOfWeek: apptDate.format('dddd').toLowerCase() })
+            .populate('shifts')
+            .then(function (day) {
+                if (!day)
+                    return deferred.resolve(availableOpenings);
+                else if (day.shifts.length === 0)
+                    return deferred.resolve(availableOpenings);
+                return day;
+            })
+            .then(function (day) {
+                businessDay = day;
+                
+                var momBusinessDayOpen = sails.moment(day.openingTime)
+                var momBusinessDayClose = sails.moment(day.closingTime)
+                
+                
+            })
+
+
+        return deferred.promise;
+
     }
 }

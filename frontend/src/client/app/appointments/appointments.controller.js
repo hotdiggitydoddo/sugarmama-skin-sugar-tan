@@ -1,24 +1,18 @@
-(function () {
-    'use strict';
+// (function () {
+//     'use strict';
 
-    angular.module('app.appointments').controller('ClientAppointments', ClientAppointments);
+//     angular.module('app.appointments').controller('ClientAppointments', ClientAppointments);
 
-    ClientAppointments.$inject = ['$state', '$uibModal', 'logger', 'spaServiceService'];
+//     ClientAppointments.$inject = ['$state', '$uibModal', 'logger', 'spaServiceService'];
 
-    function ClientAppointments($state, $uibModal, logger, spaServiceService) {
-        var vm = this;
-        vm.title = 'book appointment';
+//     function ClientAppointments($state, $uibModal, logger, spaServiceService) {
+//         var vm = this;
+        
 
-        vm.appointmentRequest = {
-            selectedDate: new Date(),
-            gender: ''
-        }
-        vm.appointmentRequest.selectedServices = [];
+//         activate();
 
-        activate();
-
-        function activate() {
-            $state.go('clientAppointments.step1', { appointmentRequest: vm.appointmentRequest });
-        }
-    }
-})();
+//         function activate() {
+//             $state.go('clientAppointments.step1');
+//         }
+//     }
+// })();

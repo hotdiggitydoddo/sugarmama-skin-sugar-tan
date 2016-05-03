@@ -7,7 +7,6 @@
 
     function ClientAppointmentsStepTwo($state, $uibModal, logger, spaServiceService) {
         var vm = this;
-        vm.title = 'book appointment';
 
         vm.appointmentRequest = $state.params.appointmentRequest;
 

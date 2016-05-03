@@ -103,7 +103,8 @@
     <!-- breadcrumbs -->
     <ol class="breadcrumb">
         <li><a href="/">home</a></li>
-        <li class="active">appointments</li>
+        <li><a href="/appointments">appointments</a></li>
+        <li class="active">select an opening</li>
     </ol>
     <!--/ breadcrumbs -->
     <div style="padding: 5px 30px; background: rgba(0,0,0,.05)">
@@ -286,10 +287,11 @@
             </div>
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-default" ng-disabled="vm.form.loading">
+                    <a ui-sref="clientAppointments_step1">back</a>
+                    <!--<button type="submit" class="btn btn-default" ng-disabled="vm.form.loading">
                     <span ng-show="!vm.form.loading">let's rendezvous!</span>
-                    <span ng-show="vm.form.loading">please wait...</span>
-                </button>
+                    <span ng-show="vm.form.loading">please wait...</span>-->
+                <!--</button>-->
                 </div>
             </div>
         </form>

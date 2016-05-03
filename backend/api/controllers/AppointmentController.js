@@ -73,10 +73,17 @@ module.exports = {
     getLocations: function (req, res) {
         return res.json(200, [{ text: 'stanton', value: 1 }, { text: 'brea', value: 2 }])
     },
-    
+
     submitRequest: function (req, res) {
-        var results = ["yes"];
-        return res.json(200, results);
+        var apptRequest = req.body;
+
+        AppointmentService.checkOpenings(apptRequest)
+            .then(function (results) {
+                return res.json(200, results);
+            })
+            .catch(function (err) {
+                return res.negotiate(err);
+            });
     }
 
 };

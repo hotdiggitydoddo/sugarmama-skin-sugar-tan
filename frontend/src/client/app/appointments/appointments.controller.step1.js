@@ -7,9 +7,13 @@
 
     function ClientAppointmentsStepOne($state, $uibModal, logger, spaServiceService, appointmentService) {
         var vm = this;
-        vm.title = 'book appointment';
+        vm.appointmentRequest = {
+            selectedDate: new Date(),
+            gender: '',
+            location: ''
+        }
+        vm.appointmentRequest.selectedServices = [];
 
-        vm.appointmentRequest = $state.params.appointmentRequest;
         vm.availableServices = {};
 
         vm.dpOptions = {
@@ -75,16 +79,20 @@
                 logger.error('Please select at least one service.');
                 vm.form.isValid = false;
             }
-
+            if (vm.appointmentRequest.gender.length === 0) {
+                logger.error('Please select a location.');
+                vm.form.isValid = false;
+            }
+            
             if (!vm.form.isValid) return;
 
             console.log(vm.appointmentRequest);
-            
+
             appointmentService.submitApptRequest(vm.appointmentRequest)
-            .then(function(results) {
-                $state.transitionTo('clientAppointments.step2', { appointmentRequest: vm.appointmentRequest });
-            });
-            
+                .then(function (results) {
+                    $state.transitionTo('clientAppointments_step2', { appointmentRequest: vm.appointmentRequest });
+                });
+
         }
 
         function serviceDisabled(service) {
@@ -93,17 +101,17 @@
 
         function changeGender() {
             if (vm.appointmentRequest.gender == 'female') return;
-            
+
             var servicesToRemove = [];
-            
+
             angular.forEach(vm.appointmentRequest.selectedServices, function (svc) {
                 if (!svc.unisex) {
                     svc.isSelected = false;
                     servicesToRemove.push(svc);
                 }
             });
-            
-            angular.forEach(servicesToRemove, function(svc) {
+
+            angular.forEach(servicesToRemove, function (svc) {
                 vm.appointmentRequest.selectedServices.pop(svc);
             })
         }
