@@ -90,7 +90,8 @@
 
             appointmentService.submitApptRequest(vm.appointmentRequest)
                 .then(function (results) {
-                    $state.transitionTo('clientAppointments_step2', { appointmentRequest: vm.appointmentRequest });
+                    vm.appointmentRequest.openings = results;
+                    $state.go('clientAppointments_step2', { appointmentRequest: vm.appointmentRequest });
                 });
 
         }

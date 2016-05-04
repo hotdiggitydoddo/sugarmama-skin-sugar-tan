@@ -7,104 +7,69 @@
 
     function ClientAppointmentsStepTwo($state, $uibModal, logger, spaServiceService) {
         var vm = this;
-
         vm.appointmentRequest = $state.params.appointmentRequest;
 
-        vm.appointmentRequest.selectedServices = [];
-
-        vm.availableServices = {};
-
-
-        vm.dpOptions = {
-            showWeeks: false,
-            minDate: new Date(),
-            dateDisabled: disabledDate
+        if (!vm.appointmentRequest) {
+            $state.go('clientAppointments_step1');
+            return;
         }
+        
+        vm.appointmentRequest.selectedDateString = moment(vm.appointmentRequest.selectedDate).format("dddd, MMMM Do").toLowerCase();
+        
+       vm.bsTableControl = {
+            options: {
+                data: vm.appointmentRequest.openings,
+                cardView: true,
+                height: 500,
+                clickToSelect: true,
+                onClickRow: rowClicked,
+                columns: [{
 
-        vm.accHairRemovalOpen = true;
-        vm.accFacialOpen = false;
-        vm.accMicrodermOpen = false;
-        vm.accPeelOpen = false;
-        vm.accTanningOpen = false;
-
-        vm.disabledDate = disabledDate;
-        vm.submitStepOne = submitStepOne;
-        vm.toggleService = toggleService;
-        vm.serviceDisabled = serviceDisabled;
-        vm.changeGender = changeGender;
-
-        vm.form = {
-            isValid: false,
-            loading: false
+                    field: 'start',
+                    title: 'starts',
+                    formatter: dtFormatter
+                    // align: 'right',
+                    // valign: 'bottom',
+                    // sortable: true
+                }, {
+                        field: 'end',
+                        title: 'ends',
+                        formatter: dtFormatter
+                        // align: 'center',
+                        // valign: 'bottom',
+                        // sortable: true
+                    }, {
+                        title: 'duration',
+                        formatter: durationFormatter,
+                    }]
+            }
         }
 
         activate();
 
+
+
         function activate() {
-            var date = vm.appointmentRequest.selectedDate;
-            if (date.getDay() === 0)
-                date.setDate(date.getDate() + 1);
-
-            vm.genderOptions = ['female', 'male'];
-
-            return spaServiceService.getServices(true)
-                .then(function (data) {
-                    vm.availableServices = data;
-                    return vm.availableServices;
-                });
+        }
+        
+        function rowClicked(row, element) {
+           var selectedTimeSlot = {
+               start: row.start,
+               end: row.end
+           }
+           vm.appointmentRequest.selectedTimeSlot = selectedTimeSlot;
+           $state.go('clientAppointments_step3',  { appointmentRequest: vm.appointmentRequest });
+        }
+        
+        function dtFormatter(value, row, index) {
+            return moment(value).format('h:mm a');
         }
 
-        function disabledDate(data) {
-            var date = data.date,
-                mode = data.mode;
-            return mode === 'day' && (date.getDay() === 0);
-        }
+        function durationFormatter(value, row, index) {
+            var start = moment(row.start);
+            var end = moment(row.end);
 
-        function toggleService(service) {
-            if (service.isSelected)
-                vm.appointmentRequest.selectedServices.push(service);
-            else
-                vm.appointmentRequest.selectedServices.pop(service);
-        }
-
-        function submitStepOne() {
-            vm.form.isValid = true;
-
-            if (vm.appointmentRequest.gender.length === 0) {
-                logger.error('Don\'t be shy!  Please select your gender.');
-                vm.form.isValid = false;
-            }
-            if (vm.appointmentRequest.selectedServices.length === 0) {
-                logger.error('Please select at least one service.');
-                vm.form.isValid = false;
-            }
-
-            if (!vm.form.isValid) return;
-
-            console.log(vm.appointmentRequest);
-            
-            $state.transitionTo('clientAppointments.step2');
-        }
-
-        function serviceDisabled(service) {
-            return vm.appointmentRequest.gender === 'male' && !service.unisex;
-        }
-
-        function changeGender() {
-            if (vm.appointmentRequest.gender == 'female') return;
-            
-            var servicesToRemove = [];
-            
-            angular.forEach(vm.appointmentRequest.selectedServices, function (svc) {
-                if (!svc.unisex) {
-                    svc.isSelected = false;
-                    servicesToRemove.push(svc);
-                }
-            });
-            
-            angular.forEach(servicesToRemove, function(svc) {
-                vm.appointmentRequest.selectedServices.pop(svc);
-            })
+            return (moment.duration(end - start) / 60000) + " minutes";
         }
     }
 })();

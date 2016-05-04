@@ -28,6 +28,7 @@
     "angular-messages": "~1.4.8",
     "angular-local-storage": "~0.2.3",
     "angular-bootstrap": "~1.2.1",
-    "angular-ui-mask": "~1.8.3"
+    "angular-ui-mask": "~1.8.3",
+    "bootstrap-table": "~1.10.1"
   }
 }

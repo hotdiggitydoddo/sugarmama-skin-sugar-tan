@@ -1,0 +1,89 @@
+<style>
+    table th, table td {
+        border-top: none;
+    }
+
+    label {
+        text-transform: lowercase;
+    }
+
+    dt, dd {
+        font-size: 16px;
+    }
+
+    hr {
+        border-top: 1px solid rgb(103, 50, 11) !important;
+    }
+
+    .accordion .item .body .save-user {
+        background: none repeat scroll 0% 0% rgba(255,255,255,0.35);
+    }
+
+    .form-group .help-block {
+        display: none;
+    }
+
+    .form-group.has-error .help-block {
+        display: block;
+    }
+
+    .cap-toranj .cap-title {
+        font-size: 60px;
+        color: #B69927;
+    }
+
+        .cap-toranj .cap-title:after {
+            background: #CCB37A;
+        }
+
+    p {
+        color: black;
+    }
+
+    .cap-bordered {
+        border-left: 10px solid #67320B;
+    }
+
+        .cap-bordered .cap-title {
+            color: #67320B;
+        }
+
+    dt, dd {
+        color: black;
+    }
+
+    #confirmation dd {
+        margin-bottom: 15px;
+    }
+
+    .img-container > img {
+        opacity: .75;
+    }
+
+    .cap-lg .cap-title {
+        font-family: ralewayregular;
+    }
+
+
+
+    .blog-list .post-format-quote .quote {
+        background: none;
+        padding: 38px 4%;
+    }
+</style>
+<div class="container">
+    <!-- breadcrumbs -->
+    <ol class="breadcrumb">
+        <li><a href="/">home</a></li>
+        <li><a href="/appointments">appointments</a></li>
+        <li><a href="/appointments">select an opening</a></li>
+        <li class="active">client info</li>
+    </ol>
+    <!--/ breadcrumbs -->
+    <div style="padding: 5px 30px; background: rgba(0,0,0,.05)">
+        <!-- page title -->
+        <h2 class="section-title" style="margin-top: 20px">tell us about yourself</h2>
+        <div class="row mb-medium" ng-if="vm.appointmentRequest">
+        </div>
+    </div>
+</div>

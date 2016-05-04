@@ -243,29 +243,115 @@ module.exports = {
         var apptReqBufferTime = (apptRequest.selectedServices.length === 1 && apptRequest.selectedServices[0].quickService)
             ? 0
             : stdBufferTime;
-        var apptDate = sails.moment(apptRequest.selectedDate);
+
+        var totalDuration = 0;
+        apptRequest.selectedServices.forEach(function (svc) {
+            totalDuration += svc.duration;
+        });
+
+        var momApptDate = sails.moment(apptRequest.selectedDate);
         var businessDay = {};
-        
-        BusinessDay.findOne({ location: apptRequest.location, dayOfWeek: apptDate.format('dddd').toLowerCase() })
+
+        BusinessDay.findOne({ location: apptRequest.location, dayOfWeek: momApptDate.format('dddd').toLowerCase() })
             .populate('shifts')
+            .then(function (day) {
+                return day;
+            })
             .then(function (day) {
                 if (!day)
                     return deferred.resolve(availableOpenings);
                 else if (day.shifts.length === 0)
                     return deferred.resolve(availableOpenings);
-                return day;
-            })
-            .then(function (day) {
                 businessDay = day;
-                
-                var momBusinessDayOpen = sails.moment(day.openingTime)
-                var momBusinessDayClose = sails.moment(day.closingTime)
-                
-                
+            }).then(function () {
+                return Appointment.find()
+                    .populate('services')
+                    .then(function (appts) {
+                        return appts;
+                    })
+            }).then(function (appts) {
+                var selectedDate = new Date(apptRequest.selectedDate);
+
+                var openingTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
+                    businessDay.openingTime.getHours(), businessDay.openingTime.getMinutes(), businessDay.openingTime.getSeconds());
+                var closingTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
+                    businessDay.closingTime.getHours(), businessDay.closingTime.getMinutes(), businessDay.closingTime.getSeconds());
+
+                var momBusinessDayOpen = sails.moment(openingTime)
+                var momBusinessDayClose = sails.moment(closingTime)
+
+                if (momBusinessDayClose < momBusinessDayOpen)
+                    momBusinessDayClose.add(1, 'day');
+
+                var possibleStart = momBusinessDayOpen;
+                var possibleEnd = sails.moment(possibleStart).add(totalDuration + apptReqBufferTime, 'minutes');
+
+                while (possibleStart < momBusinessDayClose && possibleEnd < momBusinessDayClose) {
+                    var timeSlot = {
+                        start: sails.moment(possibleStart),
+                        end: sails.moment(possibleEnd)
+                    }
+
+                    if (allowedToAdd(timeSlot, appts, apptReqBufferTime)) {
+                        //                        possibleEnd = sails.moment(timeSlot.end).add(-apptReqBufferTime, 'minutes');
+                        timeSlot.end.add(-apptReqBufferTime, 'minutes');
+                        availableOpenings.push(timeSlot);
+                    }
+
+                    possibleStart.add(15, 'minutes');
+                    possibleEnd.add(15, 'minutes');
+                }
+
+                return deferred.resolve(availableOpenings);
             })
 
 
         return deferred.promise;
 
     }
+}
+
+function allowedToAdd(timeSlot, appts, apptReqBufferTime) {
+    var intersected = false;
+    var now = sails.moment(new Date());
+
+    if (timeSlot.start < sails.moment(now).add(1, 'hours')) return false;
+
+    intersected = appts.some(function (appt) {
+        var currentApptBufferTime = apptReqBufferTime;
+
+        if (appt.services.length === 1 && appt.services[0].quickService)
+            currentApptBufferTime = 0;
+
+        var currApptStart = sails.moment(appt.startTime);
+        var currApptEnd = sails.moment(appt.endTime);
+
+        return ((currApptStart < timeSlot.start && timeSlot.start < sails.moment(currApptEnd).add(currentApptBufferTime, 'minutes')) ||
+            (currApptStart < timeSlot.end && timeSlot.end <= sails.moment(currApptEnd).add(currentApptBufferTime, 'minutes')) ||
+            (timeSlot.start < currApptStart && currApptStart < sails.moment(timeSlot.end).add(apptReqBufferTime, 'minutes')) ||
+            (timeSlot.start < sails.moment(currApptEnd).add(currentApptBufferTime, 'minutes')) &&
+            sails.moment(currApptEnd).add(currentApptBufferTime, 'minutes') <= sails.moment(timeSlot.end).add(apptReqBufferTime, 'minutes'))
+    });
+
+    return !intersected;
+
+
+    // appts.forEach(function (appt) {
+    //     var currentApptBufferTime = apptReqBufferTime;
+
+    //     if (appt.services.length === 1 && appt.services[0].quickService)
+    //         currentApptBufferTime = 0;
+
+    //     var currApptStart = sails.moment(appt.startTime);
+    //     var currApptEnd = sails.moment(appt.endTime);
+
+    //     if ((currApptStart < timeSlot.start && timeSlot.start < sails.moment(currApptEnd).add(currentApptBufferTime, 'minutes')) ||
+    //         (currApptStart < timeSlot.end && timeSlot.end <= sails.moment(currApptEnd).add(currentApptBufferTime, 'minutes')) ||
+    //         (timeSlot.start < currApptStart && currApptStart < sails.moment(timeSlot.end).add(apptReqBufferTime, 'minutes')) ||
+    //         (timeSlot.start < sails.moment(currApptEnd).add(currentApptBufferTime, 'minutes')) &&
+    //         sails.moment(currApptEnd).add(currentApptBufferTime, 'minutes') <= sails.moment(timeSlot.end).add(apptReqBufferTime, 'minutes')) {
+
+    //         intersected = true;
+    //     }
+    // });
 }

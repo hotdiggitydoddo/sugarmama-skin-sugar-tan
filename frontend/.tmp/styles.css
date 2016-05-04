@@ -4827,7 +4827,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: ralewayregular;
+  font-family: ralewayextralight;
+  color: black;
 }
 .regular-page {
   background-image: url(/images/mainbg.png) !important;

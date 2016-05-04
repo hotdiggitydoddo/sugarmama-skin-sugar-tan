@@ -46,6 +46,20 @@
                     templateUrl: 'app/appointments/appointments.step2.html',
                     controller: 'ClientAppointmentsStepTwo',
                     controllerAs: 'vm',
+                    title: 'Book an Appointment',
+                    params: {
+                        appointmentRequest: null
+                    },
+                }
+            },
+            {
+                state: 'clientAppointments_step3',
+                config: {
+                    url: '/appointments/book',
+                    templateUrl: 'app/appointments/appointments.step3.html',
+                    controller: 'ClientAppointmentsStepThree',
+                    controllerAs: 'vm',
+                    title: 'Book an Appointment',
                     params: {
                         appointmentRequest: null
                     },

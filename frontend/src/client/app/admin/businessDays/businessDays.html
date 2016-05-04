@@ -3,7 +3,20 @@
         <span>manage</span>
         business hours
     </h2>
+
     <div class="row mb-medium">
+        <div class="col-md-4" ng-repeat="businessDay in vm.businessDays">
+            <div class="icon-box ib-center ib-boxed">
+                <h4 class="title">{{ businessDay.dayOfWeek }}</h4>
+                <div class="contents">
+                    <p class="business-hours">{{ businessDay.openingTime | amPmTime }} - {{ businessDay.closingTime | amPmTime }}<br>{{ businessDay.location.name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div class="row mb-medium">
         <div class="col-md-4">
             <div class="icon-box ib-center ib-boxed">
                 <h4 class="title">Sunday</h4>
@@ -64,5 +77,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
