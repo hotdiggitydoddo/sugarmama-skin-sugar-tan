@@ -129,6 +129,8 @@ module.exports = {
         Shift.find({ where: { esthetician: id }, sort: { businessDay: 0, startTime: 1 } })
             .populate('businessDay')
             .then(function(shifts) {
+                if (shifts.length == 0)
+                    return deferred.resolve(shifts);
                 return self.getLocationInfo(shifts)
                     .then(function(s) {
                         deferred.resolve(s);
@@ -218,15 +220,22 @@ module.exports = {
         var result = {};
         var count = shifts.length;
 
-
+       
         shifts.forEach(function(shift) {
-            Location.findOne({ id: shift.businessDay.location })
+            if (shift.businessDay) {
+                Location.findOne({ id: shift.businessDay.location })
                 .then(function(location) {
                     shift.businessDay.location = location
                     count--;
                     if (count === 0)
                         deferred.resolve(shifts);
                 })
+                .catch(function(err) {
+                    deferred.reject(err);
+                }) 
+            } else {
+                deferred.resolve(shifts);
+            }
         });
 
         return deferred.promise;

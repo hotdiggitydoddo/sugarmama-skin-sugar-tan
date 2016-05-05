@@ -8,7 +8,8 @@ module.exports = {
             res.ok(success);
         })
         .catch(function(err) {
-            res.negotiate(err);
+            //res.negotiate(err);
+            res.send(403, err);
         })
     }
 };
