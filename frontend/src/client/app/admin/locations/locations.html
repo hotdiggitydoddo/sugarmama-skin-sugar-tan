@@ -1,15 +1,32 @@
 <div class="container">
     <h2 class="section-title double-title">
         <span>manage</span>
-        business hours
+        locations
     </h2>
 
-    <div class="row mb-medium">
+    <div class="row mb-small">
+        <div class="col-md-12">
+            <a ng-click="vm.openAddModal()" class="btn btn-toranj pull-right">Add New Location...</a>
+        </div>
+    </div>
+    
+    <div class="row mb-medium" ng-show="vm.locations.length == 0">
+        <div class="col-md-4 col-md-offset-4">
+             <div class="icon-box ib-center ib-boxed">
+                <div class="contents">
+                    <p>No locations yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-medium" ng-show="vm.locations.length > 0">
         <div class="col-md-4" ng-repeat="businessDay in vm.businessDays">
             <div class="icon-box ib-center ib-boxed">
                 <h4 class="title">{{ businessDay.dayOfWeek }}</h4>
                 <div class="contents">
-                    <p class="business-hours">{{ businessDay.openingTime | amPmTime }} - {{ businessDay.closingTime | amPmTime }}<br>{{ businessDay.location.name }}</p>
+                    <p class="business-hours">{{ businessDay.openingTime | amPmTime }} - {{ businessDay.closingTime | amPmTime }}<br>{{ businessDay.location.name
+                        }}</p>
                 </div>
             </div>
         </div>

@@ -3,11 +3,11 @@
 
     angular
         .module('app.core')
-        .factory('businessDayService', businessDayService);
+        .factory('locationService', locationService);
 
-    businessDayService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
+    locationService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
 
-    function businessDayService($http, $location, $q, $window, exception, logger, envService) {
+    function locationService($http, $location, $q, $window, exception, logger, envService) {
         
         var apiUrl = envService.read('apiUrl');
         
@@ -18,7 +18,7 @@
         return service;
         
         function getAll() {
-            return $http.get(apiUrl + '/businessday/get/')
+            return $http.get(apiUrl + '/location/get/')
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
@@ -65,7 +65,7 @@
         //             var shift = data.data;
         //             shift.startTime = moment(shift.startTime);
         //             shift.endTime = moment(shift.endTime);
-        //             shift.businessDay = moment.weekdays()[shift.businessDay];
+        //             shift.location = moment.weekdays()[shift.location];
                     
         //             return shift;
         //         })
@@ -80,7 +80,7 @@
         //             data.data.forEach(function(shift) {
         //                 // shift.startTime = moment(shift.startTime).format('h:mm a');
         //                 // shift.endTime = moment(shift.endTime).format('h:mm a');
-        //                 // shift.businessDay = moment.weekdays()[shift.businessDay];
+        //                 // shift.location = moment.weekdays()[shift.location];
         //             });
         //             return data.data;
         //         })
@@ -95,7 +95,7 @@
         //             var shift = data.data;
         //             shift.startTime = moment(shift.startTime).format('h:mm a');
         //             shift.endTime = moment(shift.endTime).format('h:mm a');
-        //             shift.businessDay = moment.weekdays()[shift.businessDay];
+        //             shift.location = moment.weekdays()[shift.location];
         //             return shift;
         //         })
         //         .catch(function(message) {

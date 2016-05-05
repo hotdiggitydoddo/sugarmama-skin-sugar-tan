@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.admin.businessDays').run(appRun);
+    angular.module('app.admin.locations').run(appRun);
 
     appRun.$inject = ['routerHelper'];
 
@@ -11,31 +11,31 @@
 
     function getStates() {
         return [{
-                state: 'businessDays',
+                state: 'locations',
                 config: {
-                    url: '/admin/businessdays',
-                    templateUrl: 'app/admin/businessDays/businessDays.html',
-                    controller: 'BusinessDays',
+                    url: '/admin/locations',
+                    templateUrl: 'app/admin/locations/locations.html',
+                    controller: 'locations',
                     controllerAs: 'vm',
-                    title: 'Business Days',
+                    title: 'locations',
                     settings: {
                         nav: 2,
-                        content: 'business days'
+                        content: 'locations'
                     },
                     data: {
                         authRequired: true
                     }
                 }
             }, {
-                state: 'businessDays.add',
+                state: 'locations.add',
                 config: {
                     url: '/add',
-                    controller: 'BusinessDays',
+                    controller: 'locations',
                     controllerAs: 'vm',
                     title: 'add business day',
                     views: {
                         "content": {
-                            templateUrl: 'app/admin/businessdays/add.html'
+                            templateUrl: 'app/admin/locations/add.html'
                         }
                     },
                     data: {
