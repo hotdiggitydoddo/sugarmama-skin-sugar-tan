@@ -7,12 +7,20 @@
 
     function ClientAppointmentsStepOne($state, $uibModal, logger, spaServiceService, appointmentService) {
         var vm = this;
-        vm.appointmentRequest = {
-            selectedDate: new Date(),
-            gender: '',
-            location: ''
+        // vm.appointmentRequest = {
+        //     selectedDate: new Date(),
+        //     gender: '',
+        //     location: ''
+        // }
+        // vm.appointmentRequest.selectedServices = [];
+        if (!vm.appointmentRequest) {
+            vm.appointmentRequest = {
+                selectedDate: new Date(),
+                gender: '',
+                location: ''
+            }
+            vm.appointmentRequest.selectedServices = [];
         }
-        vm.appointmentRequest.selectedServices = [];
 
         vm.availableServices = {};
 
@@ -83,7 +91,7 @@
                 logger.error('Please select a location.');
                 vm.form.isValid = false;
             }
-            
+
             if (!vm.form.isValid) return;
 
             console.log(vm.appointmentRequest);

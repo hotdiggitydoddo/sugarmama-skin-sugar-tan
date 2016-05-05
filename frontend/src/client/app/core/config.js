@@ -20,10 +20,10 @@
 	core.config(configure);
 
     configure.$inject = ['$compileProvider', '$logProvider',
-                         'routerHelperProvider', '$httpProvider'];
+                         'routerHelperProvider', '$httpProvider', 'envServiceProvider'];
     /* @ngInject */
     function configure ($compileProvider, $logProvider,
-                         routerHelperProvider, $httpProvider) {
+                         routerHelperProvider, $httpProvider, envServiceProvider) {
         
         $compileProvider.debugInfoEnabled(false);
         
@@ -34,6 +34,24 @@
         if ($logProvider.debugEnabled) {
             $logProvider.debugEnabled(true);
         }
+        
+        //configure environments
+        envServiceProvider.config({
+			domains: {
+				development: ['localhost'],
+				production: ['ryancaseydodd.com']
+			},
+			vars: {
+				development: {
+					apiUrl: 'http://localhost:1337',
+				},
+				production: {
+					apiUrl: 'http://ryancaseydodd.com/api',
+				}
+			}
+		});
+        envServiceProvider.check();
+        
         //exceptionHandlerProvider.configure(config.appErrorPrefix);
         configureStateHelper();
 

@@ -5,11 +5,12 @@
         .module('app.core')
         .factory('authService', authService);
 
-    authService.$inject = ['$http', '$location', '$q', 'exception', 'logger', 'authToken'];
+    authService.$inject = ['$http', '$location', '$q', 'exception', 'logger', 'authToken', 'envService'];
 
-    function authService($http, $location, $q, exception, logger, authToken) {
+    function authService($http, $location, $q, exception, logger, authToken, envService) {
+        var apiUrl = envService.read('apiUrl');
         var _userName;
-
+        
         var service = {
             login: login,
             logout: logout,
@@ -20,7 +21,7 @@
         return service;
 
         function login(loginData) {
-            return $http.post('http://localhost:1337/auth/login', loginData)
+            return $http.post(apiUrl + '/auth/login', loginData)
             .then(function(data, status, headers, config) {
                 authToken.setToken(data.data.token);
                 _userName = data.userName;

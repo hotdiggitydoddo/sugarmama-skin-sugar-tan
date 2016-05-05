@@ -10,6 +10,5 @@
 
 		vm.title = config.appTitle;
 		vm.isInTransit = false;
-
 	}
 })();

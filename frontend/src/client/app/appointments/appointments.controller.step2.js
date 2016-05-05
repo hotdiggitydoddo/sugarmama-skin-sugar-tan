@@ -13,10 +13,10 @@
             $state.go('clientAppointments_step1');
             return;
         }
-        
+
         vm.appointmentRequest.selectedDateString = moment(vm.appointmentRequest.selectedDate).format("dddd, MMMM Do").toLowerCase();
-        
-       vm.bsTableControl = {
+
+        vm.bsTableControl = {
             options: {
                 data: vm.appointmentRequest.openings,
                 cardView: true,
@@ -41,26 +41,31 @@
                     }, {
                         title: 'duration',
                         formatter: durationFormatter,
+                    },
+                    {
+                        title: 'esthetician',
+                        field: 'esthetician'
                     }]
             }
         }
-
-        activate();
 
 
 
         function activate() {
         }
-        
+
         function rowClicked(row, element) {
-           var selectedTimeSlot = {
-               start: row.start,
-               end: row.end
-           }
-           vm.appointmentRequest.selectedTimeSlot = selectedTimeSlot;
-           $state.go('clientAppointments_step3',  { appointmentRequest: vm.appointmentRequest });
+            vm.appointmentRequest.startTime = row.start;
+            vm.appointmentRequest.endTime = row.end;
+            vm.appointmentRequest.esthetician = row.esthetician;
+            if (vm.appointmentRequest.location == 1)
+                vm.appointmentRequest.location = 'stanton';
+            else
+                vm.appointmentRequest.location = 'brea';
+            
+            $state.go('clientAppointments_step3', { appointmentRequest: vm.appointmentRequest });
         }
-        
+
         function dtFormatter(value, row, index) {
             return moment(value).format('h:mm a');
         }

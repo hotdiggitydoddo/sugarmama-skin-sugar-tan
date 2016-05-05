@@ -11,6 +11,7 @@
 		vm.isCurrent = isCurrent;
 		vm.isAuthenticated = isAuthenticated;
 		vm.logOut = logOut;
+		
 		activate();
 
 		function activate() {

@@ -12,6 +12,7 @@
         'ui.router',
         'ui.bootstrap',
         'ui.mask',
+        'environment',
 
         /* Reusable cross-app modules */
         'blocks.logger',
@@ -87,6 +88,11 @@
         .filter('dayOfWeek', function () {
             return function (input) {
                 return moment.weekdays()[input]
+            }
+        })
+        .filter('fullDate', function() {
+             return function (input) {
+                return moment(input).format('dddd, MMMM Do')
             }
         })
         .filter('phoneNumber', function () {

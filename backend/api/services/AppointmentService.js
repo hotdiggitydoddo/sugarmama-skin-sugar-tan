@@ -255,6 +255,24 @@ module.exports = {
         BusinessDay.findOne({ location: apptRequest.location, dayOfWeek: momApptDate.format('dddd').toLowerCase() })
             .populate('shifts')
             .then(function (day) {
+                if (!day)
+                    return null;
+                var selectedDate = new Date(apptRequest.selectedDate);
+                day.shifts.forEach(function (shift) {
+                    var currentStart = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
+                        shift.startTime.getHours(), shift.startTime.getMinutes(), shift.startTime.getSeconds());
+                    var currentEnd = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
+                        shift.endTime.getHours(), shift.endTime.getMinutes(), shift.endTime.getSeconds());
+
+                    var shiftStart = sails.moment(currentStart)
+                    var shiftEnd = sails.moment(currentEnd)
+
+                    if (shiftEnd < shiftStart)
+                        shiftEnd.add(1, 'day');
+
+                    shift.startTime = shiftStart;
+                    shift.endTime = shiftEnd;
+                })
                 return day;
             })
             .then(function (day) {
@@ -263,6 +281,16 @@ module.exports = {
                 else if (day.shifts.length === 0)
                     return deferred.resolve(availableOpenings);
                 businessDay = day;
+            }).then(function () {
+                var d = sails.q.defer();
+                businessDay.shifts.forEach(function (shift) {
+                    return EstheticianService.getEstheticianById(shift.esthetician)
+                        .then(function (esth) {
+                            shift.esthetician = esth;
+                            return d.resolve(shift);;
+                        })
+                })
+                return d.promise;
             }).then(function () {
                 return Appointment.find()
                     .populate('services')
@@ -277,23 +305,28 @@ module.exports = {
                 var closingTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
                     businessDay.closingTime.getHours(), businessDay.closingTime.getMinutes(), businessDay.closingTime.getSeconds());
 
-                var momBusinessDayOpen = sails.moment(openingTime)
-                var momBusinessDayClose = sails.moment(closingTime)
+                var businessDayOpen = sails.moment(openingTime)
+                var businessDayClose = sails.moment(closingTime)
 
-                if (momBusinessDayClose < momBusinessDayOpen)
-                    momBusinessDayClose.add(1, 'day');
+                if (businessDayClose < businessDayOpen)
+                    businessDayClose.add(1, 'day');
 
-                var possibleStart = momBusinessDayOpen;
+                var possibleStart = businessDayOpen;
                 var possibleEnd = sails.moment(possibleStart).add(totalDuration + apptReqBufferTime, 'minutes');
 
-                while (possibleStart < momBusinessDayClose && possibleEnd < momBusinessDayClose) {
+                while (possibleStart < businessDayClose && possibleEnd < businessDayClose) {
                     var timeSlot = {
                         start: sails.moment(possibleStart),
-                        end: sails.moment(possibleEnd)
+                        end: sails.moment(possibleEnd),
                     }
 
                     if (allowedToAdd(timeSlot, appts, apptReqBufferTime)) {
-                        //                        possibleEnd = sails.moment(timeSlot.end).add(-apptReqBufferTime, 'minutes');
+
+                        var shift = businessDay.shifts.find(x => timeSlot.start.isBetween(x.startTime, x.endTime))
+                        if (!shift || shift.length == 0)
+                            timeSlot.esthetician = 'deborah';
+                        else
+                            timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
                         timeSlot.end.add(-apptReqBufferTime, 'minutes');
                         availableOpenings.push(timeSlot);
                     }

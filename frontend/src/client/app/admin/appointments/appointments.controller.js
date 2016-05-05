@@ -3,13 +3,13 @@
 
     angular.module('app.admin.appointments').controller('Appointments', Appointments);
 
-    Appointments.$inject = ['$state', '$uibModal', 'logger'];
+    Appointments.$inject = ['$state', '$uibModal', 'logger', 'envService'];
 
-    function Appointments($state, $uibModal, logger) {
+    function Appointments($state, $uibModal, logger, envService) {
         var vm = this;
         vm.estheticians = [];
         vm.title = 'appointments';
-
+        vm.env = envService.get();
 
         activate();
 

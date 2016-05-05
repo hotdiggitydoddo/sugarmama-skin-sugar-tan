@@ -5,10 +5,10 @@
         .module('app.core')
         .factory('estheticianService', estheticianService);
 
-    estheticianService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger'];
+    estheticianService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger','envService'];
 
-    function estheticianService($http, $location, $q, $window, exception, logger) {
-
+    function estheticianService($http, $location, $q, $window, exception, logger, envService) {
+        var apiUrl = envService.read('apiUrl');
         var service = {
             getEstheticians: getEstheticians,
             createEsthetician: createEsthetician,
@@ -24,7 +24,7 @@
         return service;
 
         function getEstheticians() {
-            return $http.get('http://localhost:1337/esthetician/get/')
+            return $http.get(apiUrl + '/esthetician/get/')
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
@@ -34,7 +34,7 @@
         }
 
         function getById(id) {
-            return $http.get('http://localhost:1337/esthetician/getById?id=' + id)
+            return $http.get(apiUrl + '/esthetician/getById?id=' + id)
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
@@ -44,7 +44,7 @@
         }
 
         function createEsthetician(estheticianData) {
-            return $http.post('http://localhost:1337/esthetician/create', estheticianData)
+            return $http.post(apiUrl + '/esthetician/create', estheticianData)
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
@@ -55,7 +55,7 @@
         }
 
         function updateEsthetician(estheticianData) {
-            return $http.post('http://localhost:1337/esthetician/update', estheticianData)
+            return $http.post(apiUrl + '/esthetician/update', estheticianData)
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
@@ -66,7 +66,7 @@
         }
         
         function deleteEsthetician(estheticianInfo) {
-              return $http.post('http://localhost:1337/esthetician/delete', { estheticianInfo: estheticianInfo })
+              return $http.post(apiUrl + '/esthetician/delete', { estheticianInfo: estheticianInfo })
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
@@ -79,7 +79,7 @@
         }
         
         function getShift(shiftId) {
-            return $http.get('http://localhost:1337/shift/getShift?shiftId=' + shiftId)
+            return $http.get(apiUrl + '/shift/getShift?shiftId=' + shiftId)
                 .then(function(data, status, headers, config) {
                     var shift = data.data;
                     return shift;
@@ -90,7 +90,7 @@
         }
 
         function getShifts(id) {
-            return $http.get('http://localhost:1337/shift/getByEsthetician?id=' + id)
+            return $http.get(apiUrl + '/shift/getByEsthetician?id=' + id)
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
@@ -100,7 +100,7 @@
         }
 
         function saveShift(shiftData) {
-            return $http.post('http://localhost:1337/shift/save', shiftData)
+            return $http.post(apiUrl + '/shift/save', shiftData)
                 .then(function(data, status, headers, config) {
                     var shift = data.data;
                     shift.startTime = moment(shift.startTime);
@@ -116,7 +116,7 @@
         }
 
         function deleteShift(shiftId) {
-            return $http.post('http://localhost:1337/shift/delete?id=' + shiftId)
+            return $http.post(apiUrl + '/shift/delete?id=' + shiftId)
                 .then(function(data, status, headers, config) {
                     var shift = {
                         id: shiftId,

@@ -5,10 +5,10 @@
         .module('app.core')
         .factory('spaServiceService', spaServiceService);
 
-    spaServiceService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger'];
+    spaServiceService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
 
-    function spaServiceService($http, $location, $q, $window, exception, logger) {
-
+    function spaServiceService($http, $location, $q, $window, exception, logger, envService) {
+        var apiUrl = envService.read('apiUrl');
         var service = {
             getServices: getServices,
          //   createService: createService,
@@ -19,7 +19,7 @@
         return service;
 
         function getServices(byType) {
-            return $http.get('http://localhost:1337/service/getAll/')
+            return $http.get(apiUrl + '/service/getAll/')
                 .then(function (data, status, headers, config) {
                     if (!byType)
                         return data.data;
@@ -72,7 +72,7 @@
         }
 
         function getById(id) {
-            return $http.get('http://localhost:1337/service/getById?id=' + id)
+            return $http.get(apiUrl + '/service/getById?id=' + id)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })
@@ -82,7 +82,7 @@
         }
 
         // function createEsthetician(serviceData) {
-        //     return $http.post('http://localhost:1337/service/create', serviceData)
+        //     return $http.post(apiUrl + '/service/create', serviceData)
         //         .then(function (data, status, headers, config) {
         //             return data.data;
         //         })
@@ -93,7 +93,7 @@
         // }
         
         // function updateEsthetician(serviceData) {
-        //    return $http.post('http://localhost:1337/service/update', serviceData)
+        //    return $http.post(apiUrl + '/service/update', serviceData)
         //         .then(function (data, status, headers, config) {
         //             return data.data;
         //         })

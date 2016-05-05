@@ -5,9 +5,12 @@
         .module('app.core')
         .factory('dataservice', dataservice);
 
-    dataservice.$inject = ['$http', '$location', '$q', 'exception', 'logger'];
+    dataservice.$inject = ['$http', '$location', '$q', 'exception', 'logger', 'envService'];
     /* @ngInject */
-    function dataservice($http, $location, $q, exception, logger) {
+    function dataservice($http, $location, $q, exception, logger, envService) {
+        
+        var apiUrl = envService.read('apiUrl');
+        
         var services = {
             hairRemoval : [{name: "Lip", price: 10.00}, {name: "Arm", price: 25.00}],
             facials: [{name: "face1", price: 12.00}, {name: "face2", price: 23.00}],
@@ -31,7 +34,7 @@
         return service;
 
         function getBusinessDays() {
-            return $http.get('http://localhost:1337/businessday')
+            return $http.get(apiUrl + '/businessday')
             .then(function(res, status, headers, config) {
                 return res.data;
             })
@@ -42,7 +45,7 @@
         }
 
         function postSignUp(userData) {
-            return $http.post('http://localhost:1337/user/signup', userData)
+            return $http.post(apiUrl + '/user/signup', userData)
             .then(function(data, status, headers, config) {
                 return data.data;
             })
@@ -53,7 +56,7 @@
         }
 
         function getUsers() {
-            return $http.get('http://localhost:1337/user')
+            return $http.get(apiUrl + '/user')
             .then(function(data, status, headers, config) {
                 return data.data;
             })

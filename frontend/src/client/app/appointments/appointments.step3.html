@@ -1,77 +1,88 @@
 <style>
-    table th, table td {
+    table th,
+    table td {
         border-top: none;
     }
-
+    
     label {
         text-transform: lowercase;
     }
-
-    dt, dd {
+    
+    dt,
+    dd {
         font-size: 16px;
+        font-weight: normal;
     }
-
+    
     hr {
         border-top: 1px solid rgb(103, 50, 11) !important;
     }
-
+    
     .accordion .item .body .save-user {
-        background: none repeat scroll 0% 0% rgba(255,255,255,0.35);
+        background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.35);
     }
-
+    
     .form-group .help-block {
         display: none;
     }
-
+    
     .form-group.has-error .help-block {
         display: block;
     }
-
+    
     .cap-toranj .cap-title {
         font-size: 60px;
         color: #B69927;
     }
-
-        .cap-toranj .cap-title:after {
-            background: #CCB37A;
-        }
-
+    
+    .cap-toranj .cap-title:after {
+        background: #CCB37A;
+    }
+    
     p {
         color: black;
     }
-
+    
     .cap-bordered {
         border-left: 10px solid #67320B;
     }
-
-        .cap-bordered .cap-title {
-            color: #67320B;
-        }
-
-    dt, dd {
-        color: black;
+    
+    .cap-bordered .cap-title {
+        color: #67320B;
     }
-
+    
+    dt {
+        color: #67320B;
+    }
+    
+    dd {
+        color: black;
+        margin-bottom: 3px;
+    }
+    
     #confirmation dd {
         margin-bottom: 15px;
     }
-
+    
     .img-container > img {
         opacity: .75;
     }
-
+    
     .cap-lg .cap-title {
         font-family: ralewayregular;
     }
-
-
-
+    
     .blog-list .post-format-quote .quote {
         background: none;
         padding: 38px 4%;
     }
+    
+    #squiggly {
+        margin: 0 auto;
+        display: inherit;
+    }
 </style>
-<div class="container">
+<div class="container slide">
     <!-- breadcrumbs -->
     <ol class="breadcrumb">
         <li><a href="/">home</a></li>
@@ -84,6 +95,99 @@
         <!-- page title -->
         <h2 class="section-title" style="margin-top: 20px">tell us about yourself</h2>
         <div class="row mb-medium" ng-if="vm.appointmentRequest">
+            <div class="col-md-6">
+                <div class="row mb-small">
+                    <div class="icon-box ib-center ib-boxed">
+                        <i class="ib-icon fa fa-calendar"></i>
+                        <h4 class="title">appointment details</h4>
+                        <div class="contents">
+                            <dl class="dl-horizontal">
+                                <dt>date</dt>
+                                <dd>{{ vm.appointmentRequest.startTime | fullDate }}</dd>
+                                <dt>time</dt>
+                                <dd>{{ vm.appointmentRequest.startTime | amPmTime }} - {{ vm.appointmentRequest.endTime | amPmTime
+                                    }}
+                                </dd>
+                                <dt>location</dt>
+                                <dd>{{ vm.appointmentRequest.location }}</dd>
+                                <dt>esthetician</dt>
+                                <dd>{{ vm.appointmentRequest.esthetician }}</dd>
+                                <div style="margin: 14px 0px">
+                                    <img id="squiggly" width="80px" src="/images/fancy-lines-sm.png" alt="divider">
+                                </div>
+                                <dt>services</dt>
+                                <dd ng-repeat="service in vm.appointmentRequest.selectedServices">{{ service.name }} · {{ service.cost }}</dd>
+                                <br>
+                                <dt>cost</dt>
+                                <dd>{{ vm.getTotalCost() }}</dd>
+
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <form ng-submit="vm.submitForm()" id="userInfo" name="userInfo" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" ng-class="{ 'has-error': vm.formSubmitted && userInfo.firstName.$invalid || userInfo.firstName.$touched && userInfo.firstName.$invalid }">
+                                <label for="firstName">first name</label>
+                                <input type="text" class="form-control" ng-model="vm.userInfo.firstName" ng-minlength="2" ng-maxlength="25" required name="firstName"
+                                    title="Please enter your first name" />
+                                <div class="help-block" ng-messages="userInfo.firstName.$error" ng-if="userInfo.firstName.$touched || vm.formSubmitted">
+                                    <div ng-messages-include="/error-messages.html"></div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': vm.formSubmitted && userInfo.lastName.$invalid || userInfo.lastName.$touched && userInfo.lastName.$invalid }">
+                                <label for="lastName">last name</label>
+                                <input type="text" class="form-control" ng-model="vm.userInfo.lastName" ng-minlength="2" ng-maxlength="25" required name="lastName"
+                                    title="Please enter your last name" />
+                                <div class="help-block" ng-messages="userInfo.lastName.$error" ng-if="userInfo.lastName.$touched || vm.formSubmitted">
+                                    <div ng-messages-include="/error-messages.html"></div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': vm.formSubmitted && userInfo.emailAddress.$invalid || userInfo.emailAddress.$touched && userInfo.emailAddress.$invalid }">
+                                <label for="emailAddress">email address</label>
+                                <input type="email" class="form-control" ng-model="vm.userInfo.emailAddress" ng-minlength="6" ng-maxlength="40" required
+                                    name="emailAddress" title="Please enter a valid email address" />
+                                <div class="help-block" ng-messages="userInfo.emailAddress.$error" ng-if="userInfo.emailAddress.$touched || vm.formSubmitted">
+                                    <div ng-messages-include="/error-messages.html"></div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': vm.formSubmitted && userInfo.phoneNumber.$invalid || userInfo.phoneNumber.$touched && userInfo.phoneNumber.$invalid }">
+                                <label for="phoneNumber">phone number</label>
+                                <input type="text" class="form-control" ng-model="vm.userInfo.phoneNumber" ui-mask="999.999.9999" ui-mask-placeholder ui-mask-placeholder-char="_"
+                                    required name="phoneNumber" title="Please enter a valid phone number." />
+                                <div class="help-block" ng-messages="userInfo.phoneNumber.$error" ng-if="userInfo.phoneNumber.$touched || vm.userInfo.formSubmitted">
+                                    <div ng-messages-include="/error-messages.html"></div>
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-disabled="userInfo.phoneNumber.$error.minlength || userInfo.phoneNumber.$error.required || userInfo.phoneNumber.$error.pattern" ng-model="vm.appointmentRequest.remindViaText" style="height:auto;" name="remindText" />
+                                    remind me via text
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-disabled="userInfo.emailAddress.$error.email || userInfo.emailAddress.$error.required" ng-model="vm.appointmentRequest.remindViaEmail" style="height:auto;" name="remindEmail" />
+                                    remind me via email
+                                </label>
+                            </div>
+
+                            <div class="input-group">
+                                <button type="submit" class="btn btn-success" ng-disabled="vm.loading">
+                                    <span ng-show="!vm.loading">schedule our fling!</span>
+                                    <span ng-show="vm.loading">Please wait...</span>
+                                </button>
+                                <button type="button" class="btn btn-default" style="margin-left: 5px;" ng-click="vm.goBack()">choose a different time</button>
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+            </form>
         </div>
     </div>
+</div>
 </div>

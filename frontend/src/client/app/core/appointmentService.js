@@ -5,10 +5,11 @@
         .module('app.core')
         .factory('appointmentService', appointmentService);
 
-    appointmentService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger'];
+    appointmentService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
 
-    function appointmentService($http, $location, $q, $window, exception, logger) {
-
+    function appointmentService($http, $location, $q, $window, exception, logger, envService) {
+       
+        var apiUrl = envService.read('apiUrl');
         var service = {
             submitApptRequest: submitApptRequest,
         };
@@ -16,7 +17,7 @@
         return service;
 
         function submitApptRequest(apptRequest) {
-            return $http.post('http://localhost:1337/appointment/submitrequest/', apptRequest)
+            return $http.post(apiUrl + '/appointment/submitrequest/', apptRequest)
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })

@@ -14,8 +14,12 @@
             return;
         }
         
+        vm.getTotalCost = getTotalCost;
+        vm.submitForm = submitForm;
+        vm.goBack = goBack;
+        vm.formSubmitted = false;
+        vm.loading = false;
         
-
         activate();
 
 
@@ -23,6 +27,21 @@
         function activate() {
         }
         
+        function getTotalCost() {
+            var total = 0;
+            angular.forEach(vm.appointmentRequest.selectedServices, function (svc) {
+                total += svc.cost;
+            });
+            return total;
+        }
+        
+        function goBack() {
+            $state.go('clientAppointments_step2', { appointmentRequest: vm.appointmentRequest });
+        }
+        
+        function submitForm() {
+            
+        }
        
         
        

@@ -5,19 +5,20 @@
         .module('app.core')
         .factory('businessDayService', businessDayService);
 
-    businessDayService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger'];
+    businessDayService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
 
-    function businessDayService($http, $location, $q, $window, exception, logger) {
-
+    function businessDayService($http, $location, $q, $window, exception, logger, envService) {
+        
+        var apiUrl = envService.read('apiUrl');
+        
         var service = {
             getAll: getAll,
-           
         };
 
         return service;
-
+        
         function getAll() {
-            return $http.get('http://localhost:1337/businessday/get/')
+            return $http.get(apiUrl + '/businessday/get/')
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })
