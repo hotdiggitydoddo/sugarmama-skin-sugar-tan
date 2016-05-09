@@ -1,0 +1,122 @@
+<style>
+    li {
+        list-style: none;
+    }
+    
+    .section-title {
+        margin-bottom: 55px;
+    }
+    
+    .icon-box .title {
+        color: #674015
+    }
+    
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+    }
+</style>
+
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">home</a></li>
+        <li><a ui-sref="locations">locations</a></li>
+        <li class="active">{{vm.location.city + ', ' + vm.location.state}}</li>
+    </ol>
+
+    <h2 class="section-title double-title">
+        <span>{{vm.location.city}},</span>{{vm.location.state}}
+    </h2>
+
+    <div class="row">
+        <div class="col-md-6 mb-small">
+            <div class="icon-box ib-center ib-boxed">
+                <i class="ib-icon fa fa-map-marker"></i>
+                <h4 class="title">address</h4>
+                <div ng-hide="vm.editMode" class="contents">
+                    <p>
+                        {{vm.location.streetAddress}}<br> {{vm.location.city}}, {{vm.location.state}} {{vm.location.zipCode}}
+                    </p>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button ng-hide="vm.editMode" ng-click="vm.toggleEditMode()" class="btn btn-toranj pull-right">update...</button>
+                            <!--<button class="btn btn-danger pull-right" ng-click="vm.destroy()">delete</button>-->
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="vm.editMode" class="contents">
+                    <form ng-submit="vm.save(addLocationForm.$valid)" id="addLocationForm" name="addLocationForm" novalidate>
+                        <div class="row mb-small">
+                            <div class="col-md-12">
+                                <div class="form-group" ng-class="{ 'has-error': vm.formSubmitted && addLocationForm.streetAddress.$invalid || addLocationForm.streetAddress.$touched && addLocationForm.streetAddress.$invalid }">
+                                    <label for="streetAddress">street address</label>
+                                    <input type="text" class="form-control" ng-model="vm.editableLoc.streetAddress" ng-minlength="2" ng-maxlength="75" required
+                                        name="streetAddress" title="Please enter a street address" />
+                                    <div class="help-block" ng-messages="addLocationForm.streetAddress.$error" ng-if="addLocationForm.streetAddress.$touched || vm.formSubmitted">
+                                        <div ng-messages-include="/error-messages.html"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-small">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-group" ng-class="{ 'has-error': vm.formSubmitted && addLocationForm.city.$invalid || addLocationForm.city.$touched && addLocationForm.city.$invalid }">
+                                    <label for="city">city</label>
+                                    <input type="text" class="form-control" ng-model="vm.editableLoc.city" ng-minlength="2" ng-maxlength="40" required name="city"
+                                        title="Please enter a city" />
+                                    <div class="help-block" ng-messages="addLocationForm.city.$error" ng-if="addLocationForm.city.$touched || vm.formSubmitted">
+                                        <div ng-messages-include="/error-messages.html"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-small">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-group" ng-class="{ 'has-error': vm.formSubmitted && addLocationForm.state.$invalid || addLocationForm.state.$touched && addLocationForm.state.$invalid }">
+                                    <label for="state">state</label>
+                                    <select ng-model="vm.editableLoc.state" name="state" class="form-control" ng-required="true">
+                                        <option value="" disabled selected="true">choose...</option>
+                                        <option ng-repeat="state in vm.stateOptions">{{state}}</option>
+                                    </select>
+                                    <div class="help-block" ng-messages="addLocationForm.state.$error" ng-if="addLocationForm.state.$touched || vm.formSubmitted">
+                                        <div ng-messages-include="/error-messages.html"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-group" ng-class="{ 'has-error': vm.formSubmitted && addLocationForm.zipCode.$invalid || addLocationForm.zipCode.$touched && addLocationForm.zipCode.$invalid }">
+                                    <label for="zipCode">zip code</label>
+                                    <input type="number" class="form-control" ng-model="vm.editableLoc.zipCode" ng-minlength="5" ng-maxlength="5" required name="zipCode"
+                                        title="Please enter a zip code" />
+                                    <div class="help-block" ng-messages="addLocationForm.zipCode.$error" ng-if="addLocationForm.zipCode.$touched || vm.formSubmitted">
+                                        <div ng-messages-include="/error-messages.html"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" ng-disabled="vm.updating">
+                                    <span ng-show="!vm.updating">Save</span>
+                                    <span ng-show="vm.updating">Please wait...</span>
+                                </button>
+                            <button class="btn btn-warning" type="button" ng-click="vm.toggleEditMode()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row col-md-6">
+            <div class="icon-box ib-center ib-boxed">
+                <i class="ib-icon fa fa-clock-o"></i>
+                <h4 class="title">business hours</h4>
+                <div class="contents">
+                    <div ui-view="businessDays"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

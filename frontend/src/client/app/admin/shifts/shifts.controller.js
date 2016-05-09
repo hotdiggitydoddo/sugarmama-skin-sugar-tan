@@ -3,9 +3,9 @@
 
     angular.module('app.admin.shifts').controller('Shifts', Shifts);
 
-    Shifts.$inject = ['$state', '$uibModal', 'logger', 'estheticianService', 'businessDayService'];
+    Shifts.$inject = ['$state', '$uibModal', 'logger', 'estheticianService', 'locationService'];
 
-    function Shifts($state, $uibModal, logger, estheticianService, businessDayService) {
+    function Shifts($state, $uibModal, logger, estheticianService, locationService) {
         var vm = this;
         vm.shifts = [];
         vm.title = 'shifts';
@@ -19,7 +19,7 @@
 
         function activate() {
             getShifts(vm.estheticianId);
-            getBusinessDays();
+            getLocations();
         }
 
         function getShifts(id) {
@@ -31,11 +31,11 @@
                 });
         }
 
-        function getBusinessDays() {
-            return businessDayService.getAll()
+        function getLocations() {
+            return locationService.getAll()
                 .then(function(data) {
-                    vm.businessDays = data;
-                    return vm.businessDays;
+                    vm.locations = data;
+                    return vm.locations;
                 });
         }
 
@@ -59,7 +59,7 @@
                 controllerAs: 'vm',
                 resolve: {
                     shift: function() { return vm.selectedShift; },
-                    businessDays: function() { return vm.businessDays; }
+                    locations: function() { return vm.locations; }
                 }
             });
 
@@ -69,9 +69,6 @@
                     vm.shifts.selectedShift = null;
                     return;
                 }
-
-                var businessDay = vm.businessDays.find(function(day) { return shift.businessDay === day.id });
-                shift.businessDay = angular.copy(businessDay);
 
                 var existing = vm.shifts.find(function(existing) {
                     return existing.id === shift.id;

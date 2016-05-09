@@ -8,8 +8,20 @@
 module.exports = {
 
   attributes: {
-      name: {
+      city: {
           type: 'string'
+      },
+      
+      streetAddress: {
+          type: 'string'
+      },
+      
+      state: {
+          type: 'string'
+      },
+      
+      zipCode: {
+          type: 'integer'
       },
       
       appointments: {

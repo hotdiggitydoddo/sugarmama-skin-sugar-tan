@@ -34,8 +34,9 @@
     <div class="row">
         <div class="col-sm-6">
            <h5 class="lined">day</h5>
-           <select ng-model="vm.shift.businessDay.id"  ng-options="day.id as day.value for day in vm.daysOfWeek" class="form-control">
+           <select ng-model="vm.shift.businessDay.dayOfWeek" class="form-control">
                  <option value="" disabled selected="true">select a day...</option>
+                 <option ng-repeat="day in vm.daysOfWeek">{{day}}</option>
             </select>
         </div>
         <div class="col-sm-6">

@@ -1,0 +1,35 @@
+<div class="row mb-medium">
+    <div class="row mb-small" ng-show="vm.businessDays.length == 0">
+        <div class="col-md-12">
+             <div class="icon-box ib-center ib-boxed">
+                <div class="contents">
+                    <p>No business hours have been set.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="vm.businessDays.length > 0" class="col-md-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>day</th>
+                    <th>open</th>
+                    <th>close</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="businessDay in vm.businessDays" ng-click="vm.selectBusinessDay(businessDay, $index)" style="cursor: pointer;">
+                    <td>{{ businessDay.dayOfWeek }}</td>
+                    <td>{{ businessDay.openingTime | amPmTime }}</td>
+                    <td>{{ businessDay.closingTime | amPmTime }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a ng-click="vm.addNewBusinessDay()" class="btn btn-toranj pull-right">add business hours...</a>
+    </div>
+</div>

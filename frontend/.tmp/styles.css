@@ -4830,6 +4830,9 @@ h6 {
   font-family: ralewayextralight;
   color: black;
 }
+.double-title {
+  font-family: ralewayextralight;
+}
 .regular-page {
   background-image: url(/images/mainbg.png) !important;
 }

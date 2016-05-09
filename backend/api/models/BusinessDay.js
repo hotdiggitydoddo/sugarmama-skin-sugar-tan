@@ -32,7 +32,6 @@ module.exports = {
         
         location: {
             model: 'Location',
-            required: true
         }
         
     },

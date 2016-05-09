@@ -1,0 +1,54 @@
+<style>
+    .uib-timepicker .btn {
+        border: none;
+        padding: 6px 12px;
+    }
+    
+    .uib-timepicker input {
+        font-size: 18px;
+    }
+    
+    .am-pm {
+        border: 1px solid #F2F2F2;
+    }
+    
+    .am-pm .btn {
+        font-size: 18px;
+    }
+</style>
+
+<div class="modal-header">
+    <h4 class="bordered" style="margin-bottom:0px; margin-top: 10px;">add/edit business hours</h3>
+</div>
+<div class="modal-body">
+     <div class="row mb-small">
+        <div class="col-xs-6">
+            <h5 class="lined">open</h5>
+            <uib-timepicker ng-model="vm.businessDay.openingTime" hour-step="1" minute-step="15" show-meridian="true"></uib-timepicker>
+        </div>
+        <div class="col-xs-6">
+            <h5 class="lined">close</h5>
+            <uib-timepicker ng-model="vm.businessDay.closingTime" hour-step="1" minute-step="15" show-meridian="true"></uib-timepicker>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+           <h5 class="lined">day</h5>
+           <select ng-model="vm.businessDay.dayOfWeek" class="form-control">
+                 <option value="" disabled selected="true">select a day...</option>
+                 <option ng-repeat="dayOfWeek in vm.daysOfWeek">{{dayOfWeek}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+ <div class="modal-footer">
+    <button class="btn btn-success" type="button"  ng-click="vm.save()" ng-disabled="vm.savingBusinessDay">
+        <span ng-show="!vm.savingBusinessDay">Save</span>
+        <span ng-show="vm.savingBusinessDay">Please wait...</span>
+    </button>
+        <button class="btn btn-danger" type="button"  ng-click="vm.deleteBusinessDay()" ng-disabled="vm.savingBusinessDay">
+        <span ng-show="!vm.savingBusinessDay">Delete</span>
+        <span ng-show="vm.savingBusinessDay">Please wait...</span>
+    </button>
+    <button class="btn btn-default" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>

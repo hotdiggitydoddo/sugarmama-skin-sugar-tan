@@ -1,11 +1,11 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('app.admin.shifts').controller('ShiftDetail', ShiftDetail);
 
-    ShiftDetail.$inject = ['$state', '$uibModalInstance', 'logger', 'estheticianService', 'shift', 'businessDays'];
+    ShiftDetail.$inject = ['$state', '$uibModalInstance', 'logger', 'estheticianService', 'shift', 'locations'];
 
-    function ShiftDetail($state, $uibModalInstance, logger, estheticianService, shift, businessDays) {
+    function ShiftDetail($state, $uibModalInstance, logger, estheticianService, shift, locations) {
         var vm = this;
 
         vm.shift = {
@@ -21,24 +21,22 @@
         vm.save = save;
         vm.deleteShift = deleteShift;
         vm.savingShift = false;
-        vm.daysOfWeek = [];
+        vm.daysOfWeek = [
+            "sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+        ]
         vm.locations = [];
 
         activate(shift);
 
         function activate(shift) {
-            businessDays.forEach(function(day) {
-                if (vm.daysOfWeek.find(function(day) {
-                    day.dayOfWeek === day.id
-                }) === undefined) {
-                    vm.daysOfWeek.push({ id: day.id, value: day.dayOfWeek });
-                }
-
-                if (vm.locations.find(function(loc) {
-                    loc.id === day.location.id
-                }) === undefined) {
-                    vm.locations.push({ id: day.location.id, value: day.location.name })
-                }
+            locations.forEach(function (location) {
+                vm.locations.push({ id: location.id, value: location.city })
             });
 
             if (shift) {
@@ -52,17 +50,22 @@
 
         function getEstheticians() {
             return estheticianService.getEstheticians()
-                .then(function(data) {
+                .then(function (data) {
                     vm.estheticians = data;
                     return vm.estheticians;
                 });
         }
 
         function save() {
-            var daysent = businessDays.find(function(day) {
-                return day.id === vm.shift.businessDay.id && day.location.id === vm.shift.businessDay.location.id
+            var selectedLocation = locations.find(function(loc) {
+                return loc.id == vm.shift.businessDay.location.id;
             });
-            if (daysent === undefined) {
+            
+            var validDay = selectedLocation.businessDays.find(function(bd) {
+                return bd.dayOfWeek == vm.shift.businessDay.dayOfWeek;
+            })
+            
+            if (validDay === undefined) {
                 logger.error('Selected location is not open on selected day.')
                 return;
             }
@@ -70,38 +73,38 @@
             vm.savingShift = true;
 
             return estheticianService.saveShift(vm.shift)
-                .then(function(data) {
+                .then(function (data) {
                     if (vm.shift.id > 0)
                         logger.success('Shift updated!')
                     else
                         logger.success('Shift added!')
                     $uibModalInstance.close(data);
                 })
-                .catch(function(err) {
+                .catch(function (err) {
 
                 })
-                .finally(function() {
+                .finally(function () {
                     vm.savingShift = false;
                 });
         }
 
         function deleteShift() {
             if (!confirm("Are you sure you wish to delete this shift?")) {
-                 $uibModalInstance.dismiss('cancel');
-                 return;
+                $uibModalInstance.dismiss('cancel');
+                return;
             }
-            
+
             vm.savingShift = true;
             return estheticianService.deleteShift(vm.shift.id)
-                .then(function(data) {
+                .then(function (data) {
                     logger.success('Shift deleted.')
                     data.isDeleted = true;
                     $uibModalInstance.close(data);
                 })
-                .catch(function(err) {
+                .catch(function (err) {
 
                 })
-                .finally(function() {
+                .finally(function () {
                     vm.savingShift = false;
                 });
         }

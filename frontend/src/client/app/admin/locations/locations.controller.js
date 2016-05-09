@@ -1,60 +1,47 @@
 (function () {
 	'use strict';
 
-	angular.module('app.admin.locations').controller('locations', locations);
+	angular.module('app.admin.locations').controller('Locations', Locations);
 
-	locations.$inject = ['$state', 'logger', 'locationService'];
+	Locations.$inject = ['$state', '$uibModal', 'logger', 'locationService'];
 
-	function locations($state, logger, locationService) {
+	function Locations($state, $uibModal, logger, locationService) {
 		var vm = this;
 		vm.locations = [];
 		vm.title = 'locations';
-	    vm.addNewLocation = addNewLocation;
-        vm.selectLocation = selectLocation;
-        vm.selectedLocation = {};
+		vm.addNewLocation = addNewLocation;
+
+		if ($state.params.deletedId) {
+            logger.success('Location succesfully deleted.')
+        }
 
 		activate();
 
 		function activate() {
-			angular.element(document).ready(function () {
-                $("#menu-toggle-wrapper").trigger('click');
-            });
-			logger.info('Activated Business Days View');
 			getlocations();
 		}
 
 		function getlocations() {
-			// locationService.getAll().then(function (data) {
-			// 	vm.locations = data;
-			return vm.locations;
-			//vm.services.facial = dataservice.getServices("facials");
-			// return dataservice.getServices().then(function(data) {
-			// 	vm.services = data;
-			// 	return vm.services;
-			// });
-			// });
+			 locationService.getAll().then(function (data) {
+				vm.locations = data;
+				return vm.locations;
+			});
 		}
 
 
-		function openAddModal() {
+		function addNewLocation() {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'app/admin/locations/locations.add.html',
-                controller: 'AddEsthetician',
+                controller: 'AddLocation',
                 controllerAs: 'vm',
             });
 
-            modalInstance.result.then(function (esthetician) {
-                console.log(esthetician);
-                vm.estheticians.push(esthetician);
+            modalInstance.result.then(function (location) {
+                vm.locations.push(location);
             }, function () {
                 // $log.info('Modal dismissed at: ' + new Date());
             });
         };
-
-
-		function gotoBusinessDay(d) {
-			$state.go('locations.' + d);
-		}
 	}
 })();

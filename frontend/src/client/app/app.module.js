@@ -21,7 +21,8 @@
 		 'app.admin.estheticians',
 		 'app.admin.locations',
          'app.admin.shifts',
-         'app.admin.appointments'
+         'app.admin.appointments',
+		 'app.admin.businessDays'
 	]);
 
 })();
