@@ -70,8 +70,14 @@ module.exports = {
             });
     },
 
-    getLocations: function (req, res) {
-        return res.json(200, [{ text: 'stanton', value: 1 }, { text: 'brea', value: 2 }])
+    getByEsthetician: function (req, res) {
+        AppointmentService.getByEsthetician(req.query.id)
+            .then(function (appointments) {
+                return res.json(appointments);
+            })
+            .catch(function (err) {
+                res.negotiate(err);
+            });
     },
 
     submitRequest: function (req, res) {

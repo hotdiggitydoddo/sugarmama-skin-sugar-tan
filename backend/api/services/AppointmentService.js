@@ -41,6 +41,24 @@ module.exports = {
         return deferred.promise;
     },
 
+    getByEsthetician: function (esthId) {
+        var appts = [];
+        var deferred = sails.q.defer();
+        var now = new Date();
+        
+        Appointment.find({ where: { esthetician: esthId, endTime: { '>=': now }}, sort: {startTime: 1} })
+            .populate('services')
+            .populate('location')
+            .then(function (appts) {
+                deferred.resolve(appts);
+            })
+            .catch(function (err) {
+                deferred.reject(err);
+            })
+
+        return deferred.promise;
+    },
+
     create: function (appt) {
         var serviceIds = [];
         var deferred = sails.q.defer();

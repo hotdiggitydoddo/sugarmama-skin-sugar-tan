@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('app.admin.estheticians').run(appRun);
@@ -53,7 +53,11 @@
                             title: 'Details',
                         },
                         'appointments@estheticians_detail': {
-                            template: '<h4>appts</h4>'
+                            templateUrl: 'app/admin/estheticians/esthetician.appointments.html',
+                            controller: 'EstheticianAppointments',
+                            controllerAs: 'vm',
+                            parent: 'estheticians_detail',
+                            title: 'Details',
                         }
                     }
                 }

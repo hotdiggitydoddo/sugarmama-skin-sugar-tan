@@ -1,0 +1,78 @@
+<style>
+    .wrapper {
+        padding: 1px 26px;
+        background: rgba(214, 195, 152, 0.2);
+        margin-bottom: 15px;
+    }
+    
+    .svc {
+        padding: 4px;
+        margin: 5px 5px 0px 0px;
+        background: #DCCCB1;
+        border: 1px solid #BDA772;
+        border-radius: 9px;
+        color: #333;
+    }
+    
+    dd {
+        margin-top: 3px;
+        margin-bottom: 9px;
+    }
+    
+    blockquote {
+        color: #404040;
+        padding: 7px 25px;
+    }
+</style>
+<div class="row mb-medium">
+    <div ng-show="vm.appointments.length === 0" class="col-md-12">
+        <span>No upcoming appointments.</span>
+    </div>
+    <div ng-show="vm.appointments.length > 0" class="col-md-12">
+        <div class="wrapper" ng-repeat="date in vm.appointments">
+            <h4 style="font-size: 18px">{{ date.key | fullDate }}</h4>
+            <blockquote ng-repeat="appt in date.appts">
+                <dl class="dl-horizontal">
+                    <dt>name</dt>
+                    <dd>{{appt.name}}</dd>
+                    <dt>phone</dt>
+                    <dd>{{appt.phoneNumber | phoneNumber}}</dd>
+                    <dt>services</dt>
+                    <dd><span class="" ng-repeat="service in appt.services">{{service.name}}{{$last ? '' : ', '}}</span></dd>
+                    <dt>time</dt>
+                    <dd>{{appt.startTime | amPmTime}} - {{appt.endTime | amPmTime}}
+                    <dt>location</dt>
+                    <dd>{{appt.location.city}}</dd>
+                </dl>
+            </blockquote>
+        </div>
+
+
+
+
+        <!--<table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>date</th>
+                    <th>start</th>
+                    <th>end</th>
+                    <th>location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="shift in vm.appointments" ng-click="vm.selectShift(shift, $index)" style="cursor: pointer;">
+                    <td>{{ shift.businessDay.dayOfWeek }}</td>
+                    <td>{{ shift.startTime | amPmTime }}</td>
+                    <td>{{ shift.endTime | amPmTime }}</td>
+                    <td>{{ shift.businessDay.location.city }}</td>                    
+                </tr>
+            </tbody>
+        </table>-->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a ng-click="vm.addNewShift()" class="btn btn-toranj pull-right">add new shift...</a>
+    </div>
+</div>

@@ -18,7 +18,8 @@
             getShift: getShift,
             getShifts: getShifts,
             saveShift: saveShift,
-            deleteShift: deleteShift
+            deleteShift: deleteShift,
+            getAppointments: getAppointments
         };
 
         return service;
@@ -123,6 +124,16 @@
                         isDeleted: true
                     }
                     return shift;
+                })
+                .catch(function(message) {
+                    logger.error(message.data);
+                })
+        }
+        
+         function getAppointments(id) {
+            return $http.get(apiUrl + '/appointment/getByEsthetician?id=' + id)
+                .then(function(data, status, headers, config) {
+                    return data.data;
                 })
                 .catch(function(message) {
                     logger.error(message.data);
