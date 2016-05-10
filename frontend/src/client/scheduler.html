@@ -126,7 +126,7 @@
             <label for="location">Location</label>
         </div>
         <div data-container-for="location" class="k-edit-field">
-            <select id="locationId" data-bind="value:locationId" data-role="dropdownlist" data-value-field="value" data-text-field="text">
+            <select id="locationId" data-bind="value:locationId" data-role="dropdownlist" data-value-field="id" data-text-field="city">
             </select>
         </div>
     </script>
@@ -236,7 +236,7 @@
                          dataSource: {  
                             transport: {  
                                 read: {  
-                                    url: "//localhost:1337/appointment/getLocations"
+                                    url: "//localhost:1337/location/get"
                                 },
                             prefix : ""
                             },
@@ -246,8 +246,8 @@
                         },
                         title: "location",
                         field: "locationId",
-                        dataTextField: "text",
-                        dataValueField: "value",
+                        dataTextField: "city",
+                        dataValueField: "id",
                     }
                 ],
         
@@ -274,10 +274,10 @@
                 
                 $("#locationId").kendoDropDownList({
                     dataSource: e.sender.resources[2].dataSource,
-                    dataTextField: "text",
-                    dataValueField: "value",
-                    template: '\#= text \#',
-                    valueTemplate: '\#= text \#',
+                    dataTextField: "city",
+                    dataValueField: "id",
+                    template: '\#= city \#',
+                    valueTemplate: '\#= city \#',
                 });
                 
                 $("#services").kendoMultiSelect({
