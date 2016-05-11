@@ -44,6 +44,21 @@ module.exports = {
 
         return deferred.promise;
     },
+    
+    getByEmail: function(email) {
+        var deferred = sails.q.defer();
+
+        User.findOne({ emailAddress: email })
+            .populate('roles')
+            .then(function(user) {
+                deferred.resolve(user);
+            })
+            .catch(function(err) {
+                deferred.reject(err);
+            })
+
+        return deferred.promise;
+    },
 
     updateUser: function(userVm) {
         var q = sails.q;

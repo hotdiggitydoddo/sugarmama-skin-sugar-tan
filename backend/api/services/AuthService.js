@@ -1,43 +1,30 @@
 module.exports = {
-    loginUser: function (userVm, hostname) {
-        var q = require('q');
-        var deferred = q.defer();
+    loginUser: function (foundUser, password, hostname) {
+        var deferred = sails.q.defer();
         var Passwords = require('machinepack-passwords');
 
-        User.findOne({
-                emailAddress: userVm.emailAddress
-            })
-            .then(function (foundUser) {
-                if (!foundUser) {
-                    deferred.reject('User not found.');
-                    return deferred.promise;
-                }
-                Passwords.checkPassword({
-                    passwordAttempt: userVm.password,
-                    encryptedPassword: foundUser.password,
-                }).exec({
-                    error: function (err) {
-                        deferred.reject(err);
-                    },
-
-                    incorrect: function () {
-                        deferred.reject("Invalid password.");
-                    },
-
-                    success: function () {
-                        createToken(foundUser, hostname)
-                            .then(function (result) {
-                                deferred.resolve(result);
-                            })
-                            .catch(function (err) {
-                                deferred.reject(err);
-                            })
-                    }
-                });
-            })
-            .catch(function (err) {
+        Passwords.checkPassword({
+            passwordAttempt: password,
+            encryptedPassword: foundUser.password,
+        }).exec({
+            error: function (err) {
                 deferred.reject(err);
-            })
+            },
+
+            incorrect: function () {
+                deferred.reject("Invalid password.");
+            },
+
+            success: function () {
+                createToken(foundUser, hostname)
+                    .then(function (result) {
+                        deferred.resolve(result);
+                    })
+                    .catch(function (err) {
+                        deferred.reject(err);
+                    })
+            }
+        });
 
         return deferred.promise;
     }

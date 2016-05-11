@@ -9,13 +9,14 @@
 
     function authService($http, $location, $q, exception, logger, authToken, envService) {
         var apiUrl = envService.read('apiUrl');
-        var _userName;
+        var _user;
         
         var service = {
             login: login,
             logout: logout,
-            userName: _userName,
-            isAuthenticated: isAuthenticated
+            user: _user,
+            isAuthenticated: isAuthenticated,
+            isInRole: isInRole
         };
 
         return service;
@@ -23,10 +24,10 @@
         function login(loginData) {
             return $http.post(apiUrl + '/auth/login', loginData)
             .then(function(data, status, headers, config) {
-                authToken.setToken(data.data.token);
-                _userName = data.userName;
-                logger.success('Logged in!');
-                
+                debugger;
+                authToken.setToken(data.data.authInfo.token);
+               _user = data.data;
+                logger.success('Welcome back, ' + _user.firstName + '!');
             })
             .catch(function(message) {
                 if (message.status === -1) {
@@ -44,6 +45,12 @@
         
         function isAuthenticated() {
             return authToken.isAuthenticated();
+        }
+        
+        function isInRole(roleName) {
+            return _user.roles.filter(function(role) {
+                return r.name == roleName;
+            });
         }
         
     };

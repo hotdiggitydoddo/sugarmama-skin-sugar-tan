@@ -18,9 +18,8 @@
 			
 			getNavRoutes();
 			if (authService.isAuthenticated)
+			debugger;
 				getAuthRoutes();
-                 angular.element(document).ready(function () {
-    });
 		}
 
 		function getNavRoutes() {
