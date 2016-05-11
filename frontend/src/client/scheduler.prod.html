@@ -52,6 +52,37 @@
             background-color: #CCB37A;
             border-color: #CCB37A;
         }
+        
+        .k-event {
+            background: none;
+            border-radius: 5px;
+        }
+        
+        .appointment-template {
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            height: 100%;
+            margin-top: -5px;
+        }
+        
+        .red-background {
+            border: 5px solid lightpink;
+        }
+        
+        .blue-background {
+            border: 5px solid lightskyblue;
+        }
+        
+        .appointment-template p {
+            padding: 0 3px 0px;
+            font-size: 12px;
+        }
+        
+        .appointment-template h3 {
+            padding: 0 3px 0px;
+            font-size: 12px;
+        }
     </style>
     <script src="//kendo.cdn.telerik.com/2016.1.226/js/jquery.min.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script>
@@ -125,9 +156,18 @@
         <div class="k-edit-label">
             <label for="location">Location</label>
         </div>
-       <div data-container-for="location" class="k-edit-field">
+        <div data-container-for="location" class="k-edit-field">
             <select id="locationId" data-bind="value:locationId" data-role="dropdownlist" data-value-field="id" data-text-field="city">
             </select>
+        </div>
+    </script>
+
+    <script id="event-template" type="text/x-kendo-template">
+        <div class="appointment-template  #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
+            <p>
+                #: kendo.toString(start, "hh:mm") # - #: kendo.toString(end, "hh:mm") #
+            </p>
+            <h3>#: title #</h3>
         </div>
     </script>
 
@@ -140,13 +180,14 @@
                 date: today,
                 startTime: today,
                 height: 800,
-                // mobile: 'phone',
+                 //mobile: 'phone',
                 views: [
                     "day",
                     { type: "week", selected: true },
                     "month",
                 ],
                 timezone: "America/Los_Angeles",
+                eventTemplate: $("#event-template").html(),
                 editable: {
                     template: $("#customEditorTemplate").html()
                 },
@@ -175,7 +216,7 @@
                             id: "appointmentId",
                             fields: {
                                 appointmentId: { from: "id", type: "number" },
-                                title: { from: "title", defaultValue: "No title", validation: { required: true } },
+                                title: { from: "title", validation: { required: true } },
                                 start: { type: "date", from: "start", validation: { required: true } },
                                 end: { type: "date", from: "end" , validation: { required: true } },
                                 startTimezone: { from: "startTimezone" },
@@ -236,7 +277,7 @@
                          dataSource: {  
                             transport: {  
                                 read: {  
-                                    url: "//localhost:1337/location/get"
+                                    url: "//ryancaseydodd.com/api/location/get"
                                 },
                             prefix : ""
                             },
@@ -288,6 +329,8 @@
                     valueTemplate: '\#= text \#',
                     index: 1
                 });
+
+		$(".k-multiselect-wrap .k-input").attr('readonly', "readonly");
                 
             //var estheticianId = e.container.find("#estheticianId").data("kendoDropDownList");
             // var recurrenceEditor = e.container.find("[data-role=recurrenceeditor]").data("kendoRecurrenceEditor");
@@ -309,7 +352,7 @@
     <script>
         $(function() {
         var scheduler = $("#scheduler").data("kendoScheduler");
-scheduler.wrapper.on("mouseup touchend", ".k-scheduler-table td, .k-event", function(e) {
+scheduler.wrapper.on("mouseup doubleTap", ".k-scheduler-table td, .k-event", function(e) {
         var target = $(e.currentTarget);
 
         if (target.hasClass("k-event")) {

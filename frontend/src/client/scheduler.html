@@ -52,6 +52,37 @@
             background-color: #CCB37A;
             border-color: #CCB37A;
         }
+        
+        .k-event {
+            background: none;
+            border-radius: 5px;
+        }
+        
+        .appointment-template {
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            height: 100%;
+            margin-top: -5px;
+        }
+        
+        .red-background {
+            border: 5px solid lightpink;
+        }
+        
+        .blue-background {
+            border: 5px solid lightskyblue;
+        }
+        
+        .appointment-template p {
+             padding: 0 3px 0px;
+            font-size: 12px;
+        }
+        
+        .appointment-template h3 {
+            padding: 0 3px 0px;
+            font-size: 12px;
+        }
     </style>
     <script src="//kendo.cdn.telerik.com/2016.1.226/js/jquery.min.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script>
@@ -60,6 +91,10 @@
 
 <body>
     <div id="example">
+        <!--<div id="people">
+            <input checked type="checkbox" id="alex" value="1">
+            <input checked type="checkbox" id="bob" value="2">
+        </div>-->
         <div id="scheduler"></div>
     </div>
 
@@ -131,6 +166,16 @@
         </div>
     </script>
 
+    <script id="event-template" type="text/x-kendo-template">
+        <div class="appointment-template  #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
+            <p>
+                #: kendo.toString(start, "hh:mm") # - #: kendo.toString(end, "hh:mm") #
+            </p>
+            <h3>#: title #</h3>
+        </div>
+    </script>
+
+
     <script>
         $(function() {
             var today = new Date();
@@ -146,6 +191,7 @@
                     { type: "week", selected: true },
                     "month",
                 ],
+                eventTemplate: $("#event-template").html(),
                 timezone: "America/Los_Angeles",
                 editable: {
                     template: $("#customEditorTemplate").html()
@@ -289,18 +335,7 @@
                     index: 1
                 });
                 
-            //var estheticianId = e.container.find("#estheticianId").data("kendoDropDownList");
-            // var recurrenceEditor = e.container.find("[data-role=recurrenceeditor]").data("kendoRecurrenceEditor");
-            
-            // recurrenceEditor.setOptions({
-            // start: e.event.start
-            // });
-            
-            //bind the widget to the resouces
-            // debugger;
-            // estheticianId.dataSource.data(e.sender.resources[0].dataSource.data());
-            // estheticianId.options.template = kendo.format('<span class="k-scheduler-mark" style="background-color:\#= data.{0}?{0}:"none" \#">sdfsd</span>\#={1}\#', e.sender.resources[0].dataColorField, e.sender.resources[0].dataTextField);
-            // estheticianId.refresh();
+          
         }
     });
 });
@@ -308,24 +343,35 @@
 
     <script>
         $(function() {
-        var scheduler = $("#scheduler").data("kendoScheduler");
-scheduler.wrapper.on("mouseup touchend", ".k-scheduler-table td, .k-event", function(e) {
-        var target = $(e.currentTarget);
+            var scheduler = $("#scheduler").data("kendoScheduler");
+            
+            scheduler.wrapper.on("mouseup doubleTap", ".k-scheduler-table td, .k-event", function(e) {
+                var target = $(e.currentTarget);
 
-        if (target.hasClass("k-event")) {
-            var event = scheduler.occurrenceByUid(target.data("uid"));
-            scheduler.editEvent(event);
-        } else {
-            var slot = scheduler.slotByElement(target[0]);
-            scheduler.addEvent({
-                start: slot.startDate,
-                end: slot.endDate
+                if (target.hasClass("k-event")) {
+                    var event = scheduler.occurrenceByUid(target.data("uid"));
+                    scheduler.editEvent(event);
+                } else {
+                    var slot = scheduler.slotByElement(target[0]);
+                    scheduler.addEvent({
+                        start: slot.startDate,
+                        end: slot.endDate
+                    });
+                }
             });
-        }
-    });
-  
-    
-      });
+            
+            // $("#people :checkbox").change(function(e) {
+            //      var checked = $.map($("#people :checked"), function(checkbox) {
+            //         return parseInt($(checkbox).val());
+            //     });
+
+            //     scheduler.dataSource.filter({
+            //         operator: function(appointment) {
+            //             return $.inArray(appointment.locationId, checked) >= 0;
+            //         }
+            //     });
+            // });
+        });
     </script>
 
     <style>
