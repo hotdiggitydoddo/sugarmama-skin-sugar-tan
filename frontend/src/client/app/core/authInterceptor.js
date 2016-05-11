@@ -24,6 +24,10 @@
         }
         
         function response(response) {
+            angular.element(document).ready(function () {
+				if ($("#menu-toggle-wrapper").hasClass('anim-out'))
+					$("#menu-toggle-wrapper").trigger('click');
+			});
             return response;
         }
     };

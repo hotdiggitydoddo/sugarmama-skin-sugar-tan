@@ -33,20 +33,6 @@
         activate(businessDay);
 
         function activate(businessDay) {
-            // businessDays.forEach(function(day) {
-            //     if (vm.daysOfWeek.find(function(day) {
-            //         day.dayOfWeek === day.id
-            //     }) === undefined) {
-            //         vm.daysOfWeek.push({ id: day.id, value: day.dayOfWeek });
-            //     }
-
-            //     if (vm.locations.find(function(loc) {
-            //         loc.id === day.location.id
-            //     }) === undefined) {
-            //         vm.locations.push({ id: day.location.id, value: day.location.city })
-            //     }
-            // });
-
             if (businessDay) {
                 vm.businessDay.id = businessDay.id;
                 vm.businessDay.startTime = moment(businessDay.startTime).format('YYYY-MM-DD HH:mm');

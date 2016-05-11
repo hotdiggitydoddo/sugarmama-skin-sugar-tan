@@ -40,24 +40,6 @@
                         else {
                               byDate.push({ key: date, appts: [appt] });
                         }
-                        // if (byDate.filter(function (val) {
-                        //     return val.key == date;
-                        // }).length == 0) {
-                        //     byDate.push({ key: date, appts: [appt] });
-                        // } else {
-                        //     var dateInCollection = byDate.filter(function (val) { return val.key == date; });
-                        //     dateInCollection.push(appt);
-                        // }
-
-
-
-                        // if (byDate.dates[date]) {
-                        //     byDate.dates[date].push(appt);
-                        // } else {
-                        //     byDate.dates.push[date];
-                        //     byDate.dates[date] = [];
-                        //     byDate.dates[date].push(appt);
-                        // }
                     });
 
                     vm.appointments = byDate;

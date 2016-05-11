@@ -221,7 +221,7 @@
                             id: "appointmentId",
                             fields: {
                                 appointmentId: { from: "id", type: "number" },
-                                title: { from: "title", defaultValue: "No title", validation: { required: true } },
+                                title: { from: "title", validation: { required: true } },
                                 start: { type: "date", from: "start", validation: { required: true } },
                                 end: { type: "date", from: "end" , validation: { required: true } },
                                 startTimezone: { from: "startTimezone" },

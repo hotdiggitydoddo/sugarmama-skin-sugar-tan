@@ -22,7 +22,6 @@
         activate();
 
         function activate() {
-            logger.info('Activated Add Esthetician View');
         }
 
         function submitAddForm() {
