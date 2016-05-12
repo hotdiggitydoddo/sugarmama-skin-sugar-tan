@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('app.admin.estheticians').controller('EstheticianProfile', EstheticianProfile);
@@ -16,15 +16,15 @@
         activate();
 
         function activate() {
-            return getEstheticianByEmail(authService.getUserName());
+            $state.params.id = authService.estheticianId();
+            
+            return (getEstheticianById(authService.estheticianId()));
         }
 
-        function getEstheticianByEmail(email) {
-            estheticianService.getByEmail(email)
-                .then(function(data) {
+        function getEstheticianById(id) {
+            estheticianService.getById(id)
+                .then(function (data) {
                     vm.esthetician = data;
-                    $state.params.id = vm.esthetician.id;
-                    return vm.esthetician;
                 })
         }
 
@@ -39,11 +39,11 @@
         function save() {
             vm.updating = true;
             estheticianService.updateEsthetician(vm.editableEsth)
-                .then(function(data) {
+                .then(function (data) {
                     vm.esthetician = data;
                     logger.success("Info successfully updated!")
                 })
-                .finally(function() {
+                .finally(function () {
                     vm.toggleEditMode();
                     vm.updating = false;
                 })
@@ -54,11 +54,11 @@
                 return;
             }
             estheticianService.deleteEsthetician({ id: vm.esthetician.id, userId: vm.esthetician.userId })
-                .then(function(data) {
+                .then(function (data) {
                     $state.go('estheticians', { deletedId: vm.esthetician.id });
                 })
-                .catch(function(err) {
-           //         logger.error(err);
+                .catch(function (err) {
+                    //         logger.error(err);
                 });
         }
     }

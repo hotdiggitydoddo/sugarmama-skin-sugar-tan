@@ -16,10 +16,10 @@
         return service;
 
         function request(config) {
-            var token = authToken.getToken();
+            // var token = authToken.getToken();
 
-            if (token)
-                config.headers.Authorization = 'Bearer ' + token;
+            // if (token)
+            //     config.headers.Authorization = 'Bearer ' + token;
             return config;
         }
         

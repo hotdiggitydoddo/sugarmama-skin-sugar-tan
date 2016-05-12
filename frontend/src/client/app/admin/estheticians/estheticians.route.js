@@ -73,9 +73,12 @@
                         nav: 1,
                         content: 'profile'
                     },
+                    params: {
+                        id: null
+                    },
                     data: {
                         authRequired: true,
-                        authorizedRoles: [user_roles.esthetician]
+                        authorizedRoles: [user_roles.esthetician],
                     },
                     views: {
                         '@': {

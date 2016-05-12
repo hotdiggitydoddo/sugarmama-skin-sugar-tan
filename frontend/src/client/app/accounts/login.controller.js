@@ -19,7 +19,7 @@
         activate();
 
         function activate() {
-            
+
         }
 
         function submitLoginForm() {
@@ -33,12 +33,12 @@
             authService.login(vm.loginForm)
                 .then(function (data) {
                     console.log(data);
-                //    logger.success('Logged in!');
-
-                    // }).finally(function() {
-                    // 	vm.signUpForm.loading = false;
+                    if (data)
+                        $state.go('estheticians_profile', { id: data });
+                    else
+                        $state.go('appointments');
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     if (error.status === -1) {
                         logger.error("Unable to communicate with the server.  Please notify tech support.")
                     } else {
@@ -52,18 +52,5 @@
             console.log('hello');
             console.log(vm.loginForm);
         }
-
-        // 		function getServices() {
-        // 			vm.services.hairRemoval = dataservice.getServices("hairRemoval");
-        // 			vm.services.facial = dataservice.getServices("facials");
-        // 			// return dataservice.getServices().then(function(data) {
-        // 			// 	vm.services = data;
-        // 			// 	return vm.services;
-        // 			// });
-        // 		}
-
-        // 		function gotoService(s) {
-        // 			$state.go('services.' + s);
-        // 		}
     }
 })();

@@ -90,7 +90,7 @@
                         }
                     }
 
-                    if (!authService.isAuthenticated()) {
+                    if (!authService.isAuthenticated) {
                         if (next.name !== 'login') {
                             event.preventDefault();
                             $state.go('login');
