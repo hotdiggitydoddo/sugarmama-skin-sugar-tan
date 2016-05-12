@@ -5,18 +5,18 @@
         .module('app.core')
         .factory('authService', authService);
 
-    authService.$inject = ['$http', '$location', '$q', 'exception', 'logger', 'authToken', 'envService'];
+    authService.$inject = ['$http', '$location', '$q', 'exception', 'logger', 'authToken', 'envService', 'user_roles'];
 
-    function authService($http, $location, $q, exception, logger, authToken, envService) {
+    function authService($http, $location, $q, exception, logger, authToken, envService, user_roles) {
         var apiUrl = envService.read('apiUrl');
         var _user;
         
         var service = {
             login: login,
             logout: logout,
-            user: _user,
+            getUserName: getUserName,
             isAuthenticated: isAuthenticated,
-            isInRole: isInRole
+            isAuthorized: isAuthorized,
         };
 
         return service;
@@ -24,9 +24,9 @@
         function login(loginData) {
             return $http.post(apiUrl + '/auth/login', loginData)
             .then(function(data, status, headers, config) {
-                debugger;
-                authToken.setToken(data.data.authInfo.token);
-               _user = data.data;
+                _user = data.data;
+                authToken.setToken(_user.authInfo);
+                authToken.setRoles(_user.roles);
                 logger.success('Welcome back, ' + _user.firstName + '!');
             })
             .catch(function(message) {
@@ -41,17 +41,19 @@
 
         function logout() {
             authToken.clearToken();
+            authToken.clearRoles();
         }
         
         function isAuthenticated() {
             return authToken.isAuthenticated();
         }
         
-        function isInRole(roleName) {
-            return _user.roles.filter(function(role) {
-                return r.name == roleName;
-            });
+        function isAuthorized(roles) {
+            return authToken.isAuthorized(roles);
         }
         
+        function getUserName() {
+            return authToken.getUserName();
+        }
     };
 })();

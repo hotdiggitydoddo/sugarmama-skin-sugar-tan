@@ -75,6 +75,33 @@ module.exports = {
         return deferred.promise;
     },
 
+    getEstheticianByEmail: function (email) {
+        var deferred = sails.q.defer();
+        var user = null;
+        User.findOne({ emailAddress: email })
+            .then(function (foundUser) {
+                user = foundUser;
+                return Esthetician.findOne({ user: user.id })
+                    .then(function (esth) {
+                        var result = {
+                            id: esth.id,
+                            userId: esth.user.id,
+                            phone: user.phoneNumber,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            email: user.emailAddress,
+                            color: esth.color
+                        };
+                        return deferred.resolve(result);
+                    })
+            })
+            .catch(function (err) {
+                deferred.reject(err);
+            });
+
+        return deferred.promise;
+    },
+
     deleteEsthetician: function (estheticianInfo) {
         var self = this;
         var deferred = sails.q.defer();
@@ -148,7 +175,7 @@ module.exports = {
         var deferred = sails.q.defer();
         var result = {};
 
-      
+
 
 
 

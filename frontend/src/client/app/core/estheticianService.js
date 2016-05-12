@@ -15,6 +15,7 @@
             updateEsthetician: updateEsthetician,
             deleteEsthetician: deleteEsthetician,
             getById: getById,
+            getByEmail: getByEmail,
             getShift: getShift,
             getShifts: getShifts,
             saveShift: saveShift,
@@ -43,6 +44,18 @@
                     logger.error(message.data);
                 })
         }
+        
+        function getByEmail(email) {
+            return $http.get(apiUrl + '/esthetician/getByEmail?email=' + email)
+                .then(function(data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function(message) {
+                    logger.error(message.data);
+                })
+        }
+
+
 
         function createEsthetician(estheticianData) {
             return $http.post(apiUrl + '/esthetician/create', estheticianData)

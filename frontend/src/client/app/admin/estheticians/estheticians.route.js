@@ -3,18 +3,18 @@
 
     angular.module('app.admin.estheticians').run(appRun);
 
-    appRun.$inject = ['routerHelper'];
+     appRun.$inject = ['routerHelper', 'user_roles'];
 
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
+    function appRun(routerHelper, user_roles) {
+        routerHelper.configureStates(getStates(user_roles));
     }
 
-    function getStates() {
+    function getStates(user_roles) {
         return [
             {
                 state: 'estheticians',
                 config: {
-                    url: '/admin/estheticians/',
+                    url: '/admin/estheticians',
                     templateUrl: 'app/admin/estheticians/estheticians.html',
                     controller: 'Estheticians',
                     controllerAs: 'vm',
@@ -27,7 +27,8 @@
                         deletedId: null
                     },
                     data: {
-                        authRequired: true
+                        authRequired: true,
+                        authorizedRoles: [user_roles.admin, user_roles.owner]
                     }
                 }
             }, {
@@ -37,7 +38,8 @@
                     title: 'Details',
                     data: {
                         id: ':id',
-                        authRequired: true
+                        authRequired: true,
+                        authorizedRoles: [user_roles.admin, user_roles.owner]
                     },
                     views: {
                         '@': {
@@ -58,6 +60,45 @@
                             controllerAs: 'vm',
                             parent: 'estheticians_detail',
                             title: 'Details',
+                        }
+                    }
+                }
+            },
+            {
+                state: 'estheticians_profile',
+                config: {
+                    url: '/admin/profile',
+                    title: 'Profile',
+                    settings: {
+                        nav: 1,
+                        content: 'profile'
+                    },
+                    data: {
+                        authRequired: true,
+                        authorizedRoles: [user_roles.esthetician]
+                    },
+                    views: {
+                        '@': {
+                            templateUrl: 'app/admin/estheticians/esthetician.profile.html',
+                            controller: 'EstheticianProfile',
+                            controllerAs: 'vm',
+                        },
+                        'shifts@estheticians_profile': {
+                            templateUrl: 'app/admin/shifts/shifts.html',
+                            controller: 'Shifts',
+                            controllerAs: 'vm',
+                            parent: 'estheticians_profile',
+                            title: 'Details',
+                        },
+                        'appointments@estheticians_profile': {
+                            templateUrl: 'app/admin/estheticians/esthetician.appointments.html',
+                            controller: 'EstheticianAppointments',
+                            controllerAs: 'vm',
+                            parent: 'estheticians_profile',
+                            title: 'Details',
+                            params: {
+                                id: null
+                            }
                         }
                     }
                 }

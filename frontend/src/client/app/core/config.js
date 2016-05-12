@@ -39,7 +39,7 @@
         envServiceProvider.config({
 			domains: {
 				development: ['localhost'],
-				production: ['ryancaseydodd.com']
+				production: ['ryancaseydodd.com', 'www.ryancaseydodd.com']
 			},
 			vars: {
 				development: {

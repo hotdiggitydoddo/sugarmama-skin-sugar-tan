@@ -10,6 +10,7 @@
 		var states = routerHelper.getStates();
 		vm.isCurrent = isCurrent;
 		vm.isAuthenticated = isAuthenticated;
+		vm.isAuthorized = isAuthorized;
 		vm.logOut = logOut;
 		
 		activate();
@@ -18,7 +19,6 @@
 			
 			getNavRoutes();
 			if (authService.isAuthenticated)
-			debugger;
 				getAuthRoutes();
 		}
 
@@ -39,7 +39,11 @@
 		function isAuthenticated() {
 			return authService.isAuthenticated();
 		}
-
+		
+		function isAuthorized(roles) {
+			return authService.isAuthorized(roles);
+		}
+		
 		function logOut() {
 			authService.logout();
 		}

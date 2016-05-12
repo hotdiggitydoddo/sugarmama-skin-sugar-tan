@@ -3,13 +3,13 @@
 
     angular.module('app.admin.locations').run(appRun);
 
-    appRun.$inject = ['routerHelper'];
+    appRun.$inject = ['routerHelper', 'user_roles'];
 
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
+    function appRun(routerHelper, user_roles) {
+        routerHelper.configureStates(getStates(user_roles));
     }
 
-    function getStates() {
+    function getStates(user_roles) {
         return [{
             state: 'locations',
             config: {
@@ -26,7 +26,8 @@
                     deletedId: null
                 },
                 data: {
-                    authRequired: true
+                    authRequired: true,
+                    authorizedRoles: [user_roles.admin, user_roles.owner]
                 }
             }
         }, 

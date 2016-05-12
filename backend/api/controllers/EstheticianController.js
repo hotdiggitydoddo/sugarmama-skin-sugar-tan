@@ -28,6 +28,18 @@ module.exports = {
                 res.send(500);
             });
     },
+    
+     getByEmail: function(req, res) {
+        
+        EstheticianService.getEstheticianByEmail(req.query.email)
+            .then(function(esthetician) {
+                console.log('here')
+                return res.json(esthetician);
+            })
+            .catch(function(err) {
+                res.send(500);
+            });
+    },
 
     create: function(req, res) {
         var estheticianVm = req.body;

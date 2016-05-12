@@ -24,5 +24,6 @@
          'app.admin.appointments',
 		 'app.admin.businessDays'
 	]);
+	
 
 })();

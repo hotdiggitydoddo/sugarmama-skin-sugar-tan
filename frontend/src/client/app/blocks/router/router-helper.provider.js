@@ -1,5 +1,5 @@
 /* Help configure the state-base ui.router */
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -17,14 +17,14 @@
 
         $locationProvider.html5Mode(true);
 
-        this.configure = function(cfg) {
+        this.configure = function (cfg) {
             angular.extend(config, cfg);
         };
 
         this.$get = RouterHelper;
-        RouterHelper.$inject = ['$location', '$rootScope', '$state', 'logger'];
+        RouterHelper.$inject = ['$location', '$rootScope', '$state', 'logger', 'authService'];
         /* @ngInject */
-        function RouterHelper($location, $rootScope, $state, logger) {
+        function RouterHelper($location, $rootScope, $state, logger, authService) {
             var handlingStateChangeError = false;
             var hasOtherwise = false;
             var stateCounts = {
@@ -45,7 +45,7 @@
             ///////////////
 
             function configureStates(states, otherwisePath) {
-                states.forEach(function(state) {
+                states.forEach(function (state) {
                     state.config.resolve =
                         angular.extend(state.config.resolve || {}, config.resolveAlways);
                     $stateProvider.state(state.state, state.config);
@@ -61,7 +61,7 @@
                 // On routing error, go to the dashboard.
                 // Provide an exit clause if it tries to do it twice.
                 $rootScope.$on('$stateChangeError',
-                    function(event, toState, toParams, fromState, fromParams, error) {
+                    function (event, toState, toParams, fromState, fromParams, error) {
                         if (handlingStateChangeError) {
                             return;
                         }
@@ -77,6 +77,26 @@
                         $location.path('/');
                     }
                 );
+
+                $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
+                    if ('data' in next && 'authorizedRoles' in next.data) {
+                        var authorizedRoles = next.data.authorizedRoles;
+                        if (!authService.isAuthorized(authorizedRoles)) {
+                            event.preventDefault();
+                            $state.go('home', {}, { reload: true });
+                           // $state.go($state.current, {}, { reload: true });
+                            logger.warning('You are not authorized to access that area.')
+                            //$rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                        }
+                    }
+
+                    if (!authService.isAuthenticated()) {
+                        if (next.name !== 'login') {
+                            event.preventDefault();
+                            $state.go('login');
+                        }
+                    }
+                });
             }
 
             function init() {
@@ -88,7 +108,7 @@
 
             function updateDocTitle() {
                 $rootScope.$on('$stateChangeSuccess',
-                    function(event, toState, toParams, fromState, fromParams) {
+                    function (event, toState, toParams, fromState, fromParams) {
                         stateCounts.changes++;
                         handlingStateChangeError = false;
                         var title = config.docTitle + ' ' + (toState.title || '');
