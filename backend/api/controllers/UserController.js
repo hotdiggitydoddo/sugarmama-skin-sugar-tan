@@ -8,7 +8,7 @@
 module.exports = {
     signup: function (req, res) {
         var userVm = req.body;
-
+        userVm.roles = [1];
         UserService.createUser(userVm)
             .then(function (success) {
                 res.ok(success);

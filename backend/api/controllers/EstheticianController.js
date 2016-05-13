@@ -44,6 +44,7 @@ module.exports = {
     create: function(req, res) {
         var estheticianVm = req.body;
         estheticianVm.password = '$ugar4Life';
+        estheticianVm.roles = [2];
         UserService.createUser(estheticianVm)
             .then(function(newUser) {
                 console.log('created user: ' + newUser)

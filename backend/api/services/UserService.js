@@ -17,7 +17,8 @@ module.exports = {
                     lastName: userVm.lastName,
                     emailAddress: userVm.emailAddress,
                     phoneNumber: userVm.phoneNumber,
-                    password: encryptedPassword
+                    password: encryptedPassword,
+                    roles: userVm.roles
                 })
                     .then(function (newUser) {
                         deferred.resolve(newUser);
@@ -88,28 +89,38 @@ module.exports = {
 
         User.findOne({ id: changePasswordVm.userId })
             .then(function (user) {
-                Passwords.checkPassword({
-                    passwordAttempt: changePasswordVm.password,
-                    encryptedPassword: user.password
-                }).exec({
-                    error: function (err) {
-                        deferred.reject(err);
-                    },
+                if (changePasswordVm.isAdmin) {
+                    return commitPasswordChange(user, changePasswordVm)
+                        .then(function (result) {
+                            deferred.resolve(result);
+                        })
+                        .catch(function (err) {
+                            deferred.reject(err);
+                        });
+                } else {
+                    Passwords.checkPassword({
+                        passwordAttempt: changePasswordVm.password,
+                        encryptedPassword: user.password
+                    }).exec({
+                        error: function (err) {
+                            deferred.reject(err);
+                        },
 
-                    incorrect: function () {
-                        deferred.reject('Your current password does not match the current password provided.');
-                    },
+                        incorrect: function () {
+                            deferred.reject('Your current password does not match the current password provided.');
+                        },
 
-                    success: function () {
-                        commitPasswordChange(user, changePasswordVm)
-                            .then(function (result) {
-                                deferred.resolve(result);
-                            })
-                            .catch(function (err) {
-                                deferred.reject(err);
-                            })
-                    }
-                });
+                        success: function () {
+                            commitPasswordChange(user, changePasswordVm)
+                                .then(function (result) {
+                                    deferred.resolve(result);
+                                })
+                                .catch(function (err) {
+                                    deferred.reject(err);
+                                })
+                        }
+                    });
+                }
             })
             .catch(function (err) {
                 deferred.reject(err);

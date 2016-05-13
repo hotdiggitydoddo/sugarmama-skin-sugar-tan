@@ -8,16 +8,22 @@
     function EstheticianProfile($state, logger, estheticianService, authService) {
         var vm = this;
         vm.esthetician = {}
+        vm.passwordForm = {
+            formSubmitted: false
+        }
         vm.editMode = false;
+         vm.passwordMode = false;
         vm.isDirty = false;
         vm.toggleEditMode = toggleEditMode;
+          vm.togglePasswordMode = togglePasswordMode;
         vm.updating = false;
         vm.save = save;
+          vm.changePassword = changePassword;
         activate();
 
         function activate() {
             $state.params.id = authService.estheticianId();
-            
+
             return (getEstheticianById(authService.estheticianId()));
         }
 
@@ -27,13 +33,42 @@
                     vm.esthetician = data;
                 })
         }
-
+        
+   function togglePasswordMode() {
+            vm.passwordMode = !vm.passwordMode;
+            vm.passwordForm = {
+                userId: vm.esthetician.userId,
+                formSubmitted: false
+            };
+        }
+        
         function toggleEditMode() {
             vm.editMode = !vm.editMode;
             if (vm.editMode)
                 vm.editableEsth = angular.copy(vm.esthetician);
             else
                 vm.editableEsth = null;
+        }
+
+
+        function changePassword(valid) {
+            vm.passwordForm.formSubmitted = true;
+            if (!valid)
+                return;
+            vm.updating = true;
+            estheticianService.changePassword(vm.passwordForm)
+                .then(function (data) {
+                    if (data) {
+                        vm.togglePasswordMode();
+                        logger.success("Password successfully updated.")
+                    }
+                })
+                .catch(function (err) {
+                    logger.error(err);
+                })
+                .finally(function () {
+                    vm.updating = false;
+                })
         }
 
         function save() {

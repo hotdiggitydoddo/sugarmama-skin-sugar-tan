@@ -57,17 +57,6 @@
 
                     <div ng-show="vm.passwordMode" class="contents">
                         <form class="form-horizontal" ng-submit="vm.changePassword(passwordForm.$valid)" id="passwordForm" name="passwordForm" novalidate>
-                            <div class="form-group" ng-class="{ 'has-error': vm.passwordForm.formSubmitted && passwordForm.password.$invalid || passwordForm.password.$touched && passwordForm.password.$invalid }">
-                                <label for="password" class="col-sm-3 control-label">current password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" ng-model="vm.passwordForm.password" ng-minlength="6" ng-maxlength="40" required
-                                        name="password" title="Please enter your password" placeholder="current password" />
-                                    <div class="help-block" ng-messages="passwordForm.password.$error" ng-if="passwordForm.password.$touched || vm.passwordForm.formSubmitted">
-                                        <div ng-messages-include="/error-messages.html"></div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="form-group" ng-class="{ 'has-error': vm.passwordForm.formSubmitted && passwordForm.newPassword.$invalid || passwordForm.newPassword.$touched && passwordForm.newPassword.$invalid }">
                                 <label for="newPassword" class="col-sm-3 control-label">new password</label>
                                 <div class="col-sm-9">
@@ -99,59 +88,6 @@
                                     <button ng-click="vm.togglePasswordMode()" class="btn btn-default">cancel</button>
                                 </div>
                             </div>
-
-                            <!--<div class="form-group" ng-class="{ 'has-error': vm.signUpForm.formSubmitted && signUpForm.passwordConfirmation.$invalid || signUpForm.passwordConfirmation.$touched && signUpForm.passwordConfirmation.$invalid }">
-                                <label for="passwordConfirmation">confirm password</label>
-                                <input type="password" class="form-control" ng-model="vm.signUpForm.passwordConfirmation" validate-equals="vm.signUpForm.password"
-                                    required name="passwordConfirmation" title="Please confirm your password" />
-                                <div class="help-block" ng-messages="signUpForm.passwordConfirmation.$error" ng-if="signUpForm.passwordConfirmation.$touched || vm.signUpForm.formSubmitted">
-                                    <div ng-messages-include="/error-messages.html"></div>
-                                </div>
-                            </div>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <!--<div class="form-group">
-                                <label for="currentPassword" class="col-sm-3 control-label">current password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="currentPassword" ng-model="vm.newPassword.currentPassword" placeholder="current password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="newPassword" class="col-sm-3 control-label">new password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="newPassword" ng-model="vm.newPassword.password" placeholder="new password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmPassword" class="col-sm-3 control-label">confirm password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="confirmPassword" ng-model="vm.newPassword.confirmPassword" placeholder="confirm password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-10">
-                                    <button type="submit" ng-click="vm.changePassword()" class="btn btn-success" ng-disabled="vm.updating">
-                                        <span ng-show="!vm.updating">save</span>
-                                        <span ng-show="vm.updating">please wait...</span>
-                                    </button>
-                                    <button ng-click="vm.togglePasswordMode()" class="btn btn-default">cancel</button>
-                                </div>
-                            </div>-->
                         </form>
                     </div>
 

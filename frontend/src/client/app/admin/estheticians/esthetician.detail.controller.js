@@ -39,7 +39,8 @@
             vm.passwordMode = !vm.passwordMode;
             vm.passwordForm = {
                 userId: vm.esthetician.userId,
-                formSubmitted: false
+                formSubmitted: false,
+                isAdmin: true
             };
         }
 
