@@ -60,3 +60,5 @@ function createToken(user, hostname) {
     });
     return deferred.promise;
 }
+
+

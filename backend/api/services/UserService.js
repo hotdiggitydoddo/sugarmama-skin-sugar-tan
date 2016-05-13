@@ -86,7 +86,7 @@ module.exports = {
     changePassword: function (changePasswordVm) {
         var deferred = sails.q.defer();
         var Passwords = require('machinepack-passwords');
-
+        console.log('changepw: looking up user with id: ' + changePasswordVm.userId);
         User.findOne({ id: changePasswordVm.userId })
             .then(function (user) {
                 if (changePasswordVm.isAdmin) {
@@ -133,6 +133,7 @@ function commitPasswordChange(user, changePasswordVm) {
     var deferred = sails.q.defer();
     var Passwords = require('machinepack-passwords');
     // Encrypt a string using the BCrypt algorithm.
+    console.log('encrypting new password: ' + changePasswordVm.newPassword)
     Passwords.encryptPassword({
         password: changePasswordVm.newPassword,
         difficulty: 10

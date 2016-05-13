@@ -20,9 +20,8 @@
 					</ul>
 				</div>
 			</div>
+
 			<div class="row">
-				<span ng-show="vm.isAuthenticated()"><a href="/" ng-click="vm.logOut()">logout</a></span>
-				<span ng-show="!vm.isAuthenticated()"><a href="/login">login</a></span>
 				<ul class="social-icons">
 					<li><a href="https://www.facebook.com/sugarmamaskinsugartan" target="_blank"><i class="fa fa-facebook fa-lg"></i></a></li>
 					<li><a href="http://instagram.com/sugarmamaskinsugartan" target="_blank"><i class="fa fa-instagram fa-lg"></i></a></li>
@@ -30,10 +29,17 @@
 				</ul>
 			</div>
 			<div class="row">
-				<span style="color: rgb(236, 209, 151)">12362 beach blvd<br />suite 19<br />stanton, ca 90680<br />562.484.8653</span>
-				<div id="copyright" style="margin-bottom: 25px !important;">
-					<!--@Html.Partial("_LoginPartial")-->
+				<span ng-show="!vm.isAuthenticated()" style="color: rgb(236, 209, 151)">12362 beach blvd<br />suite 19<br />stanton, ca 90680<br />562.484.8653</span><br>
+				<i ng-show="!vm.isAuthenticated()" class="fa fa-star" style="color:rgb(236, 209, 151)"></i><br>
+				<span ng-show="!vm.isAuthenticated()" style="color: rgb(236, 209, 151); margin-bottom: 3px; margin-top:3px">451 w. lambert rd.<br>suite 207<br>brea, ca 92821<br>562.484.8653</span>
+				<div id="copyright" style="margin-bottom: 25px !important; margin-top:16px;">
+					<div class="row mb-small" ng-show="vm.isAuthenticated()">
+						<span style="color: rgb(236, 209, 151)">welcome back, {{vm.firstName() | lowercase}}!</span>
+					</div>
+					<span ng-show="!vm.isAuthenticated()"><a href="/login" class="user-action" id="login"></a></span>
+					<span ng-show="vm.isAuthenticated()"><a  href="/" ng-click="vm.logOut()" class="user-action" id="logoff"></a></span>
 				</div>
+
 			</div>
 		</div>
 	</div>

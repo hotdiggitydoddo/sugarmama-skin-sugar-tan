@@ -11,6 +11,7 @@
 		vm.isCurrent = isCurrent;
 		vm.isAuthenticated = isAuthenticated;
 		vm.isAuthorized = isAuthorized;
+		vm.firstName = firstName;
 		vm.logOut = logOut;
 		
 		activate();
@@ -44,6 +45,10 @@
 			return authService.isAuthorized(roles);
 		}
 		
+		function firstName() {
+			return authService.firstName();
+		}
+				
 		function logOut() {
 			authService.logout();
 		}

@@ -99,7 +99,7 @@
   color: #e1e1e1;
 }
 .dark-sidebar #copyright:after {
-  background-color: #2a2a2a;
+  background-color: #9A8181;
   box-shadow: 0 1px 0 0 #383838;
 }
 .dark-sidebar #inner-bar {
@@ -782,7 +782,7 @@ ul.list-items .list-des {
 #side-contents {
   position: relative;
   left: 0;
-  padding-bottom: 100px;
+  padding-bottom: 80px;
 }
 #logo-wrapper {
   padding: 60px 40px 40px;

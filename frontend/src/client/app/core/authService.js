@@ -10,6 +10,7 @@
     function authService($http, $window, $location, $q, exception, logger, authToken, envService, user_roles) {
         var apiUrl = envService.read('apiUrl');
         var username = '';
+        var firstName = '';
         var _isAuthenticated = false;
         var role = '';
         var estheticianId;
@@ -22,7 +23,9 @@
             logout: logout,
             isAuthenticated: function () { return _isAuthenticated },
             isAuthorized: isAuthorized,
-            estheticianId: function () { return estheticianId }
+            estheticianId: function () { return estheticianId },
+            username: function() { return username },
+            firstName: function() { return firstName }
         };
 
         loadUserCredentials();
@@ -42,10 +45,11 @@
 
         function useCredentials(token) {
             var tokenized = token.split('|');
-            username = tokenized[0];
-            var roleFromServer = tokenized[1];
-            var esthId = tokenized[2];
-            var enc = tokenized[3]
+            firstName = tokenized[0]
+            username = tokenized[1];
+            var roleFromServer = tokenized[2];
+            var esthId = tokenized[3];
+            var enc = tokenized[4]
             _isAuthenticated = true;
             authToken = token;
 
@@ -77,10 +81,10 @@
                 .then(function (data, status, headers, config) {
                     var authInfo = data.data;
                     if (authInfo.estheticianId) {
-                        storeUserCredentials(authInfo.userName + '|' + authInfo.role + '|' +
+                        storeUserCredentials(authInfo.firstName + '|' + authInfo.userName + '|' + authInfo.role + '|' +
                             authInfo.estheticianId + '|' + authInfo.token);
                     } else {
-                        storeUserCredentials(authInfo.userName + '|' + authInfo.role + '|' + '*' + '|' + authInfo.token);
+                        storeUserCredentials(authInfo.firstName + '|' + authInfo.userName + '|' + authInfo.role + '|' + '*' + '|' + authInfo.token);
                     }
 
                     logger.success('Welcome back, ' + authInfo.firstName + '!');

@@ -20,7 +20,7 @@ module.exports = {
 
     changePassword: function (req, res) {
         var passwordVm = req.body;
-
+        console.log('enter user controller change pw');
         UserService.changePassword(passwordVm)
             .then(function (success) {
                 res.ok(success);
