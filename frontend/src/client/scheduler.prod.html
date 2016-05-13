@@ -12,7 +12,7 @@
             font-family: Arial, Helvetica, sans-serif;
         }
         
-         body {
+        body {
             margin: 0;
         }
         
@@ -62,7 +62,7 @@
             border-radius: 5px;
         }
         
-         .k-scheduler-table .k-today {
+        .k-scheduler-table .k-today {
             background: #F7F5EB;
         }
         
@@ -75,11 +75,11 @@
         }
         
         .red-background {
-            border: 5px solid lightpink;
+            border: 5px solid #7D0202;
         }
         
         .blue-background {
-            border: 5px solid lightskyblue;
+            border: 5px solid #0041B9;
         }
         
         .appointment-template p {
@@ -173,9 +173,8 @@
     <script id="event-template" type="text/x-kendo-template">
         <div class="appointment-template  #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
             <p>
-                #: kendo.toString(start, "hh:mm") # - #: kendo.toString(end, "hh:mm") #
+                <h3>#: title #</h3>
             </p>
-            <h3>#: title #</h3>
         </div>
     </script>
 
@@ -191,7 +190,7 @@
                  //mobile: 'phone',
                 views: [
                     "day",
-                    { type: "week", selected: true },
+                    { type: "week", selected: true, majorTick: 30 },
                     "month",
                 ],
                 timezone: "America/Los_Angeles",
