@@ -11,7 +11,7 @@
         vm.passwordForm = {
             formSubmitted: false
         }
-        
+
         vm.editMode = false;
         vm.passwordMode = false;
         vm.isDirty = false;
@@ -38,6 +38,7 @@
         function togglePasswordMode() {
             vm.passwordMode = !vm.passwordMode;
             vm.passwordForm = {
+                userId: vm.esthetician.userId,
                 formSubmitted: false
             };
         }
@@ -55,13 +56,17 @@
             if (!valid)
                 return;
             vm.updating = true;
-            estheticianService.updateEsthetician(vm.editableEsth)
+            estheticianService.changePassword(vm.passwordForm)
                 .then(function (data) {
-                    vm.esthetician = data;
-                    logger.success("Info successfully updated!")
+                    if (data) {
+                        vm.togglePasswordMode();
+                        logger.success("Password successfully updated.")
+                    }
+                })
+                .catch(function (err) {
+                    logger.error(err);
                 })
                 .finally(function () {
-                    vm.toggleEditMode();
                     vm.updating = false;
                 })
         }

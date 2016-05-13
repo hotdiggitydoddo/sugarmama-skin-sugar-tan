@@ -20,7 +20,8 @@
             getShifts: getShifts,
             saveShift: saveShift,
             deleteShift: deleteShift,
-            getAppointments: getAppointments
+            getAppointments: getAppointments,
+            changePassword: changePassword
         };
 
         return service;
@@ -145,6 +146,16 @@
         
          function getAppointments(id) {
             return $http.get(apiUrl + '/appointment/getByEsthetician?id=' + id)
+                .then(function(data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function(message) {
+                    logger.error(message.data);
+                })
+        }
+        
+        function changePassword(changePasswordVm) {
+            return $http.post(apiUrl + '/user/changepassword', changePasswordVm)
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })

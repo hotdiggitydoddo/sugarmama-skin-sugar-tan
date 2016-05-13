@@ -1,5 +1,5 @@
 module.exports = {
-    createUser: function(userVm) {
+    createUser: function (userVm) {
         var deferred = sails.q.defer();
         var Passwords = require('machinepack-passwords');
         // Encrypt a string using the BCrypt algorithm.
@@ -7,11 +7,11 @@ module.exports = {
             password: userVm.password,
             difficulty: 10
         }).exec({
-            error: function(err) {
+            error: function (err) {
                 deferred.reject(err);
             },
 
-            success: function(encryptedPassword) {
+            success: function (encryptedPassword) {
                 User.create({
                     firstName: userVm.firstName,
                     lastName: userVm.lastName,
@@ -19,10 +19,10 @@ module.exports = {
                     phoneNumber: userVm.phoneNumber,
                     password: encryptedPassword
                 })
-                    .then(function(newUser) {
+                    .then(function (newUser) {
                         deferred.resolve(newUser);
                     })
-                    .catch(function(err) {
+                    .catch(function (err) {
                         deferred.reject(err);
                     })
             }
@@ -30,45 +30,44 @@ module.exports = {
         return deferred.promise;
     },
 
-    getUserById: function(id) {
+    getUserById: function (id) {
         var deferred = sails.q.defer();
 
         User.findOne()
             .where({ id: id })
-            .then(function(user) {
+            .then(function (user) {
                 deferred.resolve(user);
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 deferred.reject(err);
             })
 
         return deferred.promise;
     },
-    
-    getByEmail: function(email) {
+
+    getByEmail: function (email) {
         var deferred = sails.q.defer();
 
         User.findOne({ emailAddress: email })
             .populate('roles')
-            .then(function(user) {
+            .then(function (user) {
                 deferred.resolve(user);
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 deferred.reject(err);
             })
 
         return deferred.promise;
     },
 
-    updateUser: function(userVm) {
-        var q = sails.q;
-        var deferred = q.defer();
+    updateUser: function (userVm) {
+        var deferred = sails.q.defer();
 
         User.findOne({ id: userVm.id })
-            .then(function(existing) {
+            .then(function (existing) {
                 existing.emailAddress = userVm.email;
                 existing.phoneNumber = userVm.phone;
-                existing.save(function(err, updated) {
+                existing.save(function (err, updated) {
                     if (err) {
                         deferred.reject(err)
                     } else {
@@ -76,10 +75,71 @@ module.exports = {
                     }
                 });
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log(err);
                 deferred.reject(err.originalError);
             });
-           return deferred.promise;  
+        return deferred.promise;
+    },
+
+    changePassword: function (changePasswordVm) {
+        var deferred = sails.q.defer();
+        var Passwords = require('machinepack-passwords');
+
+        User.findOne({ id: changePasswordVm.userId })
+            .then(function (user) {
+                Passwords.checkPassword({
+                    passwordAttempt: changePasswordVm.password,
+                    encryptedPassword: user.password
+                }).exec({
+                    error: function (err) {
+                        deferred.reject(err);
+                    },
+
+                    incorrect: function () {
+                        deferred.reject('Your current password does not match the current password provided.');
+                    },
+
+                    success: function () {
+                        commitPasswordChange(user, changePasswordVm)
+                            .then(function (result) {
+                                deferred.resolve(result);
+                            })
+                            .catch(function (err) {
+                                deferred.reject(err);
+                            })
+                    }
+                });
+            })
+            .catch(function (err) {
+                deferred.reject(err);
+            });
+        return deferred.promise;
     }
+};
+
+function commitPasswordChange(user, changePasswordVm) {
+    var deferred = sails.q.defer();
+    var Passwords = require('machinepack-passwords');
+    // Encrypt a string using the BCrypt algorithm.
+    Passwords.encryptPassword({
+        password: changePasswordVm.newPassword,
+        difficulty: 10
+    }).exec({
+        error: function (err) {
+            deferred.reject(err);
+        },
+
+        success: function (encryptedPassword) {
+            user.password = encryptedPassword;
+            user.save(function (err, updated) {
+                if (err) {
+                    deferred.reject(err)
+                } else {
+                    deferred.resolve("ok");
+                }
+            });
+        }
+    })
+    return deferred.promise;
 }

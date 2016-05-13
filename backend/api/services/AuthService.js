@@ -32,8 +32,7 @@ module.exports = {
 
 function createToken(user, hostname) {
     var JWT = require('machinepack-jwt');
-    var q = require('q');
-    var deferred = q.defer();
+    var deferred = sails.q.defer();
 
     var payload = {
         iss: hostname,
