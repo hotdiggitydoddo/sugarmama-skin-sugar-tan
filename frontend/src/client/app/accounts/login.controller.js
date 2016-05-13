@@ -33,8 +33,10 @@
             authService.login(vm.loginForm)
                 .then(function (data) {
                     console.log(data);
-                    if (data)
+                    if (data && data != -1)
                         $state.go('estheticians_profile', { id: data });
+                    else if (data && data == -1)
+                        return;
                     else
                         $state.go('appointments');
                 })

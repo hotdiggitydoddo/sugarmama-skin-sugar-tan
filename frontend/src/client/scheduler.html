@@ -12,6 +12,10 @@
             font-family: Arial, Helvetica, sans-serif;
         }
         
+        body {
+            margin: 0;
+        }
+        
         .k-scheduler-toolbar>.k-scheduler-views>li.k-state-selected {
             border-bottom-color: #D68117;
         }
@@ -57,7 +61,9 @@
             background: none;
             border-radius: 5px;
         }
-        
+        .k-scheduler-table .k-today {
+            background: #F7F5EB;
+        }
         .appointment-template {
             -webkit-border-radius: 5px;
             -moz-border-radius: 5px;
@@ -67,11 +73,11 @@
         }
         
         .red-background {
-            border: 5px solid lightpink;
+            border: 5px solid #7D0202;
         }
         
         .blue-background {
-            border: 5px solid lightskyblue;
+            border: 5px solid #0041B9;
         }
         
         .appointment-template p {
@@ -169,9 +175,9 @@
     <script id="event-template" type="text/x-kendo-template">
         <div class="appointment-template  #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
             <p>
-                #: kendo.toString(start, "hh:mm") # - #: kendo.toString(end, "hh:mm") #
+                 <h3>#: title #</h3>
             </p>
-            <h3>#: title #</h3>
+          
         </div>
     </script>
 

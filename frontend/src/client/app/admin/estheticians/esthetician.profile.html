@@ -39,7 +39,7 @@
                 <div class="icon-box ib-center ib-boxed">
                     <i class="ib-icon fa fa-user"></i>
                     <h4 class="title">info</h4>
-                    <div ng-hide="vm.editMode" class="contents">
+                    <div ng-hide="vm.editMode || vm.passwordMode" class="contents">
                         <dl class="dl-horizontal">
                             <dt>email</dt>
                             <dd>{{vm.esthetician.email}}</dd>
@@ -84,7 +84,7 @@
                     <i class="ib-icon fa fa-briefcase"></i>
                     <h4 class="title">work schedule</h4>
                     <div class="contents">
-                        <!--<div ui-view="shifts"></div>-->
+                        <div ui-view="shifts"></div>
                         <!--<div class="row">
                         <div class="col-md-12">
                             <a ng-click="vm.openAddModal()" class="btn btn-toranj pull-right">add shift...</a>

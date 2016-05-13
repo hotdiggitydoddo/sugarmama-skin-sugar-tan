@@ -86,13 +86,15 @@
                     logger.success('Welcome back, ' + authInfo.firstName + '!');
 
                     if (authInfo.estheticianId)
-                        return (authInfo.estheticianId);
+                        return authInfo.estheticianId;
                 })
                 .catch(function (message) {
                     if (message.status === -1) {
-                        logger.error("Unable to communicate with the server.  Please notify tech support.")
+                        logger.error("Unable to communicate with the server.  Please notify tech support.");
+                        return -1;
                     } else {
                         logger.error(message.data);
+                        return -1;
                     }
                 });
         }

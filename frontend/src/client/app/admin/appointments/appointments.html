@@ -1,9 +1,40 @@
 <style>
-    html,body        {height:100%;}
-.wrapper         {width:100%;height:100%;margin:0 auto;}
-.h_iframe        {position:relative;}
-.h_iframe .ratio {display:block;width:100%;height:auto;}
-.h_iframe iframe {position:absolute;top:0;left:0;width:100%; height:102%;}
+    html,
+    body {
+        height: 100%;
+    }
+    
+    .wrapper {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+    }
+    
+    .h_iframe {
+        position: relative;
+    }
+    
+    .h_iframe .ratio {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    
+    .h_iframe iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 102%;
+    }
+    
+    .stanton {
+        color: #0041B9;
+    }
+    
+    .brea {
+        color: #7D0202;
+    }
 </style>
 
 <div class="container">
@@ -15,15 +46,20 @@
         <span>manage</span>
         appointments
     </h2>
+    <p>
+        <i class="fa fa-question-circle"></i> To add an appointment, tap or click inside the window of the desired day and
+        time. To get the details of an appointment, tap or double-click it. To cancel an appointment, tap or double-click
+        it, then click the delete button in the pop-up window.
+    </p>
+    <p>
+        <span style="margin-right: 10px;"><i class="fa fa-square stanton"></i> - stanton</span><span><i class="fa fa-square brea"></i> - brea</span>
+    </p>
 
-<div class="wrapper">
-    <div class="h_iframe">
-         <img class="ratio" src="/images/4x3.png"/>
-         <iframe ng-if="vm.env == 'development'" src="/scheduler.html" frameborder="0" allowfullscreen></iframe>
-         <iframe ng-if="vm.env == 'production'" src="/scheduler.prod.html" frameborder="0" allowfullscreen></iframe>
-    </div>
-</div>
-
-    <div class="row col-md-12">
+    <div class="wrapper">
+        <div class="h_iframe">
+            <img class="ratio" src="/images/4x3.png" />
+            <iframe ng-if="vm.env == 'development'" src="/scheduler.html" frameborder="0" allowfullscreen></iframe>
+            <iframe ng-if="vm.env == 'production'" src="/scheduler.prod.html" frameborder="0" allowfullscreen></iframe>
+        </div>
     </div>
 </div>
