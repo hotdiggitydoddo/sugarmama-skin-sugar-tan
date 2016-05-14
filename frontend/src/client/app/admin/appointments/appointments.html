@@ -35,6 +35,10 @@
     .brea {
         color: #7D0202;
     }
+    
+     .datepicker {
+        background-color: white;
+    }
 </style>
 
 <div class="container">
@@ -53,8 +57,8 @@
     </p>
     <p>
         <span style="margin-right: 10px;"><i class="fa fa-square stanton"></i> - stanton</span><span><i class="fa fa-square brea"></i> - brea</span>
+        <button ng-click="vm.openBlockoutModal()" class="btn btn-toranj pull-right">Add Blockout Time...</button>
     </p>
-
     <div class="wrapper">
         <div class="h_iframe">
             <img class="ratio" src="/images/4x3.png" />

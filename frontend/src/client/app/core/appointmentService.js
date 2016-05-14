@@ -12,12 +12,23 @@
         var apiUrl = envService.read('apiUrl');
         var service = {
             submitApptRequest: submitApptRequest,
+            submitBlockout: submitBlockout
         };
 
         return service;
 
         function submitApptRequest(apptRequest) {
             return $http.post(apiUrl + '/appointment/submitrequest/', apptRequest)
+                .then(function(data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function(message) {
+                    logger.error(message.data);
+                })
+        }
+        
+        function submitBlockout(blockout) {
+            return $http.post(apiUrl + '/appointment/submitblockout/', blockout)
                 .then(function(data, status, headers, config) {
                     return data.data;
                 })

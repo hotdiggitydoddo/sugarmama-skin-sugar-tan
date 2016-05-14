@@ -45,8 +45,8 @@ module.exports = {
         var appts = [];
         var deferred = sails.q.defer();
         var now = new Date();
-        
-        Appointment.find({ where: { esthetician: esthId, endTime: { '>=': now }}, sort: {startTime: 1} })
+
+        Appointment.find({ where: { esthetician: esthId, endTime: { '>=': now } }, sort: { startTime: 1 } })
             .populate('services')
             .populate('location')
             .then(function (appts) {
@@ -359,6 +359,55 @@ module.exports = {
 
         return deferred.promise;
 
+    },
+
+    scheduleBlockout: function (blockout) {
+        var deferred = sails.q.defer();
+        var services = [];
+        var location;
+        var dummyEsth;
+        blockout.selectedDate = new Date(blockout.selectedDate);
+        blockout.startTime = new Date(blockout.startTime);
+        blockout.endTime = new Date(blockout.endTime);
+        
+        var start = new Date(blockout.selectedDate.getFullYear(), blockout.selectedDate.getMonth(), blockout.selectedDate.getDate(),
+            blockout.startTime.getHours(), blockout.startTime.getMinutes(), blockout.startTime.getSeconds());
+        var end = new Date(blockout.selectedDate.getFullYear(), blockout.selectedDate.getMonth(), blockout.selectedDate.getDate(),
+            blockout.endTime.getHours(), blockout.endTime.getMinutes(), blockout.endTime.getSeconds());
+
+        Service.findOne({ name: '-- Blockout --' })
+            .then(function (service) {
+                services.push(service);
+                return services;
+            })
+            .then(function() {
+                return Location.findOne({id: blockout.location})
+                .then(function(loc) {
+                    location = loc;
+                    return location;
+                })
+            })
+            .then(function () {
+                //Esthetician.findOne({firstName:})
+                return Appointment.create({
+                    startTime: start,
+                    endTime: end,
+                    esthetician: 1,
+                    gender: 'female',
+                    services: services,
+                    location: location,
+                    cost: 0,
+                    name: '-- Blockout --'
+                })
+            })
+            .then(function(appt) {
+                if (appt)
+                    return deferred.resolve("ok");
+            })
+            .catch(function(err) {
+                return deferred.reject(err);
+            })
+        return deferred.promise;
     }
 }
 

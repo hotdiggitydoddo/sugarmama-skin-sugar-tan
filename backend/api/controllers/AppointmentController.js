@@ -90,6 +90,18 @@ module.exports = {
             .catch(function (err) {
                 return res.negotiate(err);
             });
+    },
+
+    submitBlockout: function (req, res) {
+        var blockout = req.body;
+
+        AppointmentService.scheduleBlockout(blockout)
+            .then(function (result) {
+                return res.json(200, result);
+            })
+            .catch(function (err) {
+                return res.negotiate(err);
+            });
     }
 
 };

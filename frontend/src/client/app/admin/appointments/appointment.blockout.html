@@ -1,0 +1,61 @@
+<style>
+    .btn-sm {
+        padding: 5px 10px !important;
+    }
+    
+    .uib-timepicker input {
+        font-size: 18px;
+    }
+    
+    .uib-timepicker .btn {
+        border: none;
+        padding: 6px 12px;
+    }
+    
+    .am-pm {
+        border: 1px solid #F2F2F2;
+    }
+    
+    .am-pm .btn {
+        font-size: 18px;
+    }
+</style>
+
+<div class="modal-header">
+    <h4 class="bordered" style="margin-bottom:0px; margin-top: 10px;">add blockout time</h3>
+</div>
+<div class="modal-body">
+    <div class="row mb-small">
+        <div class="col-xs-6">
+            <h5 class="lined">choose a date</h5>
+            <div style="display: inline-block">
+                  <uib-datepicker ng-model="vm.blockout.selectedDate" class="well well-sm" datepicker-options="vm.dpOptions"></uib-datepicker>
+            </div>
+        </div>
+         <div class="col-xs-6">
+           <h5 class="lined">location</h5>
+          <select ng-model="vm.blockout.location" class="form-control">
+                <option value="" disabled selected="true">choose...</option>
+                <option value="1">stanton</option>
+                <option value="2">brea</option>
+         </select>
+        </div>
+    </div>
+     <div class="row mb-small">
+        <div class="col-xs-6">
+            <h5 class="lined">start</h5>
+            <uib-timepicker ng-model="vm.blockout.startTime" hour-step="1" minute-step="15" show-meridian="true"></uib-timepicker>
+        </div>
+        <div class="col-xs-6">
+            <h5 class="lined">end</h5>
+            <uib-timepicker ng-model="vm.blockout.endTime" hour-step="1" minute-step="15" show-meridian="true"></uib-timepicker>
+        </div>
+    </div>
+</div>
+ <div class="modal-footer">
+    <button class="btn btn-success" type="button"  ng-click="vm.saveBlockout()" ng-disabled="vm.savingBlockout">
+        <span ng-show="!vm.savingBlockout">Save</span>
+        <span ng-show="vm.savingBlockout">Please wait...</span>
+    </button>
+    <button class="btn btn-default" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>
