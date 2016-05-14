@@ -48,6 +48,30 @@
                     	"content": {templateUrl: 'app/services/facials.html'}
                     } 
                 }
+            },
+			 {
+                state: 'services.chemicalPeels',
+                config: {
+                    url: '/peels',
+                    controller: 'Services',
+                    controllerAs: 'vm',
+                    title: 'chemical peels',
+                    views: {
+                    	"content": {templateUrl: 'app/services/chemicalPeel.html'}
+                    } 
+                }
+            },
+			 {
+                state: 'services.tanning',
+                config: {
+                    url: '/tanning',
+                    controller: 'Services',
+                    controllerAs: 'vm',
+                    title: 'spray tans',
+                    views: {
+                    	"content": {templateUrl: 'app/services/tanning.html'}
+                    } 
+                }
             }
 		];
 	}

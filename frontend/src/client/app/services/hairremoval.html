@@ -10,7 +10,8 @@
                 <div>
                     <h2>sugaring</h2>
                     <p>
-                        Sugaring is an ancient art of hair removal that dates back to 1900 BC. We are excited to offer this service and product, here, in a modern setting.
+                        Sugaring is an ancient art of hair removal that dates back to 1900 BC. We are excited to offer this service and product,
+                        here, in a modern setting.
                     </p>
                     <div class="row mb-small">
                         <div class="col-md-6 col-sm-6 col-xs-6">
@@ -23,8 +24,10 @@
                     <div class="row mb-small">
                         <div class="col-md-12">
                             <p>
-                                Sugar is 100% natural. No chemicals. No preservatives. No irritants. Sugar is cooked into a paste-like consistency and applied to the skin by your certified esthetician. Sugar paste is a natural exfoliant that only adheres to dead skin cells and hair,
-                                so you can expect your skin to feel extremely smooth "like a baby's bottom".
+                                Sugar is 100% natural. No chemicals. No preservatives. No irritants. Sugar is cooked into a paste-like consistency and applied
+                                to the skin by your certified esthetician. Sugar paste is a natural exfoliant that only adheres
+                                to dead skin cells and hair, so you can expect your skin to feel extremely smooth "like a
+                                baby's bottom".
                             </p>
                         </div>
                     </div>
@@ -37,8 +40,10 @@
                     <div class="row mb-small">
                         <div class="col-md-12">
                             <p>
-                                You will never feel discomfort due to the temperature of the sugar paste as it is kept slightly warmed and is heated to body temperature during the service. The skin looks beautiful right after a sugaring session. Additionally, sugaring leads to less
-                                ingrown hairs. Many clients have switched to sugar simply for the benefit alone. Sugaring leads to noticeable "hair loss".
+                                You will never feel discomfort due to the temperature of the sugar paste as it is kept slightly warmed and is heated to body
+                                temperature during the service. The skin looks beautiful right after a sugaring session.
+                                Additionally, sugaring leads to less ingrown hairs. Many clients have switched to sugar simply
+                                for the benefit alone. Sugaring leads to noticeable "hair loss".
                             </p>
                         </div>
                     </div>
@@ -50,85 +55,23 @@
                     <h2 class="text-center">services</h2>
                     <img src="images/fancy-lines-sm.png" style="display:block; margin:auto;">
                 </div>
-                <div class="row col-md-12 mb-small" ng-repeat="service in vm.services.facial">
-                    <span class="pull-left">{{service.name}}</span>
-                    <span class="pull-right">{{service.price}}</span>
+                <div ng-repeat="service in vm.services.hairRemoval">
+                    <div ng-if="!service.premium" class="row col-md-12 mb-small">
+                        <span class="pull-left">{{service.name | lowercase}}<span ng-if="service.description"> - <em>{{service.description | lowercase}}</em></span></span>
+                        <span class="pull-right">{{service.cost}}</span>
+                    </div>
                 </div>
-
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Eyebrow Shaping</span>
-                    <span class="pull-right">15</span>
+                <div ng-repeat="service in vm.services.hairRemoval.premium">
+                     <div class="row col-md-12 mb-small" style="margin-top: 15px;">
+                        <h6 class="text-center" style="color: rgb(146, 58, 7)">{{service.name | lowercase}}* - {{service.cost}}</h6>
+                    </div>
+                    <div class="row col-md-12">
+                        <p>{{service.description | lowercase}}</p>
+                    </div>
                 </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Lip</span>
-                    <span class="pull-right">10</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Chin</span>
-                    <span class="pull-right">10</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Nostrils</span>
-                    <span class="pull-right">10</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Full Face</span>
-                    <em> - Includes brows, nostrils, lip, chin, sideburns</em>
-                    <span class="pull-right">40</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Underarms</span>
-                    <span class="pull-right">15</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Arms</span>
-                    <span class="pull-right">35</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Half Leg</span>
-                    <span class="pull-right">50</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Full Leg</span>
-                    <span class="pull-right">70</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Bikini</span>
-                    <span class="pull-right">35</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Deep Bikini</span>
-                    <span class="pull-right">45</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Brazilian</span>
-                    <span class="pull-right">60</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Chest</span>
-                    <em> - Includes Stomach</em>
-                    <span class="pull-right">75</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Lower Back</span>
-                    <span class="pull-right">30</span>
-                </div>
-                <div class="row col-md-12 mb-small">
-                    <span class="pull-left">Full Back</span>
-                    <em> - Includes Shoulders</em>
-                    <span class="pull-right">55</span>
-                </div>
-                <div class="row col-md-12 mb-small" style="margin-top:15px">
-                    <h6 class="text-center" style="color: rgb(146, 58, 7)">The Brazilian Dream - 75</h6>
-                </div>
-                <div class="row col-md-12">
-                    <p>This is a no-rush, calm and relaxing brazilian. take the edge off knowing you will arrive and enjoy a blend of calming tea while your numbing gel takes effect. Lay back while your brazilian is performed in a calm environment designed
-                        to ease all your worries. Finish with a calming mask for your delicate lady parts while enjoying a 10 minute scalp massage and aroma therapy.</p>
-                </div>
-                <div class="row col-md-12 mb-small" style="margin-top:15px">
-                    <h6 class="text-center" style="color: rgb(146, 58, 7)">The Bold and the Beautiful - 99</h6>
-                </div>
-                <div class="row col-md-12">
-                    <p>This service includes a Brazilian sugaring and a 60 min. customized facial. Nobody looks forward to having their pubic hair removed, so why not couple it with some pleasure and walk out feeling beautiful and relaxed from head to toe!</p>
+                
+                
+                <div class="row col-md-12" style="margin-top: 25px;">
+                    <p class="text-center"><em>* not eligible for the Yelp deal</em></p>
                 </div>
             </div>

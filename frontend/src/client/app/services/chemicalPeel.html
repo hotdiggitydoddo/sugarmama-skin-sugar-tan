@@ -1,0 +1,55 @@
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">home</a></li>
+        <li><a href="/services">services</a></li>
+        <li class="active">chemical peels</li>
+    </ol>
+    <div style="padding: 0px 15px;">
+        <div class="row">
+            <div class="col-md-6" style="background: rgba(0,0,0,.05)">
+                <div>
+                    <h2>chemical peels</h2>
+                    <p>
+                        Every peel performed will start with a consultation. It is important to discuss expectations and goals. Peels can improve
+                        the overall health of the skin as well as address:
+                    </p>
+                    <div class="row mb-small">
+                        <div class="col-md-5 col-sm-5 col-xs-5">
+                            <ul class="list-iconed list-hover">
+                                <li><i class="fa fa-circle-o"></i>uneven skintone</li>
+                                <li><i class="fa fa-circle-o"></i>texture</li>
+                                <li><i class="fa fa-circle-o"></i>fine lines</li>
+                                <li><i class="fa fa-circle-o"></i>wrinkles</li>
+                                <li><i class="fa fa-circle-o"></i>scarring</li>
+                                <li><i class="fa fa-circle-o"></i>acne</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-7">
+                            <img src="images/peels1.jpg" class="img-rounded img-thumbnail img-fit" />
+                        </div>
+                    </div>
+                    <div class="row mb-small">
+                        <div class="col-md-12">
+                            <img src="images/peels2.jpg" class="img-rounded img-thumbnail img-fit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="right-side">
+                <div class="row col-md-12 mb-medium">
+                    <h2 class="text-center">services</h2>
+                    <img src="images/fancy-lines-sm.png" style="display:block; margin:auto;" />
+                </div>
+                <div>
+                    <div class="row col-md-12 mb-small" ng-repeat="service in vm.services.chemicalPeel">
+                        <h6 class="text-center" style="color: rgb(146, 58, 7)">{{service.name | lowercase}} - {{service.cost}}</h6>
+                        <p class="text-center" style="margin-bottom: 5px;">{{service.description.substring(0, service.description.indexOf('(')) | lowercase}}</p>
+                        <p style="font-size: 12px; margin-bottom: 10px !important;" class="text-center">
+                            <em style="color: darkgreen">{{service.description.substring(service.description.indexOf('('), service.description.indexOf(')') + 1) | lowercase}}</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

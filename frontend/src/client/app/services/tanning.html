@@ -1,0 +1,50 @@
+<style>
+        .carousel-control.left {
+            display: none;
+        }
+        .carousel-control.right {
+            display: none;
+        }                 
+        .carousel-indicators {
+            display: none;
+        }               
+</style>
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">home</a></li>
+        <li><a href="/services">services</a></li>
+        <li class="active">spray tans</li>
+    </ol>
+    <div style="padding: 0px 15px;">
+        <div class="row">
+            <div class="col-md-12" style="background: rgba(0,0,0,.05)">
+                <div class="row col-md-12 mb-medium">
+                    <h1 class="text-center" style=" margin-top: 35px !important;">custom airbrush spray tan</h1>
+                    <img src="images/fancy-lines-sm.png" style="display:block; margin:auto;">
+                </div>
+                <div class="row mb-small">
+                    <div class="col-md-6">
+                        <p class="text-center">
+                            Spray Tanning is the only way to get a healthy tan. Avoid the risk of skin cancer and premature aging by choosing to get
+                            a spray tan. Spray tanning has come a long way. We use the finest, organic solutions that won't
+                            leave you with a "tell tale" smell and will never turn you
+                            <span style="color: #FF9100">orange</span>. Your tan will be hand-sprayed with unmatched experience
+                            and care, guranteeing that you will leave here looking and feeling <span style="color: #BFA452">golden</span>!
+                        </p>
+                        <p>
+                            <span class="pull-left">single tan - 35</span>&nbsp;
+                            <span class="pull-right">three tans - 85</span>
+                        </p>
+                    </div>
+                    <div class="col-md-6" style="position: relative; padding-bottom:15px;">
+                            <uib-carousel active="active" interval="vm.carouselSettings.interval" no-wrap="noWrapSlides">
+                                <uib-slide ng-repeat="slide in vm.carouselSettings.slides track by slide.id" index="slide.id">
+                                    <img ng-src="{{slide.image}}" style="margin:auto;">
+                                </uib-slide>
+                            </uib-carousel>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

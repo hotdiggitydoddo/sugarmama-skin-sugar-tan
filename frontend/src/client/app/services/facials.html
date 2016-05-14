@@ -10,11 +10,12 @@
                 <div>
                     <h2>our take on facials...</h2>
                     <p>
-                        Everyone's skin is different, therefore every treatment that is performed is customized. We focus on skin health. Our products are simple, yet scientific.
+                        Everyone's skin is different, therefore every treatment that is performed is customized. We focus on skin health. Our products
+                        are simple, yet scientific.
                     </p>
                     <div class="row mb-small">
                         <div class="col-md-12">
-                            <img src="/Images/facial-towels.jpg" class="img-rounded img-thumbnail img-fit">
+                            <img src="images/facial-towels.jpg" class="img-rounded img-thumbnail img-fit">
                         </div>
                     </div>
                     <div class="row mb-small">
@@ -23,13 +24,14 @@
                                 Skin stimulation + topical nourishment = healthy skin.
                             </p>
                             <p>
-                                We feature active, biogenic, paraben-free, kosher and preservative-free ingredients that improve the health of your skin in one treatment.
+                                We feature active, biogenic, paraben-free, kosher and preservative-free ingredients that improve the health of your skin
+                                in one treatment.
                             </p>
                         </div>
                     </div>
                     <div class="row mb-small">
                         <div class="col-md-12">
-                            <img src="/Images/facial-brunette.jpg" class="img-rounded img-thumbnail img-fit">
+                            <img src="images/facial-brunette.jpg" class="img-rounded img-thumbnail img-fit">
 
                         </div>
                     </div>
@@ -38,48 +40,30 @@
             <div class="col-md-6" id="right-side">
                 <div class="row col-md-12 mb-medium">
                     <h2 class="text-center">services</h2>
-                    <img src="/Images/fancy-lines-sm.png" style="display:block; margin:auto;">
+                    <img src="images/fancy-lines-sm.png" style="display:block; margin:auto;">
                 </div>
+                <div ng-repeat="service in vm.services.facial">
                     <div class="row col-md-12 mb-small">
-                        <h6 class="text-center" style="color: rgb(146, 58, 7)">The Petìt - 40</h6>
-                         <p class="text-center">A 30 minute facial that includes an ultrasonic cleanse, exfoliation, and mask. This treatment is perfect for a "pick me up" in between stronger treatments or before a big event.</p> 
-                        
+                        <h6 class="text-center" style="color: rgb(146, 58, 7)">{{service.name | lowercase}} - {{service.cost}}</h6>
+                        <p class="text-center">{{service.description | lowercase}}</p>
                     </div>
-                    <div class="row col-md-12 mb-small">
-                        <h6 class="text-center" style="color: rgb(146, 58, 7)">The Grand - 75</h6>
-                         <p class="text-center">A 60 minute facial that includes an ultrasonic cleanse, exfoliation, extractions, hot stone massage, and mask. This treatment is designed to deliver maximum results for clean, glowing skin, as well as relaxation.</p> 
-                        
-                    </div>
-                    <div class="row col-md-12 mb-small">
-                        <h6 class="text-center" style="color: rgb(146, 58, 7)">The Luxe - 110</h6>
-                         <p class="text-center">This 80 minute facial is our most luxurious. It is designed to induce relaxation, as well as treat all your skin care needs. This treatment begins face-down with a hot stone massage and includes an ultrasonic cleanse, exfoliation, extractions, eye treatment, and galvanic current.</p> 
-                        
-                    </div>
-                    <div class="row col-md-12 mb-small">
-                        <h6 class="text-center" style="color: rgb(146, 58, 7)">The Bold and the Beautiful - 99</h6>
-                         <p class="text-center">This service includes a Brazilian sugaring and a 60 min. customized facial. Nobody looks forward to having their pubic hair removed, so why not couple it with some pleasure and walk out feeling beautiful and relaxed from head to toe!</p> 
-                        
-                    </div>
+                </div>
                 <div class="row col-md-12 mb-large">
-                    <blockquote>* high-frequency included in <em>The Grand</em> and <em>The Luxe</em> treatments *</blockquote>
+                    <blockquote>high-frequency included in <em>the grand</em> and <em>the luxe</em> treatments.</blockquote>
                 </div>
+
+
                 <div class="row col-md-12 mb-medium">
                     <h2 class="text-center">microderm</h2>
-                    <img src="/Images/fancy-lines-sm.png" style="display:block; margin:auto;">
+                    <img src="images/fancy-lines-sm.png" style="display:block; margin:auto;">
                 </div>
-                    <div class="row col-md-12 mb-small">
-                        <h6 class="text-center" style="color: rgb(146, 58, 7)">Crystal-Free Diamond-Tip Microdermabrasion - 90</h6>
-                        <p class="text-center">This treatment is designed to brighten the skin, leaving it glowing, radiant, and smooth. It can also help soften the look of fine lines. A diamond-tip exfoliation is performed. This is a great anti-aging treatment with no downtime. Not recommended for acne or severe rosacea.</p>
-
-                    </div>
-                    <div class="row col-md-12 mb-small">
-                        <h6 class="text-center" style="color: rgb(146, 58, 7)">Micro Express - 45</h6>
-                        <p class="text-center">This 30 minute treatment is desgined for anyone on the go looking for rapid results. Treatment includes double-cleanse, 2 passes with diamond tip, and mask.</p>
-
-                    </div>
-                    
+                <div class="row col-md-12 mb-small" ng-repeat="service in vm.services.microderm">
+                    <h6 class="text-center" style="color: rgb(146, 58, 7)">{{service.name | lowercase}} - {{service.cost}}</h6>
+                        <p class="text-center">{{service.description | lowercase}}</p>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
 </div>

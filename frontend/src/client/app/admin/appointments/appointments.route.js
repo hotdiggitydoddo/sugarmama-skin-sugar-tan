@@ -25,7 +25,7 @@
                     },
                     data: {
                         authRequired: true,
-                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
+                        authorizedRoles: [user_roles.admin, user_roles.owner]
                     }
                 }
             }];
