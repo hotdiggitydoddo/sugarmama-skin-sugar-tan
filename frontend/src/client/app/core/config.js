@@ -39,14 +39,14 @@
         envServiceProvider.config({
 			domains: {
 				development: ['localhost'],
-				production: ['ryancaseydodd.com', 'www.ryancaseydodd.com']
+				production: ['sugarmamaskinsugartan.com', 'www.sugarmamaskinsugartan.com']
 			},
 			vars: {
 				development: {
 					apiUrl: 'http://localhost:1337',
 				},
 				production: {
-					apiUrl: 'http://ryancaseydodd.com/api',
+					apiUrl: 'http://sugarmamaskinsugartan.com/api',
 				}
 			}
 		});
