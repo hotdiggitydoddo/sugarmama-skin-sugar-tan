@@ -30,6 +30,7 @@
         }
 
         function saveBlockout() {
+            vm.savingBlockout = true;
             return appointmentService.submitBlockout(vm.blockout)
                 .then(function (data) {
                     logger.success('Blockout added.')
@@ -40,7 +41,7 @@
 
                 })
                 .finally(function () {
-                    vm.savingShift = false;
+                    vm.savingBlockout = false;
                 });
         }
 
