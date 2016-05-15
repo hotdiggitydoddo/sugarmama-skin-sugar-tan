@@ -47,7 +47,7 @@
 					apiUrl: 'http://localhost:1337',
 				},
                 staging: {
-                   apiUrl: 'https://sugarmamaskinsugartan.com/api',
+                   apiUrl: 'https://dev.sugarmamaskinsugartan.com/api',
                 },                
 				production: {
 					apiUrl: 'https://sugarmamaskinsugartan.com/api',
