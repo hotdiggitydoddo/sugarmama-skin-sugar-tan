@@ -46,7 +46,7 @@
 					apiUrl: 'http://localhost:1337',
 				},
 				production: {
-					apiUrl: 'http://sugarmamaskinsugartan.com/api',
+					apiUrl: 'https://sugarmamaskinsugartan.com/api',
 				}
 			}
 		});
