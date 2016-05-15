@@ -39,12 +39,16 @@
         envServiceProvider.config({
 			domains: {
 				development: ['localhost'],
+                staging: ['dev.sugarmamaskinsugartan.com'],
 				production: ['sugarmamaskinsugartan.com', 'www.sugarmamaskinsugartan.com']
 			},
 			vars: {
 				development: {
 					apiUrl: 'http://localhost:1337',
 				},
+                staging: {
+                   apiUrl: 'https://sugarmamaskinsugartan.com/api',
+                },                
 				production: {
 					apiUrl: 'https://sugarmamaskinsugartan.com/api',
 				}
