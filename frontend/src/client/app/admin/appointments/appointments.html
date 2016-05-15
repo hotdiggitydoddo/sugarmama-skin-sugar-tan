@@ -63,7 +63,7 @@
         <div class="h_iframe">
             <img class="ratio" src="/images/4x3.png" />
             <iframe ng-if="vm.env == 'development'" src="/scheduler.html" frameborder="0" allowfullscreen></iframe>
-            <iframe ng-if="vm.env == 'production'" src="/scheduler.prod.html" frameborder="0" allowfullscreen></iframe>
+            <iframe ng-if="vm.env == 'production' || vm.env == 'staging'" src="/scheduler.prod.html" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 </div>
