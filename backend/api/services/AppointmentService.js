@@ -19,7 +19,7 @@ module.exports = {
                             apptName += ", "
                     }
 
-                    if (!appt.esthetician || appt.isNoShow) {
+                    if (!appt.esthetician) {
                         appt.esthetician = {
                             id: 0,
                             color: "000000"
@@ -197,7 +197,7 @@ module.exports = {
                 if (appt.estheticianId != apptInDb.esthetician) {
                     return Esthetician.findOne({ id: appt.estheticianId })
                         .then(function (newEsth) {
-                            apptInDb.esthetician = newEsth;
+                            apptInDb.esthetician = newEsth.id;
                             return apptInDb;
                         })
                 }
