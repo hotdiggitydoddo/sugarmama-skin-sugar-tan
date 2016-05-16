@@ -381,7 +381,7 @@ module.exports = {
         if (end < start)
             end.add(1, 'day');
 
-        return Service.findOne({ name: 'BLOCKOUT' })
+         Service.findOne({ name: 'BLOCKOUT' })
             .then(function (service) {
                 services.push(service);
                 return services;
@@ -421,7 +421,7 @@ module.exports = {
             .catch(function (err) {
                 console.log(err);
                 return deferred.reject(err);
-            })
+            });
         return deferred.promise;
     }
 }
