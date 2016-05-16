@@ -12,11 +12,18 @@ module.exports = {
                         serviceData.push({ text: svc.name, value: svc.id });
                     });
 
-                    var apptName = appt.name + " - ";
+                    var apptName = !appt.isBlockout ? appt.name + " - " : appt.name;
                     for (var x = 0; x < serviceData.length; x++) {
                         apptName += serviceData[x].text;
                         if (x != serviceData.length - 1)
                             apptName += ", "
+                    }
+                    
+                    if (!appt.esthetician) {
+                        appt.esthetician = {
+                            id: 0,
+                            color: "000000"
+                        }
                     }
 
                     results.push({
@@ -24,6 +31,7 @@ module.exports = {
                         title: apptName,
                         phoneNumber: appt.phoneNumber,
                         estheticianId: appt.esthetician.id,
+                        isBlockout: appt.isBlockout,
                         gender: appt.gender,
                         services: serviceData,
                         locationId: appt.location.id,
@@ -363,9 +371,7 @@ module.exports = {
 
     scheduleBlockout: function (blockout) {
         var deferred = sails.q.defer();
-        var services = [];
         var location;
-        var dummyEsth;
         blockout.selectedDate = new Date(blockout.selectedDate);
         blockout.startTime = new Date(blockout.startTime);
         blockout.endTime = new Date(blockout.endTime);
@@ -381,34 +387,17 @@ module.exports = {
         if (end < start)
             end.add(1, 'day');
 
-         Service.findOne({ name: 'BLOCKOUT' })
-            .then(function (service) {
-                services.push(service);
-                return services;
+        Location.findOne({ id: blockout.location })
+            .then(function (loc) {
+                location = loc;
+                return location;
             })
             .then(function () {
-                return Location.findOne({ id: blockout.location })
-                    .then(function (loc) {
-                        location = loc;
-                        return location;
-                    })
-            })
-             .then(function () {
-                return Esthetician.findOne({ id: 1 })
-                    .then(function (esth) {
-                        dummyEsth = esth;
-                        return dummyEsth;
-                    })
-            })
-            .then(function () {
-                //Esthetician.findOne({firstName:})
-                console.log(services);
                 return Appointment.create({
                     startTime: new Date(start),
                     endTime: new Date(end),
-                    esthetician: dummyEsth,
                     gender: 'female',
-                    services: services,
+                    isBlockout: true,
                     location: location,
                     cost: 0,
                     name: '-- Blockout --'

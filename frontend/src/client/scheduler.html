@@ -58,12 +58,15 @@
         }
         
         .k-event {
-            background: none;
+            border-color: #000000;
+            background: #000000;
             border-radius: 5px;
         }
+        
         .k-scheduler-table .k-today {
             background: #F7F5EB;
         }
+        
         .appointment-template {
             -webkit-border-radius: 5px;
             -moz-border-radius: 5px;
@@ -81,7 +84,7 @@
         }
         
         .appointment-template p {
-             padding: 0 3px 0px;
+            padding: 0 3px 0px;
             font-size: 12px;
         }
         
@@ -170,14 +173,20 @@
             <select id="locationId" data-bind="value:locationId" data-role="dropdownlist" data-value-field="id" data-text-field="city">
             </select>
         </div>
+        <div class="k-edit-label">
+            <label for="canceled">Canceled</label>
+        </div>
+        <div data-container-for="canceled" class="k-edit-field">
+            <input type="checkbox" id="canceld" data-bind="checked:canceled" data-role="checkbox">
+        </div>
     </script>
 
     <script id="event-template" type="text/x-kendo-template">
-        <div class="appointment-template  #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
+        <div class="appointment-template #if(isBlockout){# blockout #}#   #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
             <p>
-                 <h3>#: title #</h3>
+                <h3>#: title #</h3>
             </p>
-          
+
         </div>
     </script>
 
@@ -240,6 +249,8 @@
                                 // recurrenceException: { from: "RecurrenceException" },
                                 estheticianId: { from: "estheticianId", validation: { required: true } },
                                 locationId: { from: "locationId", validation: { required: true } },
+                                isBlockout: { ftom: "isBlockout" },
+                                canceled: { from: "canceled" },
                                 services: { from: "services" },
                                 isAllDay: { type: "boolean", from: "isAllDay" }
                             }

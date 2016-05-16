@@ -71,6 +71,22 @@ module.exports = {
 
     duration: function (startTime) {
       return this.endTime - startTime;
+    },
+    
+    canceled: {
+      type: 'boolean',
+    },
+    
+    isBlockout: {
+      type: 'boolean',
+    },
+    
+    notifyByText: {
+      type: 'boolean',
+    },
+    
+    notifyByEmail : {
+      type: 'boolean',
     }
   },
 

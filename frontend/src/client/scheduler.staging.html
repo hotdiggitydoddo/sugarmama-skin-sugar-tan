@@ -57,8 +57,9 @@
             border-color: #CCB37A;
         }
         
-        .k-event {
-            background: none;
+          .k-event {
+            border-color: #000000;
+            background: #000000;
             border-radius: 5px;
         }
         
@@ -170,11 +171,12 @@
         </div>
     </script>
 
-    <script id="event-template" type="text/x-kendo-template">
-        <div class="appointment-template  #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
+     <script id="event-template" type="text/x-kendo-template">
+        <div class="appointment-template #if(isBlockout){# blockout #}#   #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
             <p>
                 <h3>#: title #</h3>
             </p>
+
         </div>
     </script>
 
