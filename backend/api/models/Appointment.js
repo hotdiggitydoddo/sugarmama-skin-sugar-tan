@@ -73,7 +73,7 @@ module.exports = {
       return this.endTime - startTime;
     },
     
-    canceled: {
+    isNoShow: {
       type: 'boolean',
     },
     

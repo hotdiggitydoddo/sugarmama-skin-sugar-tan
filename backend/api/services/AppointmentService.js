@@ -19,7 +19,7 @@ module.exports = {
                             apptName += ", "
                     }
                     
-                    if (!appt.esthetician) {
+                    if (!appt.esthetician || appt.isNoShow) {
                         appt.esthetician = {
                             id: 0,
                             color: "000000"
@@ -32,6 +32,7 @@ module.exports = {
                         phoneNumber: appt.phoneNumber,
                         estheticianId: appt.esthetician.id,
                         isBlockout: appt.isBlockout,
+                        isNoShow: appt.isNoShow,
                         gender: appt.gender,
                         services: serviceData,
                         locationId: appt.location.id,
