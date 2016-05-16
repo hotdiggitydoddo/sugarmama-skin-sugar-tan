@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title></title>
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.1.226/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.1.226/styles/kendo.material.min.css" />
+    <style>
+        html {
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+        }
+        
+        .k-scheduler-toolbar>.k-scheduler-views>li.k-state-selected {
+            border-bottom-color: #D68117;
+        }
+        
+        .k-block,
+        .k-button,
+        .k-draghandle,
+        .k-grid-header,
+        .k-grouping-header,
+        .k-header,
+        .k-pager-wrap,
+        .k-toolbar,
+        .k-treemap-tile,
+        html .km-pane-wrapper .k-header {
+            background-color: #67320B;
+        }
+        
+        .k-gantt-toolbar .k-button,
+        .k-gantt>.k-header .k-link,
+        .k-gantt>.k-header li,
+        .k-grid .k-header .k-button,
+        .k-scheduler .k-header .k-button,
+        .k-scheduler .k-header .k-link,
+        .k-scheduler .k-header li,
+        .km-pane-wrapper .k-header .k-button {
+            background-color: #67320B;
+            border-color: #67320B;
+        }
+        
+        .k-grid .k-header .k-button:hover,
+        .k-scheduler .k-header .k-button:hover,
+        .k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-hover,
+        .k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-hover .k-link,
+        .k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-hover,
+        .k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-hover .k-link,
+        .k-gantt .k-gantt-toolbar .k-button:hover,
+        .km-pane-wrapper .k-header .k-button:hover {
+            background-color: #CCB37A;
+            border-color: #CCB37A;
+        }
+        
+        .k-event {
+            background: none;
+            border-radius: 5px;
+        }
+        
+        .k-scheduler-table .k-today {
+            background: #F7F5EB;
+        }
+        
+        .appointment-template {
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            height: 100%;
+            margin-top: -5px;
+        }
+        
+        .red-background {
+            border: 5px solid #7D0202;
+        }
+        
+        .blue-background {
+            border: 5px solid #0041B9;
+        }
+        
+        .appointment-template p {
+            padding: 0 3px 0px;
+            font-size: 12px;
+        }
+        
+        .appointment-template h3 {
+            padding: 0 3px 0px;
+            font-size: 12px;
+        }
+    </style>
+    <script src="//kendo.cdn.telerik.com/2016.1.226/js/jquery.min.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.1.226/js/kendo.timezones.min.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        <div id="scheduler"></div>
+    </div>
+
+    <script id="customEditorTemplate" type="text/x-kendo-template">
+        <div class="k-edit-label">
+            <label for="title">Name</label>
+        </div>
+        <div data-container-for="title" class="k-edit-field">
+            <input type="text" class="k-input k-textbox" name="title" required="required" data-bind="value:title">
+            <span data-for="title" class="k-invalid-msg" style="display: none;"></span>
+        </div>
+        <div class="k-edit-label">
+            <label for="start">Start</label>
+        </div>
+        <div data-container-for="start" class="k-edit-field">
+            <input type="text" data-role="datetimepicker" data-interval="15" data-type="date" data-bind="value:start,invisible:isAllDay"
+                name="start" />
+            <input type="text" data-type="date" data-role="datepicker" data-bind="value:start,visible:isAllDay" name="start" />
+            <span data-bind="text: startTimezone"></span>
+            <span data-for="start" class="k-invalid-msg" style="display: none;"></span>
+        </div>
+        <div class="k-edit-label">
+            <label for="end">End</label>
+        </div>
+        <div data-container-for="end" class="k-edit-field">
+            <input type="text" required="required" data-type="date" data-role="datetimepicker" data-bind="value:end,invisible:isAllDay"
+                name="end" data-datecompare-msg="End date should be greater than or equal to the start date" />
+            <input type="text" required="required" data-type="date" data-role="datepicker" data-bind="value:end,visible:isAllDay" name="end"
+                data-datecompare-msg="End date should be greater than or equal to the start date" />
+            <span data-bind="text: endTimezone"></span>
+            <span data-bind="text: startTimezone, invisible: endTimezone"></span>
+            <span data-for="end" class="k-invalid-msg" style="display: none;"></span>
+        </div>
+
+        <div class="k-edit-label">
+            <label for="phoneNumber">Phone Number</label>
+        </div>
+        <div data-container-for="phoneNumber" class="k-edit-field">
+            <input type="text" name="phoneNumber" class="k-textbox" required="required" data-bind="value:phoneNumber" />
+            <span data-for="phoneNumber" class="k-invalid-msg" style="display: none;"></span>
+        </div>
+        <div class="k-edit-label">
+            <label for="gender">Gender</label>
+        </div>
+        <div data-container-for="gender" class="k-edit-field">
+            <select id="genderId" data-bind="value:gender" data-role="dropdownlist" data-value-field="value" data-text-field="value">
+            </select>
+        </div>
+        <div class="k-edit-label">
+            <label for="services">Services</label>
+        </div>
+        <div data-container-for="services" class="k-edit-field">
+            <select id="services" data-bind="value:services" multiple="multiple" data-value-field="value" data-text-field="text"></select>
+        </div>
+        <div class="k-edit-label">
+            <label for="esthetician">Esthetician</label>
+        </div>
+        <div data-container-for="esthetician" class="k-edit-field">
+            <select id="estheticianId" data-bind="value:estheticianId" data-role="dropdownlist" data-value-field="value" data-text-field="text"
+                data-color-field="color">
+            </select>
+        </div>
+        <div class="k-edit-label">
+            <label for="location">Location</label>
+        </div>
+        <div data-container-for="location" class="k-edit-field">
+            <select id="locationId" data-bind="value:locationId" data-role="dropdownlist" data-value-field="id" data-text-field="city">
+            </select>
+        </div>
+    </script>
+
+    <script id="event-template" type="text/x-kendo-template">
+        <div class="appointment-template  #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
+            <p>
+                <h3>#: title #</h3>
+            </p>
+        </div>
+    </script>
+
+    <script>
+        $(function() {
+            var today = new Date();
+            today.setHours(09,00,00);
+          
+            $("#scheduler").kendoScheduler({
+                date: today,
+                startTime: today,
+                height: 800,
+                 //mobile: 'phone',
+                views: [
+                    "day",
+                    { type: "week", selected: true, majorTick: 30 },
+                    "month",
+                ],
+                timezone: "America/Los_Angeles",
+                eventTemplate: $("#event-template").html(),
+                editable: {
+                    template: $("#customEditorTemplate").html()
+                },
+                dataSource: {
+                    batch: true,
+                    transport: {
+                        read: {
+                            url: "//dev.sugarmamaskinsugartan.com/api/appointment/get",
+                            dataType: "json"
+                        },
+                        update: {
+                            url: "//dev.sugarmamaskinsugartan.com/api/appointment/update",
+                            dataType: "json"
+                        },
+                        create: {
+                            url: "//dev.sugarmamaskinsugartan.com/api/appointment/create",
+                            dataType: "json"
+                        },
+                        destroy: {
+                            url: "//dev.sugarmamaskinsugartan.com/api/appointment/destroy",
+                            dataType: "json"
+                        },
+                    },
+                    schema: {
+                        model: {
+                            id: "appointmentId",
+                            fields: {
+                                appointmentId: { from: "id", type: "number" },
+                                title: { from: "title", validation: { required: true } },
+                                start: { type: "date", from: "start", validation: { required: true } },
+                                end: { type: "date", from: "end" , validation: { required: true } },
+                                startTimezone: { from: "startTimezone" },
+                                endTimezone: { from: "endTimezone" },
+                                description: { from: "description" },
+                                gender: { from: 'gender' },
+                                // recurrenceId: { from: "RecurrenceID" },
+                                // recurrenceRule: { from: "RecurrenceRule" },
+                                // recurrenceException: { from: "RecurrenceException" },
+                                estheticianId: { from: "estheticianId", validation: { required: true } },
+                                locationId: { from: "locationId", validation: { required: true } },
+                                services: { from: "services" },
+                                isAllDay: { type: "boolean", from: "isAllDay" }
+                            }
+                        }
+                    },
+              },
+        
+                resources: [  
+                    {  
+                        dataSource: {  
+                            transport: {  
+                                read: {  
+                                    url: "//dev.sugarmamaskinsugartan.com/api/appointment/getEstheticians"
+                                },
+                            prefix : ""
+                            },
+                            schema: {  
+                                errors: "Errors"
+                            }
+                        },
+                        title: "esthetician",
+                        field: "estheticianId",
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataColorField: "color"
+                    },
+                    
+                     {  
+                        dataSource: {  
+                            transport: {  
+                                read: {  
+                                    url: "//dev.sugarmamaskinsugartan.com/api/service/get"
+                                },
+                            prefix : ""
+                            },
+                            schema: {  
+                                errors: "Errors"
+                            }
+                        },
+                        title: "services",
+                        field: "services",
+                        dataTextField: "text",
+                        dataValueField: "value",
+                    },
+                    
+                   {
+                         dataSource: {  
+                            transport: {  
+                                read: {  
+                                    url: "//dev.sugarmamaskinsugartan.com/api/location/get"
+                                },
+                            prefix : ""
+                            },
+                            schema: {  
+                                errors: "Errors"
+                            }
+                        },
+                        title: "location",
+                        field: "locationId",
+                        dataTextField: "city",
+                        dataValueField: "id",
+                    }
+                ],
+        
+         edit: function(e) {
+            
+              $("#estheticianId").kendoDropDownList({
+                    dataSource: e.sender.resources[0].dataSource,
+                    dataTextField: "text",
+                    dataValueField: "value",
+                    dataColorField: "color",
+                    template: '<span class="k-scheduler-mark" style="background-color:\#= color \#"></span>\#= text \#',
+                    valueTemplate: '<span class="k-scheduler-mark" style="background-color:\#= color \#"></span>\#= text \#',
+                    index: 1
+                });
+                
+                $("#genderId").kendoDropDownList({
+                    dataSource: [
+                        { value: "female" },
+                        { value: "male" }
+                    ],
+                    dataTextField: "value",
+                    dataValueField: "value",
+                });
+                
+                  $("#locationId").kendoDropDownList({
+                    dataSource: e.sender.resources[2].dataSource,
+                    dataTextField: "city",
+                    dataValueField: "id",
+                    template: '\#= city \#',
+                    valueTemplate: '\#= city \#',
+                });
+                
+                $("#services").kendoMultiSelect({
+                    dataSource: e.sender.resources[1].dataSource,
+                    dataTextField: "text",
+                    dataValueField: "value",
+                    template: '\#= text \#',
+                    valueTemplate: '\#= text \#',
+                    index: 1
+                });
+
+		$(".k-multiselect-wrap .k-input").attr('readonly', "readonly");
+                
+            //var estheticianId = e.container.find("#estheticianId").data("kendoDropDownList");
+            // var recurrenceEditor = e.container.find("[data-role=recurrenceeditor]").data("kendoRecurrenceEditor");
+            
+            // recurrenceEditor.setOptions({
+            // start: e.event.start
+            // });
+            
+            //bind the widget to the resouces
+            // debugger;
+            // estheticianId.dataSource.data(e.sender.resources[0].dataSource.data());
+            // estheticianId.options.template = kendo.format('<span class="k-scheduler-mark" style="background-color:\#= data.{0}?{0}:"none" \#">sdfsd</span>\#={1}\#', e.sender.resources[0].dataColorField, e.sender.resources[0].dataTextField);
+            // estheticianId.refresh();
+        }
+    });
+});
+    </script>
+
+    <script>
+        $(function() {
+        var scheduler = $("#scheduler").data("kendoScheduler");
+scheduler.wrapper.on("mouseup doubleTap", ".k-scheduler-table td, .k-event", function(e) {
+        var target = $(e.currentTarget);
+
+        if (target.hasClass("k-event")) {
+            var event = scheduler.occurrenceByUid(target.data("uid"));
+            scheduler.editEvent(event);
+        } else {
+            var slot = scheduler.slotByElement(target[0]);
+            scheduler.addEvent({
+                start: slot.startDate,
+                end: slot.endDate
+            });
+        }
+    });
+  
+    
+      });
+    </script>
+
+    <style>
+        .k-nav-current > .k-link span + span {
+            max-width: 200px;
+            display: inline-block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            vertical-align: top;
+        }
+    </style>
+
+</body>
+
+</html>
