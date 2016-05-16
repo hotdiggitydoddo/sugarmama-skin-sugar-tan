@@ -74,7 +74,8 @@
                         content: 'profile'
                     },
                     params: {
-                        id: null
+                        id: null,
+                        isAdmin: null
                     },
                     data: {
                         authRequired: true,
@@ -92,6 +93,7 @@
                             controllerAs: 'vm',
                             parent: 'estheticians_profile',
                             title: 'Details',
+                           
                         },
                         'appointments@estheticians_profile': {
                             templateUrl: 'app/admin/estheticians/esthetician.appointments.html',

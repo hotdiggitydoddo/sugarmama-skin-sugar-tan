@@ -10,6 +10,7 @@
         vm.shifts = [];
         vm.title = 'shifts';
         vm.estheticianId = $state.params.id;
+        vm.isAdmin = $state.params.isAdmin;
         vm.addNewShift = addNewShift;
         vm.selectShift = selectShift;
         vm.selectedShift = {};
@@ -40,6 +41,8 @@
         }
 
         function selectShift(shift, index) {
+            if (!vm.isAdmin) return;
+            
             console.log("selected:" + shift.id);
             vm.selectedShift = shift;
             vm.selectedShift.index = index;

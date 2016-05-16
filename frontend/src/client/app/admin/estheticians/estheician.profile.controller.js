@@ -23,7 +23,7 @@
 
         function activate() {
             $state.params.id = authService.estheticianId();
-
+            $state.params.isAdmin = false
             return (getEstheticianById(authService.estheticianId()));
         }
 

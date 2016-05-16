@@ -46,11 +46,11 @@
                             <dt>phone</dt>
                             <dd>{{vm.esthetician.phone | phoneNumber}}</dd>
                         </dl>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <button ng-hide="vm.editMode" ng-click="vm.toggleEditMode()" class="btn btn-toranj" style="margin-right: 10px">update...</button>
-                                <button ng-hide="vm.passwordMode" ng-click="vm.togglePasswordMode()" class="btn btn-toranj">change password...</button>
-                                <button class="btn btn-danger pull-right" ng-click="vm.destroy()">delete</button>
+                        <div class="row mb-small">
+                             <div class="btn-group" role="group" aria-label="...">
+                                <button ng-hide="vm.editMode" style="margin-right: 5px; margin-bottom: 5px;" ng-click="vm.toggleEditMode()" class="btn btn-toranj">update...</button>
+                                <button ng-hide="vm.passwordMode" style="margin-right: 5px; margin-bottom: 5px;" ng-click="vm.togglePasswordMode()" class="btn btn-toranj" style="">change password...</button>
+                                <button class="btn btn-danger" ng-click="vm.destroy()">delete</button>
                             </div>
                         </div>
                     </div>

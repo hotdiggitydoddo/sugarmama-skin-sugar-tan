@@ -26,6 +26,8 @@
                     var byDate = [];
 
                     data.forEach(function (appt) {
+                        if (appt.name.indexOf('lockout') != -1)
+                            return;
                         var date = new Date(appt.startTime);
                         date.setHours(0);
                         date.setMinutes(0);
