@@ -18,7 +18,7 @@ module.exports = {
                         if (x != serviceData.length - 1)
                             apptName += ", "
                     }
-                    
+
                     if (!appt.esthetician || appt.isNoShow) {
                         appt.esthetician = {
                             id: 0,
@@ -114,7 +114,9 @@ module.exports = {
                     location: appt.location,
                     cost: 0,
                     phoneNumber: appt.phoneNumber,
-                    name: appt.title
+                    name: appt.title,
+                    isBlockout: false,
+                    isNoShow: false
                 })
                     .then(function (newAppt) {
                         var serviceData = [];
@@ -139,7 +141,9 @@ module.exports = {
                             gender: appt.gender,
                             start: appt.start,
                             end: appt.end,
-                            cost: newAppt.cost
+                            cost: newAppt.cost,
+                            isBlockout: false,
+                            isNoShow: false
                         }
                         deferred.resolve(retVal);
                     })
@@ -166,6 +170,7 @@ module.exports = {
                 apptInDb.endTime = appt.end;
                 apptInDb.phoneNumber = appt.phoneNumber;
                 apptInDb.gender = appt.gender;
+                apptInDb.isNoShow = appt.isNoShow;
                 return apptInDb;
             })
             .then(function (apptInDb) {
@@ -240,7 +245,9 @@ module.exports = {
                     locationId: appt.locationId,
                     start: appt.start,
                     end: appt.end,
-                    cost: updated.cost
+                    cost: updated.cost,
+                    isNoShow: updated.isNoShow,
+                    isBlockout: updated.isBlockout
                 }
                 deferred.resolve(retVal);
             })

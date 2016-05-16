@@ -57,7 +57,7 @@
             border-color: #CCB37A;
         }
         
-          .k-event {
+        .k-event {
             border-color: #000000;
             background: #000000;
             border-radius: 5px;
@@ -91,6 +91,10 @@
         .appointment-template h3 {
             padding: 0 3px 0px;
             font-size: 12px;
+        }
+        
+        .no-show {
+            color: red;
         }
     </style>
     <script src="//kendo.cdn.telerik.com/2016.1.226/js/jquery.min.js"></script>
@@ -169,10 +173,16 @@
             <select id="locationId" data-bind="value:locationId" data-role="dropdownlist" data-value-field="id" data-text-field="city">
             </select>
         </div>
+         <div class="k-edit-label">
+            <label for="isNoShow">No Show</label>
+        </div>
+        <div data-container-for="isNoShow" class="k-edit-field">
+            <input type="checkbox" id="isNoShow" data-bind="checked:isNoShow" data-role="checkbox">
+        </div>
     </script>
 
-     <script id="event-template" type="text/x-kendo-template">
-        <div class="appointment-template #if(isBlockout){# blockout #}#   #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
+    <script id="event-template" type="text/x-kendo-template">
+        <div class="appointment-template #if(isBlockout){# blockout #}# #if(isNoShow){# no-show #}# #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
             <p>
                 <h3>#: title #</h3>
             </p>
