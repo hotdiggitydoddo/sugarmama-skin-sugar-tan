@@ -369,29 +369,35 @@ module.exports = {
         blockout.selectedDate = new Date(blockout.selectedDate);
         blockout.startTime = new Date(blockout.startTime);
         blockout.endTime = new Date(blockout.endTime);
-        
-        var start = new Date(blockout.selectedDate.getFullYear(), blockout.selectedDate.getMonth(), blockout.selectedDate.getDate(),
+
+        var startDate = new Date(blockout.selectedDate.getFullYear(), blockout.selectedDate.getMonth(), blockout.selectedDate.getDate(),
             blockout.startTime.getHours(), blockout.startTime.getMinutes(), blockout.startTime.getSeconds());
-        var end = new Date(blockout.selectedDate.getFullYear(), blockout.selectedDate.getMonth(), blockout.selectedDate.getDate(),
+        var endDate = new Date(blockout.selectedDate.getFullYear(), blockout.selectedDate.getMonth(), blockout.selectedDate.getDate(),
             blockout.endTime.getHours(), blockout.endTime.getMinutes(), blockout.endTime.getSeconds());
+
+        var start = sails.moment(startDate)
+        var end = sails.moment(endDate)
+
+        if (end < start)
+            end.add(1, 'day');
 
         Service.findOne({ name: '-- Blockout --' })
             .then(function (service) {
                 services.push(service);
                 return services;
             })
-            .then(function() {
-                return Location.findOne({id: blockout.location})
-                .then(function(loc) {
-                    location = loc;
-                    return location;
-                })
+            .then(function () {
+                return Location.findOne({ id: blockout.location })
+                    .then(function (loc) {
+                        location = loc;
+                        return location;
+                    })
             })
             .then(function () {
                 //Esthetician.findOne({firstName:})
                 return Appointment.create({
-                    startTime: start,
-                    endTime: end,
+                    startTime: new Date(start),
+                    endTime: new Date(end),
                     esthetician: 1,
                     gender: 'female',
                     services: services,
@@ -400,11 +406,11 @@ module.exports = {
                     name: '-- Blockout --'
                 })
             })
-            .then(function(appt) {
+            .then(function (appt) {
                 if (appt)
                     return deferred.resolve("ok");
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 return deferred.reject(err);
             })
         return deferred.promise;
