@@ -381,7 +381,7 @@ module.exports = {
         if (end < start)
             end.add(1, 'day');
 
-        Service.findOne({ name: '-- Blockout --' })
+        return Service.findOne({ name: 'BLOCKOUT' })
             .then(function (service) {
                 services.push(service);
                 return services;
@@ -393,12 +393,20 @@ module.exports = {
                         return location;
                     })
             })
+             .then(function () {
+                return Esthetician.findOne({ id: 1 })
+                    .then(function (esth) {
+                        dummyEsth = esth;
+                        return dummyEsth;
+                    })
+            })
             .then(function () {
                 //Esthetician.findOne({firstName:})
+                console.log(services);
                 return Appointment.create({
                     startTime: new Date(start),
                     endTime: new Date(end),
-                    esthetician: 1,
+                    esthetician: dummyEsth,
                     gender: 'female',
                     services: services,
                     location: location,
@@ -411,6 +419,7 @@ module.exports = {
                     return deferred.resolve("ok");
             })
             .catch(function (err) {
+                console.log(err);
                 return deferred.reject(err);
             })
         return deferred.promise;
