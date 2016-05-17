@@ -96,6 +96,25 @@
         .no-show {
             color: red;
         }
+        
+        .locations {
+            border-radius: 3px;
+            color: white;
+            padding: 3px;
+           
+        }
+        
+        .stanton {
+            background-color: #0041B9;
+        }
+        
+        .brea {
+            background-color: #7D0202;
+        }
+        
+        #people {
+            margin-bottom: 7px;
+        }
     </style>
     <script src="//kendo.cdn.telerik.com/2016.1.226/js/jquery.min.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script>
@@ -104,10 +123,10 @@
 
 <body>
     <div id="example">
-        <!--<div id="people">
-            <input checked type="checkbox" id="alex" value="1">
-            <input checked type="checkbox" id="bob" value="2">
-        </div>-->
+        <div id="people">
+            <span class="stanton locations"><input checked type="checkbox" id="stanton" value="1"> <label style="margin-right: 5px; cursor: pointer;" for="stanton"><strong>  stanton</strong></label></span>
+            <span class="brea locations"><input checked type="checkbox" id="brea" value="2"><label for="brea" style="margin-right: 5px; cursor: pointer;"><strong>  brea</strong></label></span>
+        </div>
         <div id="scheduler"></div>
     </div>
 
@@ -203,7 +222,7 @@
             $("#scheduler").kendoScheduler({
                 date: today,
                 startTime: today,
-                height: 800,
+                height: 780,
                 // mobile: 'phone',
                 views: [
                     "day",
@@ -372,6 +391,9 @@
 
                 if (target.hasClass("k-event")) {
                     var event = scheduler.occurrenceByUid(target.data("uid"));
+                    if (event.isBlockout) {
+                        return;
+                    }
                     scheduler.editEvent(event);
                 } else {
                     var slot = scheduler.slotByElement(target[0]);
@@ -382,17 +404,17 @@
                 }
             });
             
-            // $("#people :checkbox").change(function(e) {
-            //      var checked = $.map($("#people :checked"), function(checkbox) {
-            //         return parseInt($(checkbox).val());
-            //     });
+            $("#people :checkbox").change(function(e) {
+                 var checked = $.map($("#people :checked"), function(checkbox) {
+                    return parseInt($(checkbox).val());
+                });
 
-            //     scheduler.dataSource.filter({
-            //         operator: function(appointment) {
-            //             return $.inArray(appointment.locationId, checked) >= 0;
-            //         }
-            //     });
-            // });
+                scheduler.dataSource.filter({
+                    operator: function(appointment) {
+                        return $.inArray(parseInt(appointment.locationId), checked) >= 0;
+                    }
+                });
+            });
         });
     </script>
 
