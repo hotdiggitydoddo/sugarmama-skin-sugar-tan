@@ -3,9 +3,9 @@
 
     angular.module('app.appointments').controller('ClientAppointmentsStepThree', ClientAppointmentsStepThree);
 
-    ClientAppointmentsStepThree.$inject = ['$state', '$uibModal', 'logger', 'spaServiceService'];
+    ClientAppointmentsStepThree.$inject = ['$state', '$uibModal', 'logger', 'spaServiceService', 'appointmentService'];
 
-    function ClientAppointmentsStepThree($state, $uibModal, logger, spaServiceService) {
+    function ClientAppointmentsStepThree($state, $uibModal, logger, spaServiceService, appointmentService) {
         var vm = this;
         vm.appointmentRequest = $state.params.appointmentRequest;
 
@@ -40,7 +40,19 @@
         }
         
         function submitForm() {
+            vm.loading = true;
+            vm.appointmentRequest.userInfo = vm.userInfo;
             
+            appointmentService.book(vm.appointmentRequest)
+            .then(function(confirmation) {
+                
+            })
+            .catch(function(err) {
+                
+            })
+            .finally(function() {
+                vm.loading = false;
+            })
         }
        
         
