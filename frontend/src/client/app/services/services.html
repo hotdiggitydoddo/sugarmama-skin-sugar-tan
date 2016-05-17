@@ -1,104 +1,117 @@
 <section ui-view="content">
     <style>
-    .tj-hover-3 .tj-overlay .title {
-        font-size: 28px;
-        text-transform: lowercase;
-        font-family: ralewayextralight;
-    }
-    .tj-hover-3 .tj-overlay .subtitle {
-        font-weight: bold;
-    }
-    .regular-page {
-        padding-bottom: 0px;
-        padding-top: 0px;
-    }
-
-    .page-main {
-        padding: 0;
-        margin-left: 0;
-    }
-</style>
-<div class="page-main">
-    <!-- services wrapper -->
-    <div class="vertical-folio">
+        .tj-hover-3 .tj-overlay .title {
+            font-size: 28px;
+            text-transform: lowercase;
+            font-family: ralewayextralight;
+        }
+        
+        .tj-hover-3 .tj-overlay .subtitle {
+            font-weight: bold;
+        }
+        
+        .regular-page {
+            padding-bottom: 0px;
+            padding-top: 0px;
+        }
+        
+        .page-main {
+            padding: 0;
+            margin-left: 0;
+        }
+    </style>
+    <div class="page-main">
+        <!-- services wrapper -->
+        <div class="vertical-folio">
             <!-- services Item -->
             <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view">
-                <img src="images/services/sugar.jpg" alt="alt" class="img-responsive">
-                <!-- Item Overlay -->
-                <div class="tj-overlay vcenter-wrapper">
-                    <div class="overlay-texts vcenter">
-                        <h3 class="title">hair removal</h3>
-                        <h4 class="subtitle">warm, lucious, organic sugar.</h4>
-                        <br>
-                        <a ng-click="vm.gotoService('hairremoval')" class="btn btn-transparent">learn more</a>
+                <div ng-click="vm.gotoService('hairremoval')" style="width: 100%; height: 100%">
+                    <img src="images/services/sugar.jpg" alt="alt" class="img-responsive">
+                    <!-- Item Overlay -->
+                    <div class="tj-overlay vcenter-wrapper">
+                        <div class="overlay-texts vcenter">
+                            <h3 class="title">hair removal</h3>
+                            <h4 class="subtitle">warm, lucious, organic sugar.</h4>
+                            <br>
+                            <a ng-click="vm.gotoService('hairremoval')" class="btn btn-transparent">discover</a>
+                        </div>
                     </div>
                 </div>
                 <!-- /Item Overlay -->
             </div>
-        <!-- /services Item -->
-        <!-- services Item -->
-        <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view">
-            <img src="images/services/home-page-3.jpg" alt="alt" class="img-responsive">
+            <!-- /services Item -->
+            <!-- services Item -->
+            <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view">
+                <div ng-click="vm.gotoService('facials')" style="width: 100%; height: 100%">
+                    <img src="images/services/home-page-3.jpg" alt="alt" class="img-responsive">
 
-            <!-- Item Overlay -->
-            <div class="tj-overlay vcenter-wrapper">
-                <div class="overlay-texts vcenter">
-                    <h3 class="title">facials</h3>
-                    <h4 class="subtitle">skin stimulation + topical nourishment = healthy skin.</h4>
-                    <br>
-                    <a ng-click="vm.gotoService('facials')" class="btn btn-transparent">learn more</a>
+                    <!-- Item Overlay -->
+                    <div class="tj-overlay vcenter-wrapper">
+                        <div class="overlay-texts vcenter">
+                            <h3 class="title">facials</h3>
+                            <h4 class="subtitle">skin stimulation + topical nourishment = healthy skin.</h4>
+                            <br>
+                            <a ng-click="vm.gotoService('facials')" class="btn btn-transparent">discover</a>
+                        </div>
+                    </div>
                 </div>
+                <!-- /Item Overlay -->
+
             </div>
-            <!-- /Item Overlay -->
+            <!-- /services Item -->
+            <!-- services Item -->
+            <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view">
+                <div ng-click="vm.gotoService('chemicalPeels')" style="width: 100%; height: 100%">
+                    <img src="images/services/chem1.jpg" alt="alt" class="img-responsive">
 
-        </div>
-        <!-- /services Item -->
-        <!-- services Item -->
-        <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view">
-            <img src="images/services/chem1.jpg" alt="alt" class="img-responsive">
-
-            <!-- Item Overlay -->
-            <div class="tj-overlay vcenter-wrapper">
-                <div class="overlay-texts vcenter">
-                    <h3 class="title">chemical peels</h3>
-                    <h4 class="subtitle">renew the elegance of your skin.</h4>
-                    <br>
-                    <a ng-click="vm.gotoService('chemicalPeels')" class="btn btn-transparent">learn more</a>
+                    <!-- Item Overlay -->
+                    <div class="tj-overlay vcenter-wrapper">
+                        <div class="overlay-texts vcenter">
+                            <h3 class="title">chemical peels</h3>
+                            <h4 class="subtitle">renew the elegance of your skin.</h4>
+                            <br>
+                            <a ng-click="vm.gotoService('chemicalPeels')" class="btn btn-transparent">discover</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- /Item Overlay -->
+                <!-- /Item Overlay -->
 
-        </div>
-        <!-- /services Item -->
-        <!-- services Item -->
-        <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view">
-            <img src="images/services/tan-legs.jpg" alt="alt" class="img-responsive">
-            <!-- Item Overlay -->
-            <div class="tj-overlay vcenter-wrapper">
-                <div class="overlay-texts vcenter">
-                    <h3 class="title">spray tans</h3>
-                    <h4 class="subtitle">hand-sprayed with unmatched experience and care.</h4>
-                    <br>
-                   <a ng-click="vm.gotoService('tanning')" class="btn btn-transparent">learn more</a>
-                </div>
             </div>
-            <!-- /Item Overlay -->
-        </div>
-        <!-- services Item -->
-        <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view" style="display: none;">
-            <img src="images/services/eyebrow-tint.jpg" alt="alt" class="img-responsive">
-            <!-- Item Overlay -->
-            <div class="tj-overlay vcenter-wrapper">
-                <div class="overlay-texts vcenter">
-                    <h3 class="title">tinting</h3>
-                    <h4 class="subtitle">deepen the shade of your lashes and brows</h4>
-                    <br>
-                    <a href="/services/tanning" class="btn btn-transparent">learn more</a>
+            <!-- /services Item -->
+            <!-- services Item -->
+            <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view">
+                <div ng-click="vm.gotoService('tanning')" style="width: 100%; height: 100%">
+                    <img src="images/services/tan-legs.jpg" alt="alt" class="img-responsive">
+                    <!-- Item Overlay -->
+                    <div class="tj-overlay vcenter-wrapper">
+                        <div class="overlay-texts vcenter">
+                            <h3 class="title">spray tans</h3>
+                            <h4 class="subtitle">hand-sprayed with unmatched experience and care.</h4>
+                            <br>
+                            <a ng-click="vm.gotoService('tanning')" class="btn btn-transparent">discover</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Item Overlay -->
+            </div>
+            <!-- services Item -->
+            <div set-bg class="vf-item tj-hover-3 inview-animate inview-fadeleft visible-view">
+                <div ng-click="vm.gotoService('tinting')" style="width: 100%; height: 100%">
+                    <img src="images/services/eyebrow-tint.jpg" alt="alt" class="img-responsive">
+                    <!-- Item Overlay -->
+                    <div class="tj-overlay vcenter-wrapper">
+                        <div class="overlay-texts vcenter">
+                            <h3 class="title">tinting</h3>
+                            <h4 class="subtitle">deepen the shade of your lashes and brows</h4>
+                            <br>
+                            <a ng-click="vm.gotoService('tinting')" class="btn btn-transparent">discover</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /Item Overlay -->
         </div>
     </div>
     <!-- /services wrapper -->
-</div>
+    </div>
 </section>

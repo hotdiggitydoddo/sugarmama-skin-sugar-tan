@@ -32,7 +32,7 @@ module.exports = {
     // client: {
     //   model: 'Client'
     // },
-    
+
     // store client values on the appointment for now
     name: {
       type: 'string',
@@ -50,7 +50,7 @@ module.exports = {
       type: 'email',
       maxLength: 50,
     },
-    
+
     gender: {
       type: 'string',
       enum: ['female', 'male'],
@@ -72,21 +72,25 @@ module.exports = {
     duration: function (startTime) {
       return this.endTime - startTime;
     },
-    
+
     isNoShow: {
       type: 'boolean',
+      defaultsTo: false
     },
-    
+
     isBlockout: {
       type: 'boolean',
+      defaultsTo: false
     },
-    
+
     notifyByText: {
       type: 'boolean',
+      defaultsTo: false
     },
-    
-    notifyByEmail : {
+
+    notifyByEmail: {
       type: 'boolean',
+      defaultsTo: false
     }
   },
 

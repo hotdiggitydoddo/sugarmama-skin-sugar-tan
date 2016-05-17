@@ -72,6 +72,18 @@
                     	"content": {templateUrl: 'app/services/tanning.html'}
                     } 
                 }
+            },
+            {
+                state: 'services.tinting',
+                config: {
+                    url: '/tinting',
+                    controller: 'Services',
+                    controllerAs: 'vm',
+                    title: 'tinting',
+                    views: {
+                    	"content": {templateUrl: 'app/services/tinting.html'}
+                    } 
+                }
             }
 		];
 	}
