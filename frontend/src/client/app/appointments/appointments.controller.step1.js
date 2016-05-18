@@ -35,7 +35,7 @@
         vm.accMicrodermOpen = false;
         vm.accPeelOpen = false;
         vm.accTanningOpen = false;
-
+        vm.accTintingOpen = false;
         vm.disabledDate = disabledDate;
         vm.submitStepOne = submitStepOne;
         vm.toggleService = toggleService;

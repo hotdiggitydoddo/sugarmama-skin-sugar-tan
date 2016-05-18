@@ -248,6 +248,30 @@
                                 </blockquote>
                             </div>
                         </uib-accordion-group>
+                        <uib-accordion-group is-open="vm.accTintingOpen" is-disabled="false">
+                            <uib-accordion-heading ng-click="vm.accTintingOpen = !vm.accTintingOpen">
+                                <div class="heading">tinting<i class="pull-left fa" style="margin-right: 10px" ng-class="{'fa-minus-circle': vm.accTintingOpen, 'fa-plus-circle': !vm.accTintingOpen}"></i></div>
+                            </uib-accordion-heading>
+                            <div class="contents">
+                                <blockquote>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div ng-repeat="service in vm.availableServices.tinting" class="svc">
+                                                    <div class="col-md-6 col-sm-6 checkbox">
+                                                        <label>
+                                                            <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                            <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                            <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </uib-accordion-group>
                         <uib-accordion-group is-open="vm.accTanningOpen" is-disabled="false">
                             <uib-accordion-heading ng-click="vm.accTanningOpen = !vm.accTanningOpen">
                                 <div class="heading">spray tan<i class="pull-left fa" style="margin-right: 10px" ng-class="{'fa-minus-circle': vm.accTanningOpen, 'fa-plus-circle': !vm.accTanningOpen}"></i></div>
