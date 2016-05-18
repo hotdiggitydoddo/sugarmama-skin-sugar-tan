@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-6">
+        <h1>booking complete.</h1>
+        <br>
+        <h3>&lt; under construction &gt;</h3>
+
+        <div class="row mb-small">
+            <div class="icon-box ib-center ib-boxed">
+                <i class="ib-icon fa fa-calendar"></i>
+                <h4 class="title">appointment details</h4>
+                <div class="contents">
+                    <dl class="dl-horizontal">
+                        <dt>date</dt>
+                        <dd>{{ vm.appointment.startTime | fullDate }}</dd>
+                        <dt>time</dt>
+                        <dd>{{ vm.appointment.startTime | amPmTime }} - {{ vm.appointment.endTime | amPmTime }}
+                        </dd>
+                        <dt>location</dt>
+                        <dd>{{ vm.appointment.location }}</dd>
+                        <dt>esthetician</dt>
+                        <dd>{{ vm.appointment.esthetician }}</dd>
+                        <div style="margin: 14px 0px">
+                            <img id="squiggly" width="80px" src="/images/fancy-lines-sm.png" alt="divider">
+                        </div>
+                        <dt>services</dt>
+                        <dd ng-repeat="service in vm.appointment.selectedServices">{{ service.name }} · {{ service.cost }}</dd>
+                        <br>
+                        <dt>cost</dt>
+                        <dd>{{ vm.appointment.cost }}</dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<a href="/" class="btn btn-toranj">go home</a>

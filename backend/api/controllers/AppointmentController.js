@@ -102,6 +102,18 @@ module.exports = {
             .catch(function (err) {
                 return res.negotiate(err);
             });
+    },
+
+    book: function (req, res) {
+        var apptForm = req.body;
+
+        AppointmentService.book(apptForm)
+            .then(function (results) {
+                return res.json(200, results);
+            })
+            .catch(function (err) {
+                return res.negotiate(err);
+            });
     }
 
 };

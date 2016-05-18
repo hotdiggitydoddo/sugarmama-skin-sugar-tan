@@ -326,7 +326,7 @@ module.exports = {
                 })
                 return d.promise;
             }).then(function () {
-                return Appointment.find()
+                return Appointment.find({ where: { location: businessDay.location }})
                     .populate('services')
                     .then(function (appts) {
                         return appts;
@@ -356,13 +356,18 @@ module.exports = {
 
                     if (allowedToAdd(timeSlot, appts, apptReqBufferTime)) {
 
-                        var shift = businessDay.shifts.find(x => timeSlot.start.isBetween(x.startTime, x.endTime))
-                        if (!shift || shift.length == 0)
-                            timeSlot.esthetician = 'deborah';
+                        var shift = businessDay.shifts.find(x => timeSlot.start.isSameOrAfter(x.startTime) && timeSlot.end.isSameOrBefore(x.endTime))
+                        var straddlesShifts = false;
+                        
+                        if (!shift || shift.length == 0) {
+                            straddlesShifts = true;                            
+                        }
                         else
                             timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
+                            
                         timeSlot.end.add(-apptReqBufferTime, 'minutes');
-                        availableOpenings.push(timeSlot);
+                        if (!(straddlesShifts))
+                            availableOpenings.push(timeSlot);
                     }
 
                     possibleStart.add(15, 'minutes');
@@ -420,8 +425,111 @@ module.exports = {
                 return deferred.reject(err);
             });
         return deferred.promise;
+    },
+
+    book: function (apptForm) {
+        var deferred = sails.q.defer();
+        var appt = {};
+
+        appt.services = apptForm.selectedServices.map(function (svc) { return svc.id; });
+        appt.gender = apptForm.gender;
+        appt.userInfo = apptForm.userInfo;
+        appt.startTime = apptForm.startTime;
+        appt.endTime = apptForm.endTime;
+        appt.remindViaEmail = apptForm.remindViaEmail;
+        appt.remindViaText = apptForm.remindViaText;
+
+        getFinalCost(appt.services)
+            .then(function (cost) {
+                appt.cost = cost;
+            })
+            .then(function () {
+                return getLocation(apptForm.location)
+                    .then(function (locId) {
+                        appt.location = locId;
+                    })
+            })
+            .then(function () {
+                return getEsthetician(apptForm.esthetician)
+                    .then(function (esth) {
+                        appt.esthetician = esth.id;
+                    })
+            })
+            .then(function () {
+                return saveAppt(appt)
+                    .then(function (newAppt) {
+                        deferred.resolve(newAppt);
+                    })
+            })
+
+        return deferred.promise;
     }
 }
+
+function saveAppt(apptToSave) {
+    var deferred = sails.q.defer();
+
+    Appointment.create({
+        startTime: apptToSave.startTime,
+        endTime: apptToSave.endTime,
+        esthetician: apptToSave.esthetician,
+        gender: apptToSave.gender,
+        services: apptToSave.services,
+        location: apptToSave.location,
+        cost: apptToSave.cost,
+        phoneNumber: apptToSave.userInfo.phoneNumber,
+        emailAddress: apptToSave.userInfo.emailAddress,
+        name: apptToSave.userInfo.firstName,
+        notifyByText: apptToSave.remindViaText,
+        notifyByEmail: apptToSave.remindViaEmail,
+        isBlockout: false,
+        isNoShow: false
+    })
+        .then(function (newAppt) {
+            deferred.resolve(newAppt);
+        })
+        .catch(function (err) {
+            deferred.reject(err);
+        })
+
+    return deferred.promise;
+}
+
+function getEsthetician(estheticianName) {
+    var deferred = sails.q.defer();
+
+    User.findOne({ firstName: estheticianName.capitalize() })
+        .exec(function (err, user) {
+            Esthetician.findOne({ user: user.id })
+                .exec(function (err, esth) {
+                    deferred.resolve(esth);
+                })
+        })
+    return deferred.promise;
+}
+
+function getLocation(selectedLoc) {
+    var deferred = sails.q.defer();
+
+    Location.findOne({ city: selectedLoc.capitalize() })
+        .then(function (loc) {
+            deferred.resolve(loc.id);
+        })
+
+    return deferred.promise;
+}
+
+function getFinalCost(svcIds) {
+    var deferred = sails.q.defer();
+
+    Service.find({ where: { id: svcIds }, select: ['cost'] }).sum('cost')
+        .then(function (total) {
+            deferred.resolve(total[0].cost);
+        })
+
+    return deferred.promise;
+}
+
 
 function allowedToAdd(timeSlot, appts, apptReqBufferTime) {
     var intersected = false;
@@ -432,7 +540,8 @@ function allowedToAdd(timeSlot, appts, apptReqBufferTime) {
     intersected = appts.some(function (appt) {
         var currentApptBufferTime = apptReqBufferTime;
 
-        if (appt.services.length === 1 && appt.services[0].quickService)
+        //check for quickService;
+        if (appt.isBlockout || (appt.services.length === 1 && appt.services[0].quickService))
             currentApptBufferTime = 0;
 
         var currApptStart = sails.moment(appt.startTime);
@@ -466,4 +575,7 @@ function allowedToAdd(timeSlot, appts, apptReqBufferTime) {
     //         intersected = true;
     //     }
     // });
+}
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
