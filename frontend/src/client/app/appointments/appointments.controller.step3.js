@@ -45,10 +45,10 @@
             
             appointmentService.book(vm.appointmentRequest)
             .then(function(confirmation) {
-                
+                $state.go("clientAppointments_step4", { appointment: confirmation });
             })
             .catch(function(err) {
-                
+                logger.error('Uh oh!  An error occurred while booking your appointment.  Please call us to book.')
             })
             .finally(function() {
                 vm.loading = false;

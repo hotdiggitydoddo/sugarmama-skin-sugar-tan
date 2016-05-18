@@ -326,7 +326,7 @@ module.exports = {
                 })
                 return d.promise;
             }).then(function () {
-                return Appointment.find()
+                return Appointment.find({ where: { location: businessDay.location }})
                     .populate('services')
                     .then(function (appts) {
                         return appts;
@@ -356,13 +356,18 @@ module.exports = {
 
                     if (allowedToAdd(timeSlot, appts, apptReqBufferTime)) {
 
-                        var shift = businessDay.shifts.find(x => timeSlot.start.isBetween(x.startTime, x.endTime))
-                        if (!shift || shift.length == 0)
-                            timeSlot.esthetician = 'deborah';
+                        var shift = businessDay.shifts.find(x => timeSlot.start.isSameOrAfter(x.startTime) && timeSlot.end.isSameOrBefore(x.endTime))
+                        var straddlesShifts = false;
+                        
+                        if (!shift || shift.length == 0) {
+                            straddlesShifts = true;                            
+                        }
                         else
                             timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
+                            
                         timeSlot.end.add(-apptReqBufferTime, 'minutes');
-                        availableOpenings.push(timeSlot);
+                        if (!(straddlesShifts))
+                            availableOpenings.push(timeSlot);
                     }
 
                     possibleStart.add(15, 'minutes');
@@ -535,7 +540,8 @@ function allowedToAdd(timeSlot, appts, apptReqBufferTime) {
     intersected = appts.some(function (appt) {
         var currentApptBufferTime = apptReqBufferTime;
 
-        if (appt.services.length === 1 && appt.services[0].quickService)
+        //check for quickService;
+        if (appt.isBlockout || (appt.services.length === 1 && appt.services[0].quickService))
             currentApptBufferTime = 0;
 
         var currApptStart = sails.moment(appt.startTime);

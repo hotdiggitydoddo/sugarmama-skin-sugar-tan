@@ -66,7 +66,8 @@
         function disabledDate(data) {
             var date = data.date,
                 mode = data.mode;
-            return mode === 'day' && (date.getDay() === 0);
+            return false;
+            //return mode === 'day' && (date.getDay() === 0);
         }
 
         function toggleService(service) {

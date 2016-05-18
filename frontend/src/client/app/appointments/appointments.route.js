@@ -3,13 +3,13 @@
 
     angular.module('app.appointments').run(appRun);
 
-    appRun.$inject = ['routerHelper'];
+    appRun.$inject = ['routerHelper', 'user_roles'];
 
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
+    function appRun(routerHelper, user_roles) {
+        routerHelper.configureStates(getStates(user_roles));
     }
 
-    function getStates() {
+    function getStates(user_roles) {
         return [
             {
                 state: 'clientAppointments_step1',
@@ -19,9 +19,13 @@
                     controller: 'ClientAppointmentsStepOne',
                     controllerAs: 'vm',
                     title: 'Book an Appointment',
-                     settings: {
+                    settings: {
                         nav: 1,
-                        content: 'appointments'
+                        content: 'book'
+                    },
+                    data: {
+                        authRequired: true,
+                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
                     },
                 }
             },
@@ -36,6 +40,10 @@
                     params: {
                         appointmentRequest: null
                     },
+                    data: {
+                        authRequired: true,
+                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
+                    },
                 }
             },
             {
@@ -48,6 +56,27 @@
                     title: 'Book an Appointment',
                     params: {
                         appointmentRequest: null
+                    },
+                    data: {
+                        authRequired: true,
+                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
+                    },
+                }
+            },
+            {
+                state: 'clientAppointments_step4',
+                config: {
+                    url: '/appointments/confimation',
+                    templateUrl: 'app/appointments/appointments.step4.html',
+                    controller: 'ClientAppointmentsStepFour',
+                    controllerAs: 'vm',
+                    title: 'Book an Appointment',
+                    params: {
+                        appointment: null
+                    },
+                    data: {
+                        authRequired: true,
+                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
                     },
                 }
             }];
