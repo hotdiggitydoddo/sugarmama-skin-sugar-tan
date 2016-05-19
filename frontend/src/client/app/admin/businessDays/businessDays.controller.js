@@ -25,7 +25,7 @@
         function getBusinessDays(id) {
             return locationService.getBusinessDays(id)
                 .then(function (data) {
-                    console.log(data);
+                    sort(data);
                     vm.businessDays = data;
                     return vm.businessDays;
                 });
@@ -41,6 +41,16 @@
         function addNewBusinessDay() {
             vm.selectedBusinessDay = null;
             openAddModal();
+        }
+
+        function sort(businessDays) {
+            businessDays.forEach(businessDay => {
+                businessDay.dayIdx = moment.weekdays().indexOf(capitalizeFirstLetter(businessDay.dayOfWeek));
+            });
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
         function openAddModal() {

@@ -16,6 +16,11 @@ module.exports = {
             collection: 'Appointment',
             via: 'esthetician'
         },
+        
+        availableServices: {
+            collection: 'Service',
+            via: 'availableEstheticians'
+        },
 
         shifts: {
             collection: 'Shift',

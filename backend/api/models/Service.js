@@ -43,6 +43,11 @@ module.exports = {
       via: 'services'
     },
     
+    availableEstheticians: {
+      collection: 'Esthetician',
+      via: 'availableServices'
+    },
+    
     duration: {
       type: 'integer',
       required: true

@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="shift in vm.shifts" ng-click="vm.selectShift(shift, $index)" style="cursor: pointer;">
+                <tr ng-repeat="shift in vm.shifts | orderBy: 'businessDay.dayIdx'" ng-click="vm.selectShift(shift, $index)" style="cursor: pointer;">
                     <td>{{ shift.businessDay.dayOfWeek }}</td>
                     <td>{{ shift.startTime | amPmTime }}</td>
                     <td>{{ shift.endTime | amPmTime }}</td>

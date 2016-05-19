@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="businessDay in vm.businessDays" ng-click="vm.selectBusinessDay(businessDay, $index)" style="cursor: pointer;">
+                <tr ng-repeat="businessDay in vm.businessDays | orderBy: 'dayIdx'" ng-click="vm.selectBusinessDay(businessDay, $index)" style="cursor: pointer;">
                     <td>{{ businessDay.dayOfWeek }}</td>
                     <td>{{ businessDay.openingTime | amPmTime }}</td>
                     <td>{{ businessDay.closingTime | amPmTime }}</td>

@@ -24,7 +24,7 @@
         activate();
 
         function activate() {
-            $state.params.isAdmin = true;            
+            $state.params.isAdmin = true;
             return getEsthetician($state.params.id);
         }
 

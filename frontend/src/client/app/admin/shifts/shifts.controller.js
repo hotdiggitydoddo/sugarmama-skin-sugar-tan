@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('app.admin.shifts').controller('Shifts', Shifts);
@@ -25,8 +25,9 @@
 
         function getShifts(id) {
             return estheticianService.getShifts(id)
-                .then(function(data) {
+                .then(function (data) {
                     console.log(data);
+                    sort(data);
                     vm.shifts = data;
                     return vm.shifts;
                 });
@@ -34,15 +35,26 @@
 
         function getLocations() {
             return locationService.getAll()
-                .then(function(data) {
+                .then(function (data) {
                     vm.locations = data;
                     return vm.locations;
                 });
         }
 
+        function sort(shifts) {
+            shifts.forEach(shift => {
+                var day = shift.businessDay.dayOfWeek
+                shift.businessDay.dayIdx = moment.weekdays().indexOf(capitalizeFirstLetter(shift.businessDay.dayOfWeek));
+            });
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
         function selectShift(shift, index) {
             if (!vm.isAdmin) return;
-            
+
             console.log("selected:" + shift.id);
             vm.selectedShift = shift;
             vm.selectedShift.index = index;
@@ -61,19 +73,19 @@
                 controller: 'ShiftDetail',
                 controllerAs: 'vm',
                 resolve: {
-                    shift: function() { return vm.selectedShift; },
-                    locations: function() { return vm.locations; }
+                    shift: function () { return vm.selectedShift; },
+                    locations: function () { return vm.locations; }
                 }
             });
 
-            modalInstance.result.then(function(shift) {
+            modalInstance.result.then(function (shift) {
                 if (shift.isDeleted) {
                     vm.shifts.splice(vm.selectedShift.index, 1);
                     vm.shifts.selectedShift = null;
                     return;
                 }
 
-                var existing = vm.shifts.find(function(existing) {
+                var existing = vm.shifts.find(function (existing) {
                     return existing.id === shift.id;
                 });
 
@@ -86,9 +98,13 @@
                     vm.shifts.push(shift);
                 }
 
-            }, function() {
+            }, function () {
                 // $log.info('Modal dismissed at: ' + new Date());
             });
         };
+
+        function dayOfWeekIdx(dayOfWeek) {
+            return moment.weekdays().indexOf(dayOfWeek);
+        }
     }
 })();

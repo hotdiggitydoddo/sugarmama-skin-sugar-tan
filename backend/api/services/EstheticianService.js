@@ -54,7 +54,9 @@ module.exports = {
 
         Esthetician.findOne({
             id: id
-        }).populate('user')
+        })
+            .populate('user')
+            .populate('availableServices')
             .then(function (esthetician) {
                 console.log(esthetician);
                 result = {
@@ -66,6 +68,11 @@ module.exports = {
                     email: esthetician.user.emailAddress,
                     color: esthetician.color
                 };
+                if (esthetician.availableServices.length == 0) {
+                    deferred.resolve(result);                    
+                } else {
+                    var services = esthetician.availableServices.map(function(svc) { return { id: svc.id, name: svc.name };});
+                }
                 deferred.resolve(result);
             })
             .catch(function (err) {
@@ -75,7 +82,7 @@ module.exports = {
         return deferred.promise;
     },
 
-    getEstheticianByEmail: function (email) {
+    getEstheticianByEmail: function (email, includeServices) {
         var deferred = sails.q.defer();
         var user = null;
         User.findOne({ emailAddress: email })
@@ -275,3 +282,4 @@ module.exports = {
         return deferred.promise;
     }
 }
+
