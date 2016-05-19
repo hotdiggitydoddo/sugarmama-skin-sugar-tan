@@ -163,7 +163,12 @@ module.exports = {
         appt.services.forEach(function (svc) {
             serviceIds.push(parseInt(svc.value));
         });
-
+        
+        if (appt.title.indexOf('-') != -1) {
+            appt.title = appt.title.substring(0, appt.title.indexOf('-')).trim();
+        }
+            
+        
         Appointment.findOne({ id: appt.id })
             .then(function (apptInDb) {
                 apptInDb.startTime = appt.start;
@@ -171,6 +176,7 @@ module.exports = {
                 apptInDb.phoneNumber = appt.phoneNumber;
                 apptInDb.gender = appt.gender;
                 apptInDb.isNoShow = appt.isNoShow;
+                apptInDb.name = appt.title;              
                 return apptInDb;
             })
             .then(function (apptInDb) {
