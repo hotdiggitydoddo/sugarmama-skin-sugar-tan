@@ -52,6 +52,28 @@ module.exports = {
             .catch(function(err) {
                 res.negotiate(err);
             })
+    },
+    
+    getByEsthetician: function (req, res) {
+        SpaServiceService.getByEsthetician(req.query.id)
+            .then(function (services) {
+                return res.json(services);
+            })
+            .catch(function (err) {
+                res.negotiate(err);
+            });
+    },
+    
+    saveRepertoire: function (req, res) {
+        var repertoire = req.body;
+        
+        SpaServiceService.saveRepertoire(repertoire)
+            .then(function () {
+                return res.ok();
+            })
+            .catch(function (err) {
+                res.negotiate(err);
+            });
     }
 };
 

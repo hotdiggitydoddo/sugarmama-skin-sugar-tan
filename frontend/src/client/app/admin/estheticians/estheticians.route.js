@@ -60,6 +60,13 @@
                             controllerAs: 'vm',
                             parent: 'estheticians_detail',
                             title: 'Details',
+                        },
+                        'repertoire@estheticians_detail': {
+                            templateUrl: 'app/admin/services/service.repertoire.html',
+                            controller: 'ServiceRepertoire',
+                            controllerAs: 'vm',
+                            parent: 'estheticians_detail',
+                            title: 'Details'
                         }
                     }
                 }

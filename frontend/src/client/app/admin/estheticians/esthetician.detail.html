@@ -32,7 +32,7 @@
             <span>{{vm.esthetician.firstName}}</span>{{vm.esthetician.lastName}}
         </div> 
     </h2>
-
+    
     <div class="row">
         <div class="col-md-6 mb-xlarge">
             <div class="row col-md-12 mb-xlarge">
@@ -120,12 +120,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row col-md-12">
+            <div class="row col-md-12 mb-large">
                 <div class="icon-box ib-center ib-boxed">
                     <i class="ib-icon fa fa-briefcase"></i>
                     <h4 class="title">work schedule</h4>
                     <div class="contents">
                         <div ui-view="shifts"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="icon-box ib-center ib-boxed">
+                    <i class="ib-icon fa fa-magic"></i>
+                    <h4 class="title">service repertoire</h4>
+                    <div class="contents">
+                        <div ui-view="repertoire"></div>
                     </div>
                 </div>
             </div>

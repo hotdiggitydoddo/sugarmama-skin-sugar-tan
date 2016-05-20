@@ -11,13 +11,11 @@ module.exports = {
     name: {
       type: 'string',
       maxLength: 100,
-      alpha: true,
       required: true
     },
     
     description: {
       type: 'string',
-      required: true
     },
     
     quickService: {

@@ -1,0 +1,32 @@
+<style>
+    .nav-pills > li.active > a,
+    .nav-pills > li.active > a:hover,
+    .nav-pills > li.active > a:focus {
+        background-color: rgb(50, 175, 59);
+    }
+    
+    .nav-pills > li > a {
+        color: black;
+        background-color: white;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12 mb-small">
+        <p>
+            touch or click on a service to add it to or remove it from this esthetician's repertoire. active services are green. click
+            the button below once finished.
+        </p>
+        <ul class="nav nav-pills">
+            <li ng-repeat="service in vm.serviceRepertoire" role="presentation" ng-class="{active: service.selected}" ng-click="service.selected = !service.selected">
+                <a href="#">{{ service.name | lowercase }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row col-md-12">
+        <button class="btn btn-success pull-right" ng-disabled="vm.saving" ng-click="vm.save()">
+            <span ng-show="!vm.saving">save repertoire</span>
+            <span ng-show="vm.saving">please wait...</span>
+        </button>
+    </div>
+</div>
