@@ -44,7 +44,7 @@
         }
 
         function sort(businessDays) {
-            businessDays.forEach(businessDay => {
+            businessDays.forEach(function(businessDay) {
                 businessDay.dayIdx = moment.weekdays().indexOf(capitalizeFirstLetter(businessDay.dayOfWeek));
             });
         }

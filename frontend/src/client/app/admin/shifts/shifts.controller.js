@@ -42,8 +42,8 @@
         }
 
         function sort(shifts) {
-            shifts.forEach(shift => {
-                var day = shift.businessDay.dayOfWeek
+            shifts.forEach(function(shift) {
+                var day = shift.businessDay.dayOfWeek;
                 shift.businessDay.dayIdx = moment.weekdays().indexOf(capitalizeFirstLetter(shift.businessDay.dayOfWeek));
             });
         }
