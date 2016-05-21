@@ -56,7 +56,7 @@ module.exports = {
             id: id
         })
             .populate('user')
-            .populate('availableServices')
+            .populate('services')
             .then(function (esthetician) {
                 console.log(esthetician);
                 result = {
@@ -68,10 +68,11 @@ module.exports = {
                     email: esthetician.user.emailAddress,
                     color: esthetician.color
                 };
-                if (esthetician.availableServices.length == 0) {
+                if (esthetician.services.length == 0) {
                     deferred.resolve(result);                    
                 } else {
-                    var services = esthetician.availableServices.map(function(svc) { return { id: svc.id, name: svc.name };});
+                    var services = esthetician.services.map(function(svc) { return { id: svc.id, name: svc.name };});
+                    result.services = services;
                 }
                 deferred.resolve(result);
             })

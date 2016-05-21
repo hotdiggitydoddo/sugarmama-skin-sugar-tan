@@ -65,18 +65,18 @@ module.exports = {
         return deferred.promise;
     },
 
-    getByEsthetician: function (id) {
+    getByEsthetician: function (esthId) {
         var deferred = sails.q.defer();
         var results = [];
 
         Service.find()
-            .populate('availableEstheticians')
+            .populate('estheticians')
             .then(function (allServices) {
                 var repertoire = allServices.map(service => {
                     return {
                         id: service.id,
                         name: service.name,
-                        selected: service.availableEstheticians.some(esth => { esth.id == id })
+                        selected: service.estheticians.some(esth => { return esth.id == esthId })
                     }
                 });
                 deferred.resolve(repertoire);
@@ -91,26 +91,14 @@ module.exports = {
     saveRepertoire: function (repertoire) {
         var deferred = sails.q.defer();
 
-        Service.find()
-            .populate('availableEstheticians')
-            .then(function (allServices) {
-                allServices.forEach(service => {
-                    var repertoireService = repertoire.services.filter(repSvc => { return repSvc.id == service.id })[0];
-                    if (repertoireService.selected)
-                        service.availableEstheticians.push(parseInt(repertoire.estheticianId));
-                    else
-                        service.availableEstheticians.slice(allServices.indexOf(service), 1);
-                });
-                var ids = allServices.map(svc => { return svc.id });
-                Service.update({}, { availableEstheticians: allServices.map(svc => { return svc.availableEstheticians }) })
+        Esthetician.findOne({ id: repertoire.estheticianId })
+            .populate('services')
+            .then(esth => {
+                var selectedServices = repertoire.services.filter(repSvc => { return repSvc.selected }).map(svc => { return svc.id });
+                return Esthetician.update({ id: esth.id }, { services: selectedServices })
                     .then(function (updated) {
-                        deferred.resolve();
+                        deferred.resolve(updated[0]);
                     })
-                    .catch(function (err) {
-                        deferred.reject(err);
-                    });
-
-                return deferred.promise;
             })
             .catch(function (err) {
                 deferred.reject(err);

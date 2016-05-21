@@ -17,9 +17,9 @@ module.exports = {
             via: 'esthetician'
         },
         
-        availableServices: {
+        services: {
             collection: 'Service',
-            via: 'availableEstheticians'
+            via: 'estheticians'
         },
 
         shifts: {
