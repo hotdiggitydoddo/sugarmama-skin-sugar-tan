@@ -27,7 +27,9 @@ module.exports = {
     getEstheticians: function () {
         var deferred = sails.q.defer();
         var results = [];
-        Esthetician.find().populate('user')
+        Esthetician.find()
+            .populate('user')
+            .populate('services')
             .then(function (estheticians) {
                 estheticians.forEach(function (est) {
                     results.push({
@@ -35,7 +37,8 @@ module.exports = {
                         firstName: est.user.firstName,
                         lastName: est.user.lastName,
                         email: est.user.emailAddress,
-                        color: est.color
+                        color: est.color,
+                        services: est.services
                     });
                 })
                 deferred.resolve(results);
@@ -69,9 +72,9 @@ module.exports = {
                     color: esthetician.color
                 };
                 if (esthetician.services.length == 0) {
-                    deferred.resolve(result);                    
+                    deferred.resolve(result);
                 } else {
-                    var services = esthetician.services.map(function(svc) { return { id: svc.id, name: svc.name };});
+                    var services = esthetician.services.map(function (svc) { return { id: svc.id, name: svc.name }; });
                     result.services = services;
                 }
                 deferred.resolve(result);

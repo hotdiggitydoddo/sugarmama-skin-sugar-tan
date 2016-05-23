@@ -24,6 +24,7 @@ module.exports = {
         var deferred = sails.q.defer();
 
         Service.find()
+            .populate('estheticians')
             .then(function (services) {
                 deferred.resolve(services);
             })
@@ -64,7 +65,7 @@ module.exports = {
 
         return deferred.promise;
     },
-
+    
     getByEsthetician: function (esthId) {
         var deferred = sails.q.defer();
         var results = [];
@@ -87,7 +88,7 @@ module.exports = {
 
         return deferred.promise;
     },
-
+    
     saveRepertoire: function (repertoire) {
         var deferred = sails.q.defer();
 

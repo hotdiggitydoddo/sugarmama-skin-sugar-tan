@@ -1,0 +1,340 @@
+<style>
+    .panel-default > .panel-heading {
+        color: #CCB37A;
+        background: none;
+    }
+    
+    .panel {
+        background: rgba(111, 77, 49, 0.7);
+    }
+    
+    .panel-body {
+        padding: 0
+    }
+    
+    .heading {
+        background: none;
+        color: #E6C97C;
+        position: relative;
+    }
+    
+    .heading:focus,
+    .heading:hover,
+    .panel-heading:focus,
+    .panel-heading:hover {
+        background: rgb(111, 77, 49);
+        -webkit-transition: all .25s ease;
+        -moz-transition: all .25s ease;
+        -ms-transition: all .25s ease;
+        -o-transition: all .25s ease;
+        transition: all .25s ease;
+    }
+    
+    hr {
+        border-top: 1px solid black;
+    }
+    
+    .form-group {
+        margin-bottom: 30px;
+    }
+    
+    label {
+        text-transform: lowercase !important;
+    }
+    
+    .accordion .item .body {
+        background: #6F4D31;
+    }
+    
+    .accordion .item .body .contents {
+        padding: 0;
+    }
+    
+    .accordion .head {
+        background: rgb(111, 77, 49);
+    }
+    
+    .accordion .item.active .head a {
+        color: #D3A42A;
+        color: #CCB37A;
+    }
+    
+    .accordion .item .head a {
+        color: #D3A42A;
+        padding: 10px 20px 10px 40px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .accordion .item .head:after,
+    .accordion .item.active .head:after {
+        color: #CCB37A;
+    }
+    
+    .accordion .item:focus .item:hover .head:after,
+    .accordion .item.active .head:after {
+        color: #CCB37A;
+    }
+    
+    .datepicker {
+        background-color: white;
+    }
+    
+    .btn-sm {
+        padding: 5px 10px !important;
+    }
+    
+    input[type="checkbox"] {
+        outline: 0;
+        height: 13px;
+    }
+    
+    label {
+        font-size: 15px;
+    }
+    
+    .footnote {
+        font-size: 14px;
+        font-style: italic;
+        font-weight: bold;
+        color: #742020;
+        margin-bottom: 40px;
+    }
+</style>
+<link href="~/Content/datepicker3.css" rel="stylesheet" />
+<div class="row form-group">
+    <div class="col-md-3">
+        <label for="guests">are you a lady or a gentleman?</label>
+        <select ng-model="vm.appointmentRequest.gender" ng-change="vm.changeGender()" class="form-control">
+            <option value="" disabled selected="true">choose...</option>
+            <option value="female">lady</option>
+            <option value="male">gentleman</option>
+        </select>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 10px">
+    <div class="col-md-6">
+        <label>select your service(s)...</label>
+    </div>
+    <div class="col-md-6">
+        <span class="footnote pull-right">* - sorry gents, this service is only availble to the ladies.</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <uib-accordion close-others="true">
+            <uib-accordion-group is-open="vm.accHairRemovalOpen" is-disabled="false">
+                <uib-accordion-heading ng-click="vm.accHairRemovalOpen = !vm.accHairRemovalOpen">
+                    <div class="heading">hair removal<i class="pull-left fa" style="margin-right: 10px" ng-class="{'fa-minus-circle': vm.accHairRemovalOpen, 'fa-plus-circle': !vm.accHairRemovalOpen}"></i></div>
+                </uib-accordion-heading>
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>premium treatments</h4>
+                                    <div ng-repeat="service in vm.data.services.hairRemoval" class="svc">
+                                        <div class="col-md-6 col-sm-6 checkbox" ng-if="service.premium">
+                                            <label>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <span ng-if="service.description" class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.data.services.hairRemoval" class="svc">
+                                        <div class="col-md-4 col-sm-6 checkbox" ng-if="!service.premium">
+                                            <label>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+            </uib-accordion-group>
+            <uib-accordion-group is-open="vm.accFacialOpen" is-disabled="false">
+                <uib-accordion-heading ng-click="vm.accFacialOpen = !vm.accFacialOpen">
+                    <div class="heading">facial<i class="pull-left fa" style="margin-right: 10px" ng-class="{'fa-minus-circle': vm.accFacialOpen, 'fa-plus-circle': !vm.accFacialOpen}"></i></div>
+                </uib-accordion-heading>
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.data.services.facial" class="svc">
+                                        <div class="col-md-4 col-sm-6 checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+            </uib-accordion-group>
+            <uib-accordion-group is-open="vm.accMicrodermOpen" is-disabled="false">
+                <uib-accordion-heading ng-click="vm.accMicrodermOpen = !vm.accMicrodermOpen">
+                    <div class="heading">microderm<i class="pull-left fa" style="margin-right: 10px" ng-class="{'fa-minus-circle': vm.accMicrodermOpen, 'fa-plus-circle': !vm.accMicrodermOpen}"></i></div>
+                </uib-accordion-heading>
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.data.services.microderm" class="svc">
+                                        <div class="col-md-6 col-sm-6 checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+            </uib-accordion-group>
+            <uib-accordion-group is-open="vm.accPeelOpen" is-disabled="false">
+                <uib-accordion-heading ng-click="vm.accPeelOpen = !vm.accPeelOpen">
+                    <div class="heading">peel<i class="pull-left fa" style="margin-right: 10px" ng-class="{'fa-minus-circle': vm.accPeelOpen, 'fa-plus-circle': !vm.accPeelOpen}"></i></div>
+                </uib-accordion-heading>
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.data.services.chemicalPeel" class="svc">
+                                        <div class="col-md-6 col-sm-6 checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+            </uib-accordion-group>
+            <uib-accordion-group is-open="vm.accTintingOpen" is-disabled="false">
+                <uib-accordion-heading ng-click="vm.accTintingOpen = !vm.accTintingOpen">
+                    <div class="heading">tinting<i class="pull-left fa" style="margin-right: 10px" ng-class="{'fa-minus-circle': vm.accTintingOpen, 'fa-plus-circle': !vm.accTintingOpen}"></i></div>
+                </uib-accordion-heading>
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.data.services.tinting" class="svc">
+                                        <div class="col-md-6 col-sm-6 checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+            </uib-accordion-group>
+            <uib-accordion-group is-open="vm.accTanningOpen" is-disabled="false">
+                <uib-accordion-heading ng-click="vm.accTanningOpen = !vm.accTanningOpen">
+                    <div class="heading">spray tan<i class="pull-left fa" style="margin-right: 10px" ng-class="{'fa-minus-circle': vm.accTanningOpen, 'fa-plus-circle': !vm.accTanningOpen}"></i></div>
+                </uib-accordion-heading>
+                <div class="contents">
+                    <blockquote>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-repeat="service in vm.data.services.sprayTan" class="svc">
+                                        <div class="col-md-6 col-sm-6 checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
+                                                <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
+            </uib-accordion-group>
+        </uib-accordion>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <label style="margin-bottom: 10px !important">when would you like to come?</label>
+        </div>
+        <div style="display:inline-block; min-height:290px;">
+            <uib-datepicker ng-model="vm.appointmentRequest.selectedDate" class="well well-sm" datepicker-options="vm.dpOptions"></uib-datepicker>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label for="guests">select a location</label>
+        <select ng-model="vm.appointmentRequest.location" class="form-control">
+            <option value="" disabled selected="true">choose...</option>
+            <option value="1">stanton</option>
+            <option value="2">brea</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="guests">select an esthetician</label>
+        <select ng-model="vm.appointmentRequest.selectedEsthetician" class="form-control">
+                <option value=""  selected="true">anyone</option>
+            <option ng-repeat="esthetician in vm.availableEstheticians" value="{{esthetician.id}}">{{esthetician.name}}</option>
+        </select>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="form-group row">
+    <button type="button" ng-click="vm.checkAvailableOpenings()" class="btn btn-info">Check</button>
+</div>
+
+<div class="form-group row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <a ui-sref="appointment.chooseTimeSlot" class="btn btn-block btn-info">Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+    </div>
+</div>

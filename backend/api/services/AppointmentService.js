@@ -163,12 +163,12 @@ module.exports = {
         appt.services.forEach(function (svc) {
             serviceIds.push(parseInt(svc.value));
         });
-        
+
         if (appt.title.indexOf('-') != -1) {
             appt.title = appt.title.substring(0, appt.title.indexOf('-')).trim();
         }
-            
-        
+
+
         Appointment.findOne({ id: appt.id })
             .then(function (apptInDb) {
                 apptInDb.startTime = appt.start;
@@ -176,7 +176,7 @@ module.exports = {
                 apptInDb.phoneNumber = appt.phoneNumber;
                 apptInDb.gender = appt.gender;
                 apptInDb.isNoShow = appt.isNoShow;
-                apptInDb.name = appt.title;              
+                apptInDb.name = appt.title;
                 return apptInDb;
             })
             .then(function (apptInDb) {
@@ -275,6 +275,43 @@ module.exports = {
         return deferred.promise;
     },
 
+    checkOpenings1: function (apptRequest) {
+        var deferred = sails.q.defer();
+        var datesToCheck = [];
+        var requestedDate = sails.moment(apptRequest.selectedDate);
+        var today = sails.moment(new Date().setHours(0, 0, 0, 0));
+        var datesToCheck = [];
+        var count = 6;
+
+        var rd = requestedDate.clone();
+
+        for (var i = 0; i < 4; i++) {
+            datesToCheck.push(rd.clone());
+            count--;
+            rd.subtract(1, 'days');
+            if (rd < today)
+                break;
+        }
+        datesToCheck.reverse();
+
+        var t = requestedDate.clone().add(1, 'days');
+
+        for (var i = count - 1; count >= 0; count--) {
+            datesToCheck.push(t.clone());
+            t.add(1, 'days');
+        }
+
+        var simpleDates = datesToCheck.map(function (date) {
+            return new Date(date.format());
+        });
+
+        getTimeSlots(apptRequest, simpleDates)
+            .then(function (openings) {
+                deferred.resolve(openings);
+            });
+        return deferred.promise;
+    },
+
     checkOpenings: function (apptRequest) {
         var deferred = sails.q.defer();
         var availableOpenings = [];
@@ -332,7 +369,7 @@ module.exports = {
                 })
                 return d.promise;
             }).then(function () {
-                return Appointment.find({ where: { location: businessDay.location }})
+                return Appointment.find({ where: { location: businessDay.location } })
                     .populate('services')
                     .then(function (appts) {
                         return appts;
@@ -364,13 +401,13 @@ module.exports = {
 
                         var shift = businessDay.shifts.find(x => timeSlot.start.isSameOrAfter(x.startTime) && timeSlot.end.isSameOrBefore(x.endTime))
                         var straddlesShifts = false;
-                        
+
                         if (!shift || shift.length == 0) {
-                            straddlesShifts = true;                            
+                            straddlesShifts = true;
                         }
                         else
                             timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
-                            
+
                         timeSlot.end.add(-apptReqBufferTime, 'minutes');
                         if (!(straddlesShifts))
                             availableOpenings.push(timeSlot);
@@ -471,6 +508,167 @@ module.exports = {
         return deferred.promise;
     }
 }
+
+/************* utility functions *****************/
+
+function getTimeSlots(apptRequest, datesToCheck) {
+    var deferred = sails.q.defer();
+    var openings = [];
+
+    var promises = [];
+    for (var i = 0; i < datesToCheck.length; i++) {
+        var item = {};
+        item.date = datesToCheck[i];
+        item.openings = [];
+        promises.push(getOpenings(apptRequest, item));
+    }
+
+    sails.q.allSettled(promises)
+    .then(function(results) {
+        results.forEach(result => {
+            openings.push(result.value);
+        });
+        deferred.resolve(openings);
+    })
+    return deferred.promise;
+}
+
+function getDatesToCheck(selectedDate) {
+    var requestedDate = sails.moment(selectedDate);
+    var today = sails.moment(new Date().setHours(0, 0, 0, 0));
+    var datesToCheck = [];
+    var count = 6;
+
+    var rd = requestedDate.clone();
+
+    for (var i = 0; i < 4; i++) {
+        datesToCheck.push(rd.clone());
+        count--;
+        rd.subtract(1, 'days');
+        if (rd < today)
+            break;
+    }
+    datesToCheck.reverse();
+
+    var t = requestedDate.clone().add(1, 'days');
+
+    for (var i = count - 1; count >= 0; count--) {
+        datesToCheck.push(t.clone());
+        t.add(1, 'days');
+    }
+    return datesToCheck;
+}
+
+function getOpenings(apptRequest, item) {
+    var deferred = sails.q.defer();
+    var availableOpenings = [];
+    var stdBufferTime = 15;
+
+    var apptReqBufferTime = (apptRequest.selectedServices.length === 1 && apptRequest.selectedServices[0].quickService)
+        ? 0
+        : stdBufferTime;
+
+    var totalDuration = 0;
+    apptRequest.selectedServices.forEach(function (svc) {
+        totalDuration += svc.duration;
+    });
+    var momApptDate = sails.moment(item.date);
+    var businessDay = {};
+
+    BusinessDay.findOne({ location: apptRequest.location, dayOfWeek: momApptDate.format('dddd').toLowerCase() })
+        .populate('shifts')
+        .then(function (day) {
+            if (!day)
+                return null;
+            var selectedDate = new Date(item.date);
+            day.shifts.forEach(function (shift) {
+                var currentStart = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
+                    shift.startTime.getHours(), shift.startTime.getMinutes(), shift.startTime.getSeconds());
+                var currentEnd = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
+                    shift.endTime.getHours(), shift.endTime.getMinutes(), shift.endTime.getSeconds());
+
+                var shiftStart = sails.moment(currentStart)
+                var shiftEnd = sails.moment(currentEnd)
+
+                if (shiftEnd < shiftStart)
+                    shiftEnd.add(1, 'day');
+
+                shift.startTime = shiftStart;
+                shift.endTime = shiftEnd;
+            })
+            return day;
+        })
+        .then(function (day) {
+            if (!day)
+                return deferred.resolve(availableOpenings);
+            else if (day.shifts.length === 0)
+                return deferred.resolve(availableOpenings);
+            businessDay = day;
+        }).then(function () {
+            var d = sails.q.defer();
+            businessDay.shifts.forEach(function (shift) {
+                return EstheticianService.getEstheticianById(shift.esthetician)
+                    .then(function (esth) {
+                        shift.esthetician = esth;
+                        return d.resolve(shift);;
+                    })
+            })
+            return d.promise;
+        }).then(function () {
+            return Appointment.find({ where: { location: businessDay.location } })
+                .populate('services')
+                .then(function (appts) {
+                    return appts;
+                })
+        }).then(function (appts) {
+            var selectedDate = new Date(item.date);
+
+            var openingTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
+                businessDay.openingTime.getHours(), businessDay.openingTime.getMinutes(), businessDay.openingTime.getSeconds());
+            var closingTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(),
+                businessDay.closingTime.getHours(), businessDay.closingTime.getMinutes(), businessDay.closingTime.getSeconds());
+
+            var businessDayOpen = sails.moment(openingTime)
+            var businessDayClose = sails.moment(closingTime)
+
+            if (businessDayClose < businessDayOpen)
+                businessDayClose.add(1, 'day');
+
+            var possibleStart = businessDayOpen;
+            var possibleEnd = sails.moment(possibleStart).add(totalDuration + apptReqBufferTime, 'minutes');
+
+            while (possibleStart < businessDayClose && possibleEnd < businessDayClose) {
+                var timeSlot = {
+                    start: sails.moment(possibleStart),
+                    end: sails.moment(possibleEnd),
+                }
+
+                if (allowedToAdd(timeSlot, appts, apptReqBufferTime)) {
+
+                    var shift = businessDay.shifts.find(x => timeSlot.start.isSameOrAfter(x.startTime) && timeSlot.end.isSameOrBefore(x.endTime))
+                    var straddlesShifts = false;
+
+                    if (!shift || shift.length == 0) {
+                        straddlesShifts = true;
+                    }
+                    else
+                        timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
+
+                    timeSlot.end.add(-apptReqBufferTime, 'minutes');
+                    if (!(straddlesShifts))
+                        availableOpenings.push(timeSlot);
+                }
+
+                possibleStart.add(15, 'minutes');
+                possibleEnd.add(15, 'minutes');
+            }
+            item.openings = availableOpenings;
+            return deferred.resolve(item);
+        })
+    return deferred.promise;
+}
+
+
 
 function saveAppt(apptToSave) {
     var deferred = sails.q.defer();

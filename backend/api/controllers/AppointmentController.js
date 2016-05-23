@@ -92,6 +92,17 @@ module.exports = {
             });
     },
 
+    checkAvailableOpenings: function (req, res) {
+         var apptRequest = req.body;
+         AppointmentService.checkOpenings1(apptRequest)
+            .then(function (results) {
+                return res.json(200, results);
+            })
+            .catch(function (err) {
+                return res.negotiate(err);
+            });
+    },
+    
     submitBlockout: function (req, res) {
         var blockout = req.body;
 
@@ -114,7 +125,71 @@ module.exports = {
             .catch(function (err) {
                 return res.negotiate(err);
             });
+    },
+
+    start: function (req, res) {
+        var data = {};
+
+        SpaServiceService.getServices()
+            .then(function (services) {
+                data.services = groupServices(services);
+                EstheticianService.getEstheticians()
+                    .then(function (estheticians) {
+                        data.estheticians = estheticians.map(esth => ({ id: esth.id, name: esth.firstName, services: esth.services.map(svc => (svc.id))}));
+                        LocationService.getAll()
+                            .then(function (locations) {
+                                data.locations = locations;
+                                res.json(200, data);
+                            })
+                    })
+            })
+            .catch(function (err) {
+                res.negotiate(err);
+            })
     }
 
 };
+
+function groupServices(services) {
+    var hairRemoval = [];
+    var chemicalPeel = [];
+    var sprayTan = [];
+    var microderm = [];
+    var tinting = [];
+    var facial = [];
+
+    services.forEach(function (svc) {
+        svc.isSelected = false;
+        switch (svc.serviceType) {
+            case "hairRemoval":
+                hairRemoval.push(svc);
+                break;
+            case "facial":
+                facial.push(svc);
+                break;
+            case "sprayTan":
+                sprayTan.push(svc);
+                break;
+            case "chemicalPeel":
+                chemicalPeel.push(svc);
+                break;
+            case "microderm":
+                microderm.push(svc);
+                break;
+            case "tinting":
+                tinting.push(svc);
+                break;
+        }
+    });
+    return {
+        hairRemoval: hairRemoval,
+        facial: facial,
+        sprayTan: sprayTan,
+        chemicalPeel: chemicalPeel,
+        microderm: microderm,
+        tinting: tinting
+    }
+
+
+}
 

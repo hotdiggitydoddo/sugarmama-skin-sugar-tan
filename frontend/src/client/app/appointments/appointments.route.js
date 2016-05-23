@@ -12,73 +12,117 @@
     function getStates(user_roles) {
         return [
             {
-                state: 'clientAppointments_step1',
+                state: 'appointment',
                 config: {
-                    url: '/appointments',
-                    templateUrl: 'app/appointments/appointments.step1.html',
-                    controller: 'ClientAppointmentsStepOne',
+                    url: '/book',
+                    templateUrl: 'app/appointments/appointment.html',
+                    controller: 'ClientAppointments',
                     controllerAs: 'vm',
-                    title: 'Book an Appointment',
                     settings: {
-                        nav: 1,
+                        nav: 5,
                         content: 'book'
                     },
-                    data: {
-                        authRequired: true,
-                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
-                    },
                 }
             },
             {
-                state: 'clientAppointments_step2',
+                state: 'appointment.chooseServices',
                 config: {
-                    url: '/appointments/openings',
-                    templateUrl: 'app/appointments/appointments.step2.html',
-                    controller: 'ClientAppointmentsStepTwo',
-                    controllerAs: 'vm',
-                    title: 'Book an Appointment',
-                    params: {
-                        appointmentRequest: null
-                    },
-                    data: {
-                        authRequired: true,
-                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
-                    },
+                    url: '/chooseservices',
+                    templateUrl: 'app/appointments/appointment.chooseServices.html',
+                    title: 'Book an Appointment'
                 }
             },
             {
-                state: 'clientAppointments_step3',
+                state: 'appointment.chooseTimeSlot',
                 config: {
-                    url: '/appointments/book',
-                    templateUrl: 'app/appointments/appointments.step3.html',
-                    controller: 'ClientAppointmentsStepThree',
+                    url: '/selecttimeslot',
+                    templateUrl: 'app/appointments/appointment.chooseTimeSlot.html',
+                    controller: 'TimeSlots',
                     controllerAs: 'vm',
-                    title: 'Book an Appointment',
                     params: {
-                        appointmentRequest: null
-                    },
-                    data: {
-                        authRequired: true,
-                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
-                    },
+                        appointmentRequest: null,
+                        openings: null
+                    }
                 }
-            },
-            {
-                state: 'clientAppointments_step4',
-                config: {
-                    url: '/appointments/confimation',
-                    templateUrl: 'app/appointments/appointments.step4.html',
-                    controller: 'ClientAppointmentsStepFour',
-                    controllerAs: 'vm',
-                    title: 'Book an Appointment',
-                    params: {
-                        appointment: null
-                    },
-                    data: {
-                        authRequired: true,
-                        authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
-                    },
-                }
-            }];
+            }]
+        // {
+        //     state: 'appointment.clientInfo',
+        //     config: {
+        //         url: '/clientinfo',
+        //         templateUrl: 'appointment.clientInfo.html'
+        //     }
+        // }]
+
+
+
+        // {
+        //     state: 'clientAppointments_step1',
+        //     config: {
+        //         url: '/appointments',
+        //         templateUrl: 'app/appointments/appointments.step1.html',
+        //         controller: 'ClientAppointmentsStepOne',
+        //         controllerAs: 'vm',
+        //         title: 'Book an Appointment',
+        //         settings: {
+        //             nav: 1,
+        //             content: 'book'
+        //         },
+        //         data: {
+        //             authRequired: true,
+        //             authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
+        //         },
+        //     }
+        // },
+        // {
+        //     state: 'clientAppointments_step2',
+        //     config: {
+        //         url: '/appointments/openings',
+        //         templateUrl: 'app/appointments/appointments.step2.html',
+        //         controller: 'ClientAppointmentsStepTwo',
+        //         controllerAs: 'vm',
+        //         title: 'Book an Appointment',
+        //         params: {
+        //             appointmentRequest: null
+        //         },
+        //         data: {
+        //             authRequired: true,
+        //             authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
+        //         },
+        //     }
+        // },
+        // {
+        //     state: 'clientAppointments_step3',
+        //     config: {
+        //         url: '/appointments/book',
+        //         templateUrl: 'app/appointments/appointments.step3.html',
+        //         controller: 'ClientAppointmentsStepThree',
+        //         controllerAs: 'vm',
+        //         title: 'Book an Appointment',
+        //         params: {
+        //             appointmentRequest: null
+        //         },
+        //         data: {
+        //             authRequired: true,
+        //             authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
+        //         },
+        //     }
+        // },
+        // {
+        //     state: 'clientAppointments_step4',
+        //     config: {
+        //         url: '/appointments/confimation',
+        //         templateUrl: 'app/appointments/appointments.step4.html',
+        //         controller: 'ClientAppointmentsStepFour',
+        //         controllerAs: 'vm',
+        //         title: 'Book an Appointment',
+        //         params: {
+        //             appointment: null
+        //         },
+        //         data: {
+        //             authRequired: true,
+        //             authorizedRoles: [user_roles.admin, user_roles.owner, user_roles.esthetician]
+        //         },
+        //     }
+        // }];
     }
 })();

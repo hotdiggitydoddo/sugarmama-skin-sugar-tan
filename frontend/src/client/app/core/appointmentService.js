@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -8,9 +8,11 @@
     appointmentService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
 
     function appointmentService($http, $location, $q, $window, exception, logger, envService) {
-       
+
         var apiUrl = envService.read('apiUrl');
         var service = {
+            initiateBooking: initiateBooking,
+            checkAvailableOpenings: checkAvailableOpenings,
             submitApptRequest: submitApptRequest,
             submitBlockout: submitBlockout,
             book: book
@@ -18,32 +20,53 @@
 
         return service;
 
+        function initiateBooking() {
+            return $http.get(apiUrl + '/appointment/start')
+                .then(function (data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function (message) {
+                    logger.error(message.data);
+                })
+        }
+
+        function checkAvailableOpenings(apptRequest) {
+             return $http.post(apiUrl + '/appointment/checkavailableopenings', apptRequest)
+                .then(function (data, status, headers, config) {
+                    
+                    return data.data;
+                })
+                .catch(function (message) {
+                    logger.error(message.data);
+                })
+        }
+
         function submitApptRequest(apptRequest) {
             return $http.post(apiUrl + '/appointment/submitrequest', apptRequest)
-                .then(function(data, status, headers, config) {
+                .then(function (data, status, headers, config) {
                     return data.data;
                 })
-                .catch(function(message) {
+                .catch(function (message) {
                     logger.error(message.data);
                 })
         }
-        
+
         function submitBlockout(blockout) {
             return $http.post(apiUrl + '/appointment/submitblockout', blockout)
-                .then(function(data, status, headers, config) {
+                .then(function (data, status, headers, config) {
                     return data.data;
                 })
-                .catch(function(message) {
+                .catch(function (message) {
                     logger.error(message.data);
                 })
         }
-        
+
         function book(appointment) {
-             return $http.post(apiUrl + '/appointment/book', appointment)
-                .then(function(data, status, headers, config) {
+            return $http.post(apiUrl + '/appointment/book', appointment)
+                .then(function (data, status, headers, config) {
                     return data.data;
                 })
-                .catch(function(message) {
+                .catch(function (message) {
                     logger.error(message.data);
                 })
         }
@@ -87,7 +110,7 @@
         //             shift.startTime = moment(shift.startTime);
         //             shift.endTime = moment(shift.endTime);
         //             shift.businessDay = moment.weekdays()[shift.businessDay];
-                    
+
         //             return shift;
         //         })
         //         .catch(function(message) {
