@@ -3,19 +3,12 @@
         display: block;
     }
     
-    .nav-pills > li > a {
-        border-radius: 8px;
+    .date-pill > a {
         color: white;
-        min-width: 57px;
     }
     
-    .nav > li > a {
-        padding: 2px 13px;
-        /*margin: 0 3px;*/
-    }
-    
-    .nav > li > a:hover,
-    .nav > li > a:focus {
+    .date-pill:hover,
+    .date-pill:focus {
         text-decoration: none;
         background-color: #B16911;
     }
@@ -31,7 +24,6 @@
     .selected-date {
         background: #B16911;
     }
-    
     /*.col-md-1 {
         padding-right: 10px;
         min-width: 9%;
@@ -44,17 +36,21 @@
         padding-left: 12px;
     }
     
+    .date-pill {
+        min-width: 36px;
+        padding: 5px 0px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
 </style>
-<div class="row">
+<div class="row mb-small">
     <div class="col-md-12">
         <div class="text-center">
-            <ul class="nav nav-pills">
-                <li role="presentation" class="col-md-1 col-sm-1 col-xs-1" ng-repeat="date in vm.openings">
-                    <a href="#" ng-click="vm.changeDate(date, $index)" ng-class="{'no-openings': date.openings.length == 0, 'has-openings': date.openings.length > 0, 'selected-date': date.selected }">
-                {{ date.day }}<span class="shortDate">{{ date.shortDate }}</span>
-            </a>
-                </li>
-            </ul>
+            <div role="presentation" class="col-md-1 col-sm-1 col-xs-1" ng-repeat="date in vm.openings">
+                <div class="date-pill" ng-click="vm.changeDate(date, $index)" ng-class="{'no-openings': date.openings.length == 0, 'has-openings': date.openings.length > 0, 'selected-date': date.selected }">
+                    <a href="#">{{ date.day }}<span class="shortDate">{{ date.shortDate }}</span></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
