@@ -6,7 +6,6 @@
     .nav-pills > li > a {
         border-radius: 8px;
         color: white;
-        max-width: 57px;
         min-width: 57px;
     }
     
@@ -41,15 +40,16 @@
     
     .col-md-1 {
         padding-right: 12px;
-        min-width: 14%;
+        width: 14%;
         padding-left: 12px;
     }
+    
 </style>
 <div class="row">
     <div class="col-md-12">
         <div class="text-center">
             <ul class="nav nav-pills">
-                <li role="presentation" class="col-md-1" ng-repeat="date in vm.openings">
+                <li role="presentation" class="col-md-1 col-sm-1 col-xs-1" ng-repeat="date in vm.openings">
                     <a href="#" ng-click="vm.changeDate(date, $index)" ng-class="{'no-openings': date.openings.length == 0, 'has-openings': date.openings.length > 0, 'selected-date': date.selected }">
                 {{ date.day }}<span class="shortDate">{{ date.shortDate }}</span>
             </a>
