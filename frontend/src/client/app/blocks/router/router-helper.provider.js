@@ -113,6 +113,7 @@
                         handlingStateChangeError = false;
                         var title = config.docTitle + ' ' + (toState.title || '');
                         $rootScope.title = title; // data bind to <title>
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
                     }
                 );
             }

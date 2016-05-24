@@ -14,14 +14,17 @@
         // }
         vm.appointmentRequest = $stateParams.appointmentRequest;
         vm.openings = $stateParams.openings;
-
+        vm.changeDate = changeDate;
         //vm.appointmentRequest.selectedDateString = moment(vm.appointmentRequest.selectedDate).format("dddd, MMMM Do").toLowerCase();
-
+        vm.selectedIndex = -1;
         vm.bsTableControls = [];
         activate();
 
         function activate() {
             vm.openings.forEach(function (openingSet) {
+                if (openingSet.selected) {
+                    vm.selectedIndex = vm.openings.indexOf(openingSet);
+                }
                 vm.bsTableControls.push({
                     options: {
                         data: openingSet.openings,
@@ -78,6 +81,13 @@
             var end = moment(row.end);
 
             return (moment.duration(end - start) / 60000) + " minutes";
+        }
+
+        function changeDate(date, index) {
+            var old = vm.openings.find(function (item) { return item.selected; });
+            old.selected = false;
+            vm.openings[index].selected = true;
+            vm.selectedIndex = index;
         }
     }
 })();

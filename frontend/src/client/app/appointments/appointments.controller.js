@@ -14,7 +14,6 @@
         vm.serviceDisabled = serviceDisabled;
         vm.toggleService = toggleService;
         vm.checkAvailableOpenings = checkAvailableOpenings;
-        vm.changeDate = changeDate;
         vm.dpOptions = {
             showWeeks: false,
             minDate: new Date()
@@ -89,11 +88,7 @@
                 })
         }
         
-        function changeDate(date, index) {
-            var old = vm.openings.find(function(item){ return item.selected;});
-            old.selected = false;
-            vm.openings[index].selected = true;            
-        }
+      
     }
 })();
 

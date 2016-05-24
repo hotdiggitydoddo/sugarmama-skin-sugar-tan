@@ -103,7 +103,7 @@
 </style>
 <link href="~/Content/datepicker3.css" rel="stylesheet" />
 <div class="row form-group">
-    <div class="col-md-3">
+    <div class="col-md-3 col-sm-4 col-xs-4">
         <label for="guests">are you a lady or a gentleman?</label>
         <select ng-model="vm.appointmentRequest.gender" ng-change="vm.changeGender()" class="form-control">
             <option value="" disabled selected="true">choose...</option>
@@ -113,10 +113,10 @@
     </div>
 </div>
 <div class="row" style="margin-bottom: 10px">
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-4 col-xs-5">
         <label>select your service(s)...</label>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-8 col-xs-7">
         <span class="footnote pull-right">* - sorry gents, this service is only availble to the ladies.</span>
     </div>
 </div>
@@ -287,7 +287,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-7">
         <div>
             <label style="margin-bottom: 10px !important">when would you like to come?</label>
         </div>
@@ -295,7 +295,7 @@
             <uib-datepicker ng-model="vm.appointmentRequest.selectedDate" class="well well-sm" datepicker-options="vm.dpOptions"></uib-datepicker>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-xs-5">
         <label for="guests">select a location</label>
         <select ng-model="vm.appointmentRequest.location" class="form-control">
             <option value="" disabled selected="true">choose...</option>
@@ -303,7 +303,7 @@
             <option value="2">brea</option>
         </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-xs-5">
         <label for="guests">select an esthetician</label>
         <select ng-model="vm.appointmentRequest.selectedEsthetician" class="form-control">
                 <option value=""  selected="true">anyone</option>
@@ -311,30 +311,14 @@
         </select>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="form-group row">
-    <button type="button" ng-click="vm.checkAvailableOpenings()" class="btn btn-info">Check</button>
+<div class="row mb-small">
+    <div class="col-xs-6 col-xs-offset-3">
+        <button type="button" ng-click="vm.checkAvailableOpenings()" class="btn btn-toranj btn-block">Let's Rendezvous! <span class="glyphicon glyphicon-circle-arrow-right"></button>
+    </div>
 </div>
 
-<div class="form-group row">
+<!--<div class="form-group row">
     <div class="col-xs-6 col-xs-offset-3">
         <a ui-sref="appointment.chooseTimeSlot" class="btn btn-block btn-info">Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
     </div>
-</div>
+</div>-->
