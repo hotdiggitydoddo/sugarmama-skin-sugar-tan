@@ -75,7 +75,7 @@
 
                     data.forEach(function (item) {
                         var mom = moment(item.date);
-                        var longDate = mom.format('dddd, MMMM Do');
+                        var longDate = mom.format('dddd, MMMM Do YYYY');
                         var day = mom.format('ddd');
                         var shortDate = mom.format('M/D');
                         item.selected = mom.date() == selectedDate.date();

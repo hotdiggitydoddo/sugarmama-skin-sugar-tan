@@ -15,12 +15,17 @@
         vm.appointmentRequest = $stateParams.appointmentRequest;
         vm.openings = $stateParams.openings;
         vm.changeDate = changeDate;
-        //vm.appointmentRequest.selectedDateString = moment(vm.appointmentRequest.selectedDate).format("dddd, MMMM Do").toLowerCase();
+      
         vm.selectedIndex = -1;
         vm.bsTableControls = [];
         activate();
 
         function activate() {
+            if (!vm.appointmentRequest) {
+                $state.go('appointment.chooseServices')
+            }
+             
+            vm.appointmentRequest.selectedDateString = moment(vm.appointmentRequest.selectedDate).format("dddd, MMMM Do YYYY").toLowerCase();      
             vm.openings.forEach(function (openingSet) {
                 if (openingSet.selected) {
                     vm.selectedIndex = vm.openings.indexOf(openingSet);
@@ -30,6 +35,7 @@
                         data: openingSet.openings,
                         cardView: true,
                         height: 500,
+                        striped: true,
                         clickToSelect: true,
                         onClickRow: rowClicked,
                         columns: [{
@@ -88,6 +94,8 @@
             old.selected = false;
             vm.openings[index].selected = true;
             vm.selectedIndex = index;
+            vm.appointmentRequest.selectedDate = date.date;
+            vm.appointmentRequest.selectedDateString = date.longDate.toLowerCase();
         }
     }
 })();

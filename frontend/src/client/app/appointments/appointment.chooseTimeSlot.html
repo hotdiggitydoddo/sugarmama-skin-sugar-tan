@@ -24,11 +24,6 @@
     .selected-date {
         background: #B16911;
     }
-    /*.col-md-1 {
-        padding-right: 10px;
-        min-width: 9%;
-        padding-left: 12px;
-    }*/
     
     .col-md-1 {
         padding-right: 12px;
@@ -39,8 +34,38 @@
     .date-pill {
         min-width: 36px;
         padding: 5px 0px;
-        border-radius: 8px;
+        border-radius: 23px;
+        border-top-left-radius: 4px;
+        border-bottom-right-radius: 4px;
         cursor: pointer;
+    }
+    
+    .workspaceContainer {
+        height: 624px;
+        background: rgba(255, 255, 255, 0.45);
+        padding: 1px 26px;
+    }
+    
+    tr {
+        background: #FFF9E6
+    }
+    
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #F7EED3;
+    }
+    
+    .card-view > .title {
+        font-size: 13px;
+        text-transform: none;
+        margin: 2px;
+    }
+    
+    .ib-center {
+        margin-top: 0px;
+    }
+    
+    .date-text {
+        color: #67320B;
     }
 </style>
 <div class="row mb-small">
@@ -55,9 +80,21 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6">
-        <div ng-repeat="tableControl in vm.bsTableControls" ng-show="$index == vm.selectedIndex" class="workspaceContainer">
-            <table bs-table-control="vm.bsTableControls[$index]"></table>
+    <div class="col-md-6" style="margin-top: 45px !important">
+        <div ng-repeat="tableControl in vm.bsTableControls" ng-show="$index == vm.selectedIndex" class="icon-box ib-center ib-boxed">
+            <i class="ib-icon fa fa-calendar"></i>
+            <h2 class="title">available openings for<br><span class="date-text">{{vm.appointmentRequest.selectedDateString}}</span></h2>
+            <div class="contents">
+                <table ng-if="vm.bsTableControls[$index].options.data.length > 0" bs-table-control="vm.bsTableControls[$index]"></table>
+                <div ng-if="vm.bsTableControls[$index].options.data.length == 0" class="row mb-small">
+                    <div class="alert alert-warning">
+                        <p style="font-size:14px" class="text-center">It looks like we're unable to fit you in on the services and day that you selected. To choose a different
+                            day, select one from above or click below to go back and choose fewer services.</p>
+                        <p class="text-center"><a onclick="window.history.back();" class="btn btn-toranj btn-icon"><i class="fa fa-mail-reply"></i>Go Back</a></p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
