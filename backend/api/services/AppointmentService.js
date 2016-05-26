@@ -406,7 +406,8 @@ module.exports = {
                             straddlesShifts = true;
                         }
                         else
-                            timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
+                            //timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
+                            timeSlot.esthetician = shift.esthetician;
 
                         timeSlot.end.add(-apptReqBufferTime, 'minutes');
                         if (!(straddlesShifts))
@@ -416,6 +417,9 @@ module.exports = {
                     possibleStart.add(15, 'minutes');
                     possibleEnd.add(15, 'minutes');
                 }
+
+
+
 
                 return deferred.resolve(availableOpenings);
             })
@@ -524,12 +528,12 @@ function getTimeSlots(apptRequest, datesToCheck) {
     }
 
     sails.q.allSettled(promises)
-    .then(function(results) {
-        results.forEach(result => {
-            openings.push(result.value);
-        });
-        deferred.resolve(openings);
-    })
+        .then(function (results) {
+            results.forEach(result => {
+                openings.push(result.value);
+            });
+            deferred.resolve(openings);
+        })
     return deferred.promise;
 }
 
@@ -652,7 +656,8 @@ function getOpenings(apptRequest, item) {
                         straddlesShifts = true;
                     }
                     else
-                        timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
+                        //timeSlot.esthetician = shift.esthetician.firstName.toLowerCase();
+                        timeSlot.esthetician = shift.esthetician;
 
                     timeSlot.end.add(-apptReqBufferTime, 'minutes');
                     if (!(straddlesShifts))
@@ -662,6 +667,53 @@ function getOpenings(apptRequest, item) {
                 possibleStart.add(15, 'minutes');
                 possibleEnd.add(15, 'minutes');
             }
+
+
+            var openingsToRemove = []
+            var qualifiedEstheticiansAvailable = false;
+
+            for (var i = 0; i < availableOpenings.length; i++) {
+                var op = availableOpenings[i];
+
+                if (!op.esthetician.services)
+                    openingsToRemove.push(op);
+                else {
+                    var svcReqIds = apptRequest.selectedServices.map(function (svc) { return svc.id });
+                    var esthSvcs = op.esthetician.services.map(function (svc) { return svc.id });
+
+                    //check to ensure the esthetician available for this opening can do the requested services
+                    if (svcReqIds.every(function (svc) { return esthSvcs.indexOf(svc) >= 0; }) || svcReqIds.length == 0) {
+                        //if so, check to see if either any esthetician is ok or if the selected esthetician matches
+                        //the opening's available esthetician
+                        qualifiedEstheticiansAvailable = true;
+
+                        if (!apptRequest.selectedEsthetician || apptRequest.selectedEsthetician == op.esthetician.id)
+                            op.esthetician = op.esthetician.firstName.toLowerCase();
+                        else {
+                            //esthetician was qualified but was not preferred.
+                            op.esthetician = op.esthetician.firstName.toLowerCase();
+                            openingsToRemove.push(op);
+                        }
+                            
+                    }
+                    else {
+                        //no estheticians qualified
+                        openingsToRemove.push(op);
+                    }
+                }
+            }
+
+            //if an esthetician was selected but is not available but others are on the given day, do not remove any openings
+            //and instead set a flag on the day that the client can use to display all openings with a blurb
+            if (qualifiedEstheticiansAvailable && (openingsToRemove.length == availableOpenings.length) && apptRequest.selectedEsthetician != "")
+                item.hasQualifiedButNotPreferred = true;
+            else {
+                //otherwise remove the flagged openings
+                openingsToRemove.forEach(function (op) {
+                    availableOpenings.splice(availableOpenings.indexOf(op), 1);
+                });
+            }
+
             item.openings = availableOpenings;
             return deferred.resolve(item);
         })

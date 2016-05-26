@@ -85,10 +85,15 @@
             <i class="ib-icon fa fa-calendar"></i>
             <h2 class="title">available openings for<br><span class="date-text">{{vm.appointmentRequest.selectedDateString}}</span></h2>
             <div class="contents">
+                <div ng-show="vm.hasQualifiedButNotPreferred" class="row mb-small">
+                    <div class="alert alert-info">
+                        <p style="font-size:14px"><i class="fa fa-info-circle" aria-hidden="true"></i>  your selected esthetician has no open availability for this day.  displaying all available appointments instead.</p>
+                    </div>
+                </div>
                 <table ng-if="vm.bsTableControls[$index].options.data.length > 0" bs-table-control="vm.bsTableControls[$index]"></table>
                 <div ng-if="vm.bsTableControls[$index].options.data.length == 0" class="row mb-small">
                     <div class="alert alert-warning">
-                        <p style="font-size:14px" class="text-center">It looks like we're unable to fit you in on the services and day that you selected. To choose a different
+                        <p style="font-size:14px" class="text-center">it looks like we're unable to fit you in on the services and day that you selected.  to choose a different
                             day, select one from above or click below to go back and choose fewer services.</p>
                         <p class="text-center"><a onclick="window.history.back();" class="btn btn-toranj btn-icon"><i class="fa fa-mail-reply"></i>Go Back</a></p>
                     </div>
@@ -97,9 +102,12 @@
 
         </div>
     </div>
+    <div class="col-md-6">
+        
+    </div>
 </div>
 
-
+<!--
 <div class="form-group row">
     <div class="col-xs-6 col-xs-offset-3">
         <a ui-sref="appointment.chooseTimeSlot" class="btn btn-block btn-info">
@@ -113,4 +121,4 @@
     Go Back <span class="glyphicon glyphicon-circle-arrow-right"></span>
     </a>
     </div>
-</div>
+</div>-->

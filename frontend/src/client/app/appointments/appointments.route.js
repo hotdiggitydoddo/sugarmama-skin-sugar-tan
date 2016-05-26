@@ -27,6 +27,7 @@
             {
                 state: 'appointment.chooseServices',
                 config: {
+                    url: '/services',
                     templateUrl: 'app/appointments/appointment.chooseServices.html',
                     title: 'Book an Appointment'
                 }
@@ -34,6 +35,7 @@
             {
                 state: 'appointment.chooseTimeSlot',
                 config: {
+                    url: '/timeslots',
                     templateUrl: 'app/appointments/appointment.chooseTimeSlot.html',
                     controller: 'TimeSlots',
                     controllerAs: 'vm',

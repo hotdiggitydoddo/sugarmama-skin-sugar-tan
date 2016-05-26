@@ -22,13 +22,15 @@
 
         function activate() {
             if (!vm.appointmentRequest) {
-                $state.go('appointment.chooseServices')
+                $state.go('appointment.chooseServices');
+                return;
             }
              
             vm.appointmentRequest.selectedDateString = moment(vm.appointmentRequest.selectedDate).format("dddd, MMMM Do YYYY").toLowerCase();      
             vm.openings.forEach(function (openingSet) {
                 if (openingSet.selected) {
                     vm.selectedIndex = vm.openings.indexOf(openingSet);
+                    vm.hasQualifiedButNotPreferred = openingSet.hasQualifiedButNotPreferred;
                 }
                 vm.bsTableControls.push({
                     options: {
@@ -94,6 +96,7 @@
             old.selected = false;
             vm.openings[index].selected = true;
             vm.selectedIndex = index;
+            vm.hasQualifiedButNotPreferred = vm.openings[index].hasQualifiedButNotPreferred;
             vm.appointmentRequest.selectedDate = date.date;
             vm.appointmentRequest.selectedDateString = date.longDate.toLowerCase();
         }
