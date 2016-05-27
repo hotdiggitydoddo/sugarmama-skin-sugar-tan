@@ -103,19 +103,17 @@
         </div>
     </div>
     <div class="col-md-6">
-        
+        {{vm.appointmentRequest.timeSlotSelected}}
     </div>
 </div>
 
-<!--
+
 <div class="form-group row">
-    <div class="col-xs-6 col-xs-offset-3">
-        <a ui-sref="appointment.chooseTimeSlot" class="btn btn-block btn-info">
-    Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span>
-    </a>
+    <div class="col-md-12">
+        <button ng-disabled="!vm.appointmentRequest.timeSlotSelected" class="pull-right btn btn-toranj">Next <span class="glyphicon glyphicon-circle-arrow-right"></span></button>
     </div>
 </div>
-<div class="form-group row">
+<!--<div class="form-group row">
     <div class="col-xs-6 col-xs-offset-3">
         <a ui-sref="appointment.chooseServices" class="btn btn-block btn-info">
     Go Back <span class="glyphicon glyphicon-circle-arrow-right"></span>

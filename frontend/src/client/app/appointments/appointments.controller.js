@@ -9,6 +9,7 @@
         var vm = this;
         vm.appointmentRequest = {};
         vm.appointmentRequest.selectedServices = [];
+        vm.appointmentRequest.timeSlotSelected = false;
         vm.data = {};
         vm.changeGender = changeGender;
         vm.serviceDisabled = serviceDisabled;
