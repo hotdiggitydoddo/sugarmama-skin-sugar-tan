@@ -104,7 +104,6 @@
             vm.hasQualifiedButNotPreferred = vm.openings[index].hasQualifiedButNotPreferred;
             vm.appointmentRequest.selectedDate = date.date;
             vm.appointmentRequest.selectedDateString = date.longDate.toLowerCase();
-            vm.appointmentRequest.timeSlotSelected = true;
         }
     }
 })();

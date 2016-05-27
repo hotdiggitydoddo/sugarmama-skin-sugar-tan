@@ -79,7 +79,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mb-medium">
     <div class="col-md-6" style="margin-top: 45px !important">
         <div ng-repeat="tableControl in vm.bsTableControls" ng-show="$index == vm.selectedIndex" class="icon-box ib-center ib-boxed">
             <i class="ib-icon fa fa-calendar"></i>
@@ -110,6 +110,7 @@
 
 <div class="form-group row">
     <div class="col-md-12">
+        <a ui-sref="appointment.chooseServices" ng-click="vm.appointmentRequest.timeSlotSelected = false" class="btn btn-toranj pull-left"><span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
         <button ng-disabled="!vm.appointmentRequest.timeSlotSelected" class="pull-right btn btn-toranj">Next <span class="glyphicon glyphicon-circle-arrow-right"></span></button>
     </div>
 </div>
