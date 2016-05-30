@@ -15,6 +15,7 @@
         vm.serviceDisabled = serviceDisabled;
         vm.toggleService = toggleService;
         vm.checkAvailableOpenings = checkAvailableOpenings;
+        vm.submitForm = submitForm;
         vm.dpOptions = {
             showWeeks: false,
             minDate: new Date()
@@ -23,10 +24,32 @@
         activate();
 
         function activate() {
+            vm.header = "let's get acquainted..."
             appointmentService.initiateBooking()
                 .then(function (data) {
                     vm.data = data;
                     $state.go('appointment.chooseServices');
+                })
+        }
+
+        function submitForm() {
+            vm.appointmentRequest.formSubmitted = true;
+            vm.appointmentRequest.loading = true;
+            
+            appointmentService.book(vm.appointmentRequest)
+                .then(function (confirmation) {
+                    vm.bookingComplete = true;
+                    vm.header = "it's a date!"
+                    
+                    confirmation.esthetician = vm.data.estheticians.find(function(esth) { return esth.id == confirmation.esthetician;}).name;
+                    confirmation.location = vm.data.locations.find(function(loc) { return loc.id == confirmation.location;}).city;
+                    $state.go("appointment.bookingComplete", { appointment: confirmation });
+                })
+                .catch(function (err) {
+                    logger.error('Uh oh!  An error occurred while booking your appointment.  Please call us to book.')
+                })
+                .finally(function () {
+                    vm.appointmentRequest.loading = false;
                 })
         }
 
@@ -70,6 +93,23 @@
         }
 
         function checkAvailableOpenings() {
+            var hasErrors = false
+
+            if (!vm.appointmentRequest.location || vm.appointmentRequest.location == "") {
+                logger.error('Please choose a location.');
+                hasErrors = true;
+            }
+            if (vm.appointmentRequest.selectedServices.length == 0) {
+                logger.error('You haven\'t selected any services.');
+                hasErrors = true;
+            }
+            if (!vm.appointmentRequest.gender) {
+                logger.error('Don\'t be shy!  Please select a gender.');
+                hasErrors = true;
+            }
+            if (hasErrors)
+                return;
+
             appointmentService.checkAvailableOpenings(vm.appointmentRequest)
                 .then(function (data) {
                     var selectedDate = moment(vm.appointmentRequest.selectedDate);
@@ -85,11 +125,11 @@
                         item.longDate = longDate;
                     });
                     vm.openings = data;
-                    $state.go('appointment.chooseTimeSlot', {appointmentRequest: vm.appointmentRequest, openings: vm.openings});
+                    $state.go('appointment.chooseTimeSlot', { appointmentRequest: vm.appointmentRequest, openings: vm.openings });
                 })
         }
-        
-      
+
+
     }
 })();
 

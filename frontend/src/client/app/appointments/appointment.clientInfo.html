@@ -1,0 +1,215 @@
+<style>
+    table th,
+    table td {
+        border-top: none;
+    }
+    
+    label {
+        text-transform: lowercase;
+    }
+    
+    dt,
+    dd {
+        font-size: 16px;
+        font-weight: normal;
+    }
+    
+    hr {
+        border-top: 1px solid rgb(103, 50, 11) !important;
+    }
+    
+    .accordion .item .body .save-user {
+        background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.35);
+    }
+    
+    .form-group .help-block {
+        display: none;
+    }
+    
+    .form-group.has-error .help-block {
+        display: block;
+    }
+    
+    .cap-toranj .cap-title {
+        font-size: 60px;
+        color: #B69927;
+    }
+    
+    .cap-toranj .cap-title:after {
+        background: #CCB37A;
+    }
+    
+    p {
+        color: black;
+    }
+    
+    .cap-bordered {
+        border-left: 10px solid #67320B;
+    }
+    
+    .cap-bordered .cap-title {
+        color: #67320B;
+    }
+    
+    dt {
+        color: #67320B;
+    }
+    
+    dd {
+        color: black;
+        margin-bottom: 3px;
+    }
+    
+    #confirmation dd {
+        margin-bottom: 15px;
+    }
+    
+    .img-container > img {
+        opacity: .75;
+    }
+    
+    .cap-lg .cap-title {
+        font-family: ralewayregular;
+    }
+    
+    .blog-list .post-format-quote .quote {
+        background: none;
+        padding: 38px 4%;
+    }
+    
+    #squiggly {
+        margin: 0 auto;
+        display: inherit;
+    }
+    
+    .help-block p {
+        color: #a94442;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+    }
+    
+    .inner-bg {
+        background: url('images/hot-stones-side.png');
+        background-size: cover;
+    }
+    
+    .inner-card {
+        padding: 14px 14px 4px 14px;
+        margin-bottom: 4px;
+        border: 1px solid #D2D2D2;
+    }
+    
+    .bordered {
+        margin-top: 0;
+        text-align: center;
+    }
+    
+    bordered-fine:after,
+    .bordered:after {
+        display: none;
+    }
+    
+    bordered-fine:before, .bordered:before {
+    content: "i";
+    height: 15px;
+    width: 4px;
+    color: #CCB37A;
+    background: #CCB37A;
+}
+</style>
+<div class="row mb-medium" ng-if="vm.appointmentRequest">
+    <div class="col-md-6" style="
+    background: rgba(255, 255, 255, 0.43);
+    padding-top: 15px;
+    padding-bottom: 10px;
+    margin-top: 46px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="inner-bg">
+                    <div class="inner-card">
+                        <h3 class="bordered"></span> appointment details</h4>
+                    <dl class="dl-horizontal">
+                        <dt>date</dt>
+                        <dd>{{ vm.appointmentRequest.startTime | fullDate }}</dd>
+                        <dt>time</dt>
+                        <dd>{{ vm.appointmentRequest.startTime | amPmTime }} - {{ vm.appointmentRequest.endTime | amPmTime }}
+                        </dd>
+                        <dt>location</dt>
+                        <dd ng-if="vm.appointmentRequest.location == 1">stanton</dd>
+                        <dd ng-if="vm.appointmentRequest.location == 2">brea</dd>
+                        <dt>esthetician</dt>
+                        <dd>{{ vm.appointmentRequest.esthetician }}</dd>
+                        <div style="margin: 14px 0px">
+                            <img id="squiggly" width="80px" src="/images/fancy-lines-sm.png" alt="divider">
+                        </div>
+                        <dt>services</dt>
+                        <dd ng-repeat="service in vm.appointmentRequest.selectedServices">{{ service.name }} · {{ service.cost }}</dd>
+                        <br>
+                        <dt>cost</dt>
+                        <dd>{{ vm.appointmentRequest.totalCost }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group" ng-class="{ 'has-error': vm.appointmentRequest.formSubmitted && bookingForm.firstName.$invalid || bookingForm.firstName.$touched && bookingForm.firstName.$invalid }">
+                    <label for="firstName">first name <span class="req">*</span></label>
+                    <input type="text" class="form-control" ng-model="vm.appointmentRequest.userInfo.firstName" ng-minlength="2" ng-maxlength="25"
+                        required name="firstName" title="Please enter your first name" />
+                    <div class="help-block" ng-messages="bookingForm.firstName.$error" ng-if="bookingForm.firstName.$touched || vm.appointmentRequest.formSubmitted">
+                        <div ng-messages-include="/error-messages.html"></div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': vm.appointmentRequest.formSubmitted && bookingForm.lastName.$invalid || bookingForm.lastName.$touched && bookingForm.lastName.$invalid }">
+                    <label for="lastName">last name <span class="req">*</span></label>
+                    <input type="text" class="form-control" ng-model="vm.appointmentRequest.userInfo.lastName" ng-minlength="2" ng-maxlength="25"
+                        required name="lastName" title="Please enter your last name" />
+                    <div class="help-block" ng-messages="bookingForm.lastName.$error" ng-if="bookingForm.lastName.$touched || vm.appointmentRequest.formSubmitted">
+                        <div ng-messages-include="/error-messages.html"></div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': vm.appointmentRequest.formSubmitted && bookingForm.emailAddress.$invalid || bookingForm.emailAddress.$touched && bookingForm.emailAddress.$invalid }">
+                    <label for="emailAddress">email address <span class="req">*</span></label> &nbsp;<small>(for appointment confirmations)</small>
+                    <input type="email" class="form-control" ng-model="vm.appointmentRequest.userInfo.emailAddress" ng-minlength="6" ng-maxlength="40"
+                        required name="emailAddress" title="Please enter a valid email address" />
+                    <div class="help-block" ng-messages="bookingForm.emailAddress.$error" ng-if="bookingForm.emailAddress.$touched || vm.appointmentRequest.formSubmitted">
+                        <div ng-messages-include="/error-messages.html"></div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': vm.appointmentRequest.formSubmitted && bookingForm.phoneNumber.$invalid || bookingForm.phoneNumber.$touched && bookingForm.phoneNumber.$invalid }">
+                    <label for="phoneNumber">phone number <span class="req">*</span></label> &nbsp;<small>(in case we need to contact you)</small>
+                    <input type="text" class="form-control" ng-model="vm.appointmentRequest.userInfo.phoneNumber" ui-mask="999.999.9999" ui-mask-placeholder
+                        ui-mask-placeholder-char="_" required name="phoneNumber" title="Please enter a valid phone number." />
+                    <div class="help-block" ng-messages="bookingForm.phoneNumber.$error" ng-if="bookingForm.phoneNumber.$touched || vm.appointmentRequest.formSubmitted">
+                        <div ng-messages-include="/error-messages.html"></div>
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-disabled="bookingForm.phoneNumber.$error.minlength || bookingForm.phoneNumber.$error.required || bookingForm.phoneNumber.$error.pattern" ng-model="vm.appointmentRequest.userInfo.remindViaText" style="height:auto;" name="remindText" />
+                        remind me via text
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-disabled="bookingForm.emailAddress.$error.email || bookingForm.emailAddress.$error.required" ng-model="vm.appointmentRequest.userInfo.remindViaEmail" style="height:auto;" name="remindEmail" />
+                        remind me via email
+                    </label>
+                </div>
+                <div class="input-group">
+                    <button type="submit" class="btn btn-success" ng-disabled="vm.appointmentRequest.loading">
+                        <span ng-show="!vm.appointmentRequest.loading">schedule our fling!</span>
+                        <span ng-show="vm.appointmentRequest.loading">Please wait...</span>
+                    </button>
+                    <button type="button" class="btn btn-default" style="margin-left: 5px;" ng-click="vm.previous()">choose a different time</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

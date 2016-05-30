@@ -483,8 +483,8 @@ module.exports = {
         appt.userInfo = apptForm.userInfo;
         appt.startTime = apptForm.startTime;
         appt.endTime = apptForm.endTime;
-        appt.remindViaEmail = apptForm.remindViaEmail;
-        appt.remindViaText = apptForm.remindViaText;
+        appt.remindViaEmail = apptForm.userInfo.remindViaEmail;
+        appt.remindViaText = apptForm.userInfo.remindViaText;
 
         getFinalCost(appt.services)
             .then(function (cost) {
@@ -736,8 +736,8 @@ function saveAppt(apptToSave) {
         phoneNumber: apptToSave.userInfo.phoneNumber,
         emailAddress: apptToSave.userInfo.emailAddress,
         name: apptToSave.userInfo.firstName,
-        notifyByText: apptToSave.remindViaText,
-        notifyByEmail: apptToSave.remindViaEmail,
+        notifyByText: apptToSave.userInfo.remindViaText,
+        notifyByEmail: apptToSave.userInfo.remindViaEmail,
         isBlockout: false,
         isNoShow: false
     })
@@ -767,7 +767,7 @@ function getEsthetician(estheticianName) {
 function getLocation(selectedLoc) {
     var deferred = sails.q.defer();
 
-    Location.findOne({ city: selectedLoc.capitalize() })
+    Location.findOne({ id: selectedLoc })
         .then(function (loc) {
             deferred.resolve(loc.id);
         })

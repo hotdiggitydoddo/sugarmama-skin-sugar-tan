@@ -51,7 +51,7 @@
     }
     
     .table-striped > tbody > tr:nth-of-type(odd) {
-        background-color: #F7EED3;
+        background-color: #FFFCF2;
     }
     
     .card-view > .title {
@@ -64,8 +64,50 @@
         margin-top: 0px;
     }
     
+    .bootstrap-table {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    
     .date-text {
         color: #67320B;
+    }
+    
+    ul.list-items li {
+        font-size: 13px;
+    }
+    
+    ul.list-items .list-label {
+        color: #866F42;
+    }
+    
+    .svc-pill {
+        background: rgba(255, 212, 147, 0.58);
+        padding: 1px 4px;
+        border-radius: 6px;
+        border: 1px solid #DAC661;
+        margin-right: 5px;
+    }
+    
+    .inner-bg {
+        background: url('images/pink-lillies.png');
+        background-size: cover;
+    }
+    
+    .inner-card {
+        padding: 14px 14px 4px 14px;
+        margin-bottom: 4px;
+        border: 1px solid #E6E6E6;
+    }
+    
+    .bordered {
+        margin-top: 0;
+    }
+    
+    h2 small {
+        color: #1D1D1D;
+        text-transform: none;
+        font-size: 69%;
     }
 </style>
 <div class="row mb-small">
@@ -83,17 +125,19 @@
     <div class="col-md-6" style="margin-top: 45px !important">
         <div ng-repeat="tableControl in vm.bsTableControls" ng-show="$index == vm.selectedIndex" class="icon-box ib-center ib-boxed">
             <i class="ib-icon fa fa-calendar"></i>
-            <h2 class="title">available openings for<br><span class="date-text">{{vm.appointmentRequest.selectedDateString}}</span></h2>
+            <h2 class="title">available openings for<br><span class="date-text">{{vm.appointmentRequest.selectedDateString}}</span><br><small>(select an opening from below)</small></h2>
+            
             <div class="contents">
                 <div ng-show="vm.hasQualifiedButNotPreferred" class="row mb-small">
                     <div class="alert alert-info">
-                        <p style="font-size:14px"><i class="fa fa-info-circle" aria-hidden="true"></i>  your selected esthetician has no open availability for this day.  displaying all available appointments instead.</p>
+                        <p style="font-size:14px"><i class="fa fa-info-circle" aria-hidden="true"></i> your selected esthetician has no open availability
+                            for this day. displaying all available appointments instead.</p>
                     </div>
                 </div>
                 <table ng-if="vm.bsTableControls[$index].options.data.length > 0" bs-table-control="vm.bsTableControls[$index]"></table>
                 <div ng-if="vm.bsTableControls[$index].options.data.length == 0" class="row mb-small">
                     <div class="alert alert-warning">
-                        <p style="font-size:14px" class="text-center">it looks like we're unable to fit you in on the services and day that you selected.  to choose a different
+                        <p style="font-size:14px" class="text-center">it looks like we're unable to fit you in on the services and day that you selected. to choose a different
                             day, select one from above or click below to go back and choose fewer services.</p>
                         <p class="text-center"><a onclick="window.history.back();" class="btn btn-toranj btn-icon"><i class="fa fa-mail-reply"></i>Go Back</a></p>
                     </div>
@@ -102,19 +146,70 @@
 
         </div>
     </div>
-    <div class="col-md-6">
-        {{vm.appointmentRequest.timeSlotSelected}}
-    </div>
-</div>
+    <div class="col-md-6" style="
+    background: rgba(255, 255, 255, 0.43);
+    padding-top: 15px;
+    padding-bottom: 10px;
+    margin-top: 46px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="inner-bg">
+                    <div class="inner-card">
+                        <h3 class="bordered">what we've got so far...</h3>
+                        <ul class="list-items">
+                            <li>
+                                <div class="list-label">Services</div>
+                                <div class="list-des"><span class="svc-pill" ng-repeat="service in vm.appointmentRequest.selectedServices">{{service.name | lowercase }}</span></div>
+                            </li>
+                            <li>
+                                <div class="list-label">Cost</div>
+                                <div class="list-des">{{ vm.appointmentRequest.totalCost | currency}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="list-label">Esthetician</div>
+                                <div class="list-des">
+                                    <span ng-show="vm.appointmentRequest.timeSlotSelected">{{ vm.appointmentRequest.esthetician }}</span>
+                                    <span ng-show="!vm.appointmentRequest.timeSlotSelected"><em>~</em></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="list-label">Date</div>
+                                <div class="list-des">
+                                    <span ng-show="vm.appointmentRequest.timeSlotSelected">{{ vm.appointmentRequest.startTime | fullDate | lowercase }}</span>
+                                    <span ng-show="!vm.appointmentRequest.timeSlotSelected"><em>~</em></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="list-label">Time</div>
+                                <div class="list-des">
+                                    <span ng-show="vm.appointmentRequest.timeSlotSelected">{{ vm.appointmentRequest.startTime | amPmTime }} - {{ vm.appointmentRequest.endTime | amPmTime }} </span>
+                                    <span ng-show="!vm.appointmentRequest.timeSlotSelected"><em>~</em></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="list-label">Location</div>
+                                <div class="list-des">
+                                    <span ng-if="vm.appointmentRequest.location == 1">stanton</span>
+                                    <span ng-if="vm.appointmentRequest.location == 2">brea</span>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <a ng-click="vm.previous()" ng-click="vm.appointmentRequest.timeSlotSelected = false" class="btn btn-toranj pull-left"><span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
+                                <a ng-click="vm.next()" ng-disabled="!vm.appointmentRequest.timeSlotSelected" class="pull-right btn btn-toranj">Next <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-<div class="form-group row">
-    <div class="col-md-12">
-        <a ui-sref="appointment.chooseServices" ng-click="vm.appointmentRequest.timeSlotSelected = false" class="btn btn-toranj pull-left"><span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
-        <button ng-disabled="!vm.appointmentRequest.timeSlotSelected" class="pull-right btn btn-toranj">Next <span class="glyphicon glyphicon-circle-arrow-right"></span></button>
-    </div>
-</div>
-<!--<div class="form-group row">
+
+        <!--<div class="form-group row">
     <div class="col-xs-6 col-xs-offset-3">
         <a ui-sref="appointment.chooseServices" class="btn btn-block btn-info">
     Go Back <span class="glyphicon glyphicon-circle-arrow-right"></span>

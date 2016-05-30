@@ -158,6 +158,7 @@
     
     .wizard.small a {
         padding: 8px 12px 5px;
+        pointer-events: none;
     }
     
     .wizard.small:not(.left-arrow) a:before {
@@ -215,6 +216,11 @@
         right: -29px;
     }
     
+    .req {
+        color: #a94442;
+        font-size: 20px;
+        line-height: 12px;
+    }
 </style>
 
 <div class="container">
@@ -227,16 +233,18 @@
     <div style="padding: 5px 30px; background: rgba(0,0,0,.05)">
         <!-- page title -->
         <h2 class="section-title" style="margin-top: 20px">
-            <span></span>let's get acquainted...
+            <span></span>{{ vm.header }}
         </h2>
-        <div class="wizard small text-center">
+        <div ng-show="!vm.bookingComplete" class="wizard small text-center">
             <a ui-sref-active="current" ui-sref=".chooseServices" class="left-arrow">CHOOSE YOUR SERVICES</a>
             <a ui-sref-active="current" ui-sref=".chooseTimeSlot" class="left-arrow">SELECT A TIME</a>
             <a ui-sref-active="current" ui-sref=".clientInfo" class="left-arrow">PROVIDE YOUR INFO</a>
         </div>
-        <form ng-submit="vm.sumbitForm()" name="bookingForm" novalidatee>
+        <form ng-submit="vm.submitForm()" name="bookingForm" novalidate>
             <div id="form-views" ui-view></div>
+            <!--<input type="submit" class="btn btn-default"></button>    -->
         </form>
+
     </div>
     <!--<div>
         <pre>

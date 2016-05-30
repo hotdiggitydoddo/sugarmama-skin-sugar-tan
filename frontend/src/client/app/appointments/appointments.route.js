@@ -44,7 +44,33 @@
                         openings: null
                     }
                 }
-            }]
+            },
+            {
+                state: 'appointment.clientInfo',
+                config: {
+                    url: '/clientinfo',
+                    templateUrl: 'app/appointments/appointment.clientInfo.html',
+                    controller: 'ClientInfo',
+                    controllerAs: 'vm',
+                    params: {
+                        appointmentRequest: null,
+                        openings: null
+                    }
+                }
+            },
+            {
+                state: 'appointment.bookingComplete',
+                config: {
+                    url: '/complete',
+                    templateUrl: 'app/appointments/appointment.bookingComplete.html',
+                    controller: 'BookingComplete',
+                    controllerAs: 'vm',
+                    params: {
+                        appointment: null,
+                    }
+                }
+            }]        
+            
         // {
         //     state: 'appointment.clientInfo',
         //     config: {

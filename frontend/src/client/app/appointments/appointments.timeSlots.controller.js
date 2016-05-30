@@ -9,14 +9,13 @@
         var vm = this;
         
         var selectedEl = null;
-        // if (!vm.appointmentRequest) {
-        //     $state.go('clientAppointments_step1');
-        //     return;
-        // }
+       
         vm.appointmentRequest = $stateParams.appointmentRequest;
         vm.openings = $stateParams.openings;
         vm.changeDate = changeDate;
         vm.scope = $scope;
+        vm.next = next;
+        vm.previous = previous;
         vm.selectedIndex = -1;
         vm.bsTableControls = [];
         activate();
@@ -26,7 +25,13 @@
                 $state.go('appointment.chooseServices');
                 return;
             }
-            vm.appointmentRequest.selectedDateString = moment(vm.appointmentRequest.selectedDate).format("dddd, MMMM Do YYYY").toLowerCase();      
+            vm.appointmentRequest.totalCost = 0;
+            vm.appointmentRequest.selectedServices.forEach(function(svc) {
+                vm.appointmentRequest.totalCost += svc.cost;
+            })
+            
+            vm.appointmentRequest.selectedDateString = moment(vm.appointmentRequest.selectedDate).format("dddd, MMMM Do YYYY").toLowerCase();
+                  
             vm.openings.forEach(function (openingSet) {
                 if (openingSet.selected) {
                     vm.selectedIndex = vm.openings.indexOf(openingSet);
@@ -104,6 +109,15 @@
             vm.hasQualifiedButNotPreferred = vm.openings[index].hasQualifiedButNotPreferred;
             vm.appointmentRequest.selectedDate = date.date;
             vm.appointmentRequest.selectedDateString = date.longDate.toLowerCase();
+        }
+        
+        function next() {
+            if (vm.appointmentRequest.timeSlotSelected)
+                $state.go('appointment.clientInfo',{ appointmentRequest: vm.appointmentRequest, openings: vm.openings })
+        }
+        
+        function previous() {
+            $state.go('appointment.chooseServices',{ appointmentRequest: vm.appointmentRequest })
         }
     }
 })();

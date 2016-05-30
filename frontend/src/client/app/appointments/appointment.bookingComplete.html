@@ -1,0 +1,78 @@
+<style>
+    dl {
+        font-size: 16px;
+    }
+    
+    dd {
+        margin-bottom: 18px;
+        text-transform: lowercase;
+    }
+    
+    .cap-lg .cap-title {
+        letter-spacing: 0px;
+        font-family: ralewayextralight;
+        font-size: 54px;
+    }
+    
+    p {
+        text-transform: lowercase;
+        color: #676767;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .quote {
+        background: url('/images/blurry-bg-top.png');
+        background-size: cover;
+        border: 2px solid #D6C5A0;
+    }
+    
+    .cap-lg .cap-des {
+        margin-bottom: 0;
+    }
+    
+    .regular-page h4 {
+        color: #67320B;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="post post-format-quote">
+    <div class="quote">
+        <div class="cap-light">
+            <div class="vcenter-wrapper mb-medium">
+                <div class="cap-lg vcenter">
+                    <h2 class="cap-title allcaps" style="color: #67320B">done.</h2>
+                    <div class="cap-des">
+                        <p>
+                            {{vm.appointment.name}}, your appointment has successfully been booked!<br /> fyi - life
+                            happens, and we know this. if you need to cancel for any reason, please provide us with <strong>at least 24 hours</strong> notice.<br />
+                            <br />
+                            <span ng-show="vm.appointment.notifyByEmail || vm.appointment.notifyByText" style="margin-bottom: 20px;">
+                            <span ng-show="vm.appointment.notifyByEmail && !vm.appointment.notifyByText">note: as per your request, we will send you a reminder email the day before your appointment.</span>
+                            <span ng-show="vm.appointment.notifyByText && !vm.appointment.notifyByEmail">note: as per your request, we will text a reminder to you the day before your appointment.</span>
+                            <span ng-show="vm.appointment.notifyByText && vm.appointment.notifyByEmail">note: as per your request, we will email and text you a reminder the day before your appointment.</span>
+                            </span>
+                        </p>
+                    </div>
+                    <img style="width: auto;" src="/images/fancy-lines-sm.png" />
+                    <div class="">
+                        <h4>details</h4>
+                        <dl>
+                            <dt>date</dt>
+                            <dd>{{vm.appointment.startTime | fullDate}}</dd>
+                            <dt>time</dt>
+                            <dd>{{vm.appointment.startTime | amPmTime}}</dd>
+                            <dt>esthetician</dt>
+                            <dd>{{vm.appointment.esthetician}}</dd>
+                            <dt>location</dt>
+                            <dd>{{vm.appointment.location}}</dd>
+                        </dl>
+                    </div>
+                    <a href="/" class="btn btn-toranj btn-lg">back home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

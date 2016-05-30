@@ -92,7 +92,7 @@
         })
         .filter('fullDate', function() {
              return function (input) {
-                return moment(input).format('dddd, MMMM Do')
+                return moment(input).format('dddd, MMMM Do YYYY')
             }
         })
         .filter('phoneNumber', function () {
