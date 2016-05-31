@@ -93,8 +93,8 @@ module.exports = {
     },
 
     checkAvailableOpenings: function (req, res) {
-         var apptRequest = req.body;
-         AppointmentService.checkOpenings1(apptRequest)
+        var apptRequest = req.body;
+        AppointmentService.checkOpenings1(apptRequest)
             .then(function (results) {
                 return res.json(200, results);
             })
@@ -102,7 +102,7 @@ module.exports = {
                 return res.negotiate(err);
             });
     },
-    
+
     submitBlockout: function (req, res) {
         var blockout = req.body;
 
@@ -120,7 +120,22 @@ module.exports = {
 
         AppointmentService.book(apptForm)
             .then(function (results) {
-                return res.json(200, results);
+                res.json(200, results);
+
+                sails.hooks.email.send(
+                    "appointmentConfirmation", 
+                    {
+                        recipientName: results.name,
+                    }, 
+                    {
+                        to: results.emailAddress,
+                        subject: "Appointment Confirmation - " + sails.moment(results.startTime).format('ddd, MMMM Do YYYY @ h:mm a'),
+                        from: 'SugarMaMa Appointments <no-reply@sugarmamaskinsugartan.com>'
+                    }, 
+                    function (err) {
+                        console.log(err || "It worked!");
+                    }
+                );
             })
             .catch(function (err) {
                 return res.negotiate(err);
@@ -135,7 +150,7 @@ module.exports = {
                 data.services = groupServices(services);
                 EstheticianService.getEstheticians()
                     .then(function (estheticians) {
-                        data.estheticians = estheticians.map(esth => ({ id: esth.id, name: esth.firstName, services: esth.services.map(svc => (svc.id))}));
+                        data.estheticians = estheticians.map(esth => ({ id: esth.id, name: esth.firstName, services: esth.services.map(svc => (svc.id)) }));
                         LocationService.getAll()
                             .then(function (locations) {
                                 data.locations = locations;
