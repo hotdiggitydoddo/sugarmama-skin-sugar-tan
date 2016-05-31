@@ -9,10 +9,10 @@ module.exports.schedule = {
             task: function (context, sails) {
                 var tomorrow = sails.moment(new Date()).add(1, 'days');
 
-                Appointment.find({ startTime: { '>': tomorrow.toDate(), '<': sails.moment(tomorrow).add(1, 'days').toDate() } })
-                    .then(function (appts) {
-                        var a = appts;
-                    })
+                // Appointment.find({ startTime: { '>': tomorrow.toDate(), '<': sails.moment(tomorrow).add(1, 'days').toDate() } })
+                //     .then(function (appts) {
+                //         var a = appts;
+                //     })
 
             },
             context: {}

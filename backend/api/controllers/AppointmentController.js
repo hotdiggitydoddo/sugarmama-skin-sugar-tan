@@ -121,21 +121,7 @@ module.exports = {
         AppointmentService.book(apptForm)
             .then(function (results) {
                 res.json(200, results);
-
-                sails.hooks.email.send(
-                    "appointmentConfirmation", 
-                    {
-                        recipientName: results.name,
-                    }, 
-                    {
-                        to: results.emailAddress,
-                        subject: "Appointment Confirmation - " + sails.moment(results.startTime).format('ddd, MMMM Do YYYY @ h:mm a'),
-                        from: 'SugarMaMa Appointments <no-reply@sugarmamaskinsugartan.com>'
-                    }, 
-                    function (err) {
-                        console.log(err || "It worked!");
-                    }
-                );
+                SmsEmailService.sendNewAppointmentCorrespondence(results.id);
             })
             .catch(function (err) {
                 return res.negotiate(err);
