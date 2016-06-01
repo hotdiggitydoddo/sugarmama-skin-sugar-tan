@@ -19,7 +19,7 @@
                     controller: 'ClientAppointments',
                     controllerAs: 'vm',
                     settings: {
-                        nav: 5,
+                        nav: 1,
                         content: 'book'
                     },
                 }

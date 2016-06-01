@@ -93,18 +93,22 @@
         font-size: 15px;
     }
     
+    .not-unisex {
+         color: #FF5091;
+    }
     .footnote {
         font-size: 14px;
         font-style: italic;
         font-weight: bold;
-        color: #742020;
+        color: #FF5091;
         margin-bottom: 40px;
     }
 </style>
 <link href="~/Content/datepicker3.css" rel="stylesheet" />
+
 <div class="row form-group">
     <div class="col-md-3 col-sm-4 col-xs-12">
-        <label for="guests">are you a lady or a gentleman?</label> <span class="req">*</span>
+        <label for="guests">lady or gentleman?</label> <span class="req">*</span>
         <select ng-model="vm.appointmentRequest.gender" ng-change="vm.changeGender()" class="form-control">
             <option value="" disabled selected="true">choose...</option>
             <option value="female">lady</option>
@@ -114,10 +118,7 @@
 </div>
 <div class="row" style="margin-bottom: 10px">
     <div class="col-md-6 col-sm-4 col-xs-5">
-        <label>select your service(s)...</label> 
-    </div>
-    <div class="col-md-6 col-sm-8 col-xs-7">
-        <span class="footnote pull-right">* - sorry gents, this service is only availble to the ladies.</span>
+        <label>select your service(s)...</label>
     </div>
 </div>
 <div class="row">
@@ -136,7 +137,7 @@
                                     <div ng-repeat="service in vm.data.services.hairRemoval" class="svc">
                                         <div class="col-md-6 col-sm-6 checkbox" ng-if="service.premium">
                                             <label>
-                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span class="not-unisex" ng-if="!service.unisex">*</span>
                                                 <span ng-if="service.description" class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
                                                 <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
                                             </label>
@@ -150,13 +151,16 @@
                                     <div ng-repeat="service in vm.data.services.hairRemoval" class="svc">
                                         <div class="col-md-4 col-sm-6 checkbox" ng-if="!service.premium">
                                             <label>
-                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span class="not-unisex" ng-if="!service.unisex">*</span>
                                                 <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="col-md-12" style="margin-top: 15px;">
+                                    <span class="pull-right" style="font-style: italic; color: #8A8A8A;"><span class="footnote">*</span> - sorry gents, this service is only availble to the
+                                    ladies.</span>
+                                </div>
                             </div>
                         </div>
                     </blockquote>
@@ -174,7 +178,7 @@
                                     <div ng-repeat="service in vm.data.services.facial" class="svc">
                                         <div class="col-md-4 col-sm-6 checkbox">
                                             <label>
-                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span class="not-unisex" ng-if="!service.unisex">*</span>
                                                 <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
                                                 <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
                                             </label>
@@ -199,7 +203,7 @@
                                     <div ng-repeat="service in vm.data.services.microderm" class="svc">
                                         <div class="col-md-6 col-sm-6 checkbox">
                                             <label>
-                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span class="not-unisex" ng-if="!service.unisex">*</span>
                                                 <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
                                                 <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
                                             </label>
@@ -223,7 +227,7 @@
                                     <div ng-repeat="service in vm.data.services.chemicalPeel" class="svc">
                                         <div class="col-md-6 col-sm-6 checkbox">
                                             <label>
-                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span class="not-unisex" ng-if="!service.unisex">*</span>
                                                 <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
                                                 <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
                                             </label>
@@ -247,7 +251,7 @@
                                     <div ng-repeat="service in vm.data.services.tinting" class="svc">
                                         <div class="col-md-6 col-sm-6 checkbox">
                                             <label>
-                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span class="not-unisex" ng-if="!service.unisex">*</span>
                                                 <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
                                                 <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
                                             </label>
@@ -271,7 +275,7 @@
                                     <div ng-repeat="service in vm.data.services.sprayTan" class="svc">
                                         <div class="col-md-6 col-sm-6 checkbox">
                                             <label>
-                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span ng-if="!service.unisex">*</span>
+                                                <input type="checkbox" ng-model="service.isSelected" ng-disabled="vm.serviceDisabled(service)" ng-click="vm.toggleService(service)" /> {{service.name}}<span class="not-unisex" ng-if="!service.unisex">*</span>
                                                 <span class="help-block hidden-xs" style="font-weight: normal">{{service.description}}</span>
                                                 <span class="help-block" style="font-weight: normal"><em>Price: {{service.cost | currency}} &nbsp;&nbsp;Duration: {{service.duration}} minutes</em></span>
                                             </label>
@@ -313,7 +317,8 @@
 </div>
 <div class="row mb-small">
     <div class="col-md-12">
-        <button type="button" ng-click="vm.checkAvailableOpenings()" class="btn btn-toranj" style="margin: 0 auto; display: block">Let's Rendezvous! <span class="glyphicon glyphicon-circle-arrow-right"></button>
+        <button type="button" ng-click="vm.checkAvailableOpenings()" ng-disabled="vm.appointmentRequest.loading" class="btn btn-toranj"
+            style="margin: 0 auto; display: block"><span ng-show="!vm.appointmentRequest.loading">Let's Rendezvous!</span><span ng-show="vm.appointmentRequest.loading">Please Wait...</span> <span class="glyphicon glyphicon-circle-arrow-right"></button>
     </div>
 </div>
 

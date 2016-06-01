@@ -29,6 +29,7 @@
                 .then(function (data) {
                     vm.data = data;
                     $state.go('appointment.chooseServices');
+                    vm.ready = true;
                 })
         }
 

@@ -91,7 +91,7 @@
     }
     
     .inner-bg {
-        background: url('images/hot-stones-side.png');
+        background: url('images/beige-bg-left-accent.jpeg');
         background-size: cover;
     }
     
@@ -117,6 +117,7 @@
     width: 4px;
     color: #CCB37A;
     background: #CCB37A;
+    margin-right: 7px;
 }
 </style>
 <div class="row mb-medium" ng-if="vm.appointmentRequest">
@@ -129,7 +130,7 @@
             <div class="col-md-12">
                 <div class="inner-bg">
                     <div class="inner-card">
-                        <h3 class="bordered"></span> appointment details</h4>
+                        <h3 class="bordered"> appointment details</h3>
                     <dl class="dl-horizontal">
                         <dt>date</dt>
                         <dd>{{ vm.appointmentRequest.startTime | fullDate }}</dd>
@@ -140,7 +141,7 @@
                         <dd ng-if="vm.appointmentRequest.location == 1">stanton</dd>
                         <dd ng-if="vm.appointmentRequest.location == 2">brea</dd>
                         <dt>esthetician</dt>
-                        <dd>{{ vm.appointmentRequest.esthetician }}</dd>
+                        <dd>{{ vm.appointmentRequest.esthetician.name }}</dd>
                         <div style="margin: 14px 0px">
                             <img id="squiggly" width="80px" src="/images/fancy-lines-sm.png" alt="divider">
                         </div>

@@ -66,11 +66,13 @@
                             },
                             {
                                 title: 'esthetician',
-                                field: 'esthetician'
+                                field: 'esthetician',
+                                formatter: estheticianFormatter
                             }]
                     }
                 });
             });
+            vm.ready = true;
         }
 
         function rowClicked(row, element) {
@@ -99,6 +101,10 @@
             var end = moment(row.end);
 
             return (moment.duration(end - start) / 60000) + " minutes";
+        }
+
+        function estheticianFormatter(value, row, index) {
+            return value.name;
         }
 
         function changeDate(date, index) {

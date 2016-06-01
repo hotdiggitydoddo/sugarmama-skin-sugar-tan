@@ -688,10 +688,10 @@ function getOpenings(apptRequest, item) {
                         qualifiedEstheticiansAvailable = true;
 
                         if (!apptRequest.selectedEsthetician || apptRequest.selectedEsthetician == op.esthetician.id)
-                            op.esthetician = op.esthetician.firstName.toLowerCase();
+                            op.esthetician = { id: op.esthetician.id, name: op.esthetician.firstName.toLowerCase() };
                         else {
                             //esthetician was qualified but was not preferred.
-                            op.esthetician = op.esthetician.firstName.toLowerCase();
+                            op.esthetician = { id: op.esthetician.id, name: op.esthetician.firstName.toLowerCase() };
                             openingsToRemove.push(op);
                         }
                             
@@ -751,13 +751,14 @@ function saveAppt(apptToSave) {
     return deferred.promise;
 }
 
-function getEsthetician(estheticianName) {
+function getEsthetician(esthetician) {
     var deferred = sails.q.defer();
 
-    User.findOne({ firstName: estheticianName.capitalize() })
-        .exec(function (err, user) {
-            Esthetician.findOne({ user: user.id })
-                .exec(function (err, esth) {
+    Esthetician.findOne({ id: esthetician.id })
+        .exec(function (err, esth) {
+            User.findOne({ id: esth.user })
+                .exec(function (err, user) {
+                    esth.user = user;
                     deferred.resolve(esth);
                 })
         })

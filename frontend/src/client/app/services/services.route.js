@@ -20,7 +20,7 @@
 					controllerAs: 'vm',
 					title: 'Services',
 					settings: {
-						nav: 1,
+						nav: 2,
 						content: 'services'
 					}
 				}

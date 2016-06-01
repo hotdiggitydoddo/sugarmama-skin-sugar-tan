@@ -1,9 +1,8 @@
 module.exports.email = {
   service: 'Gmail',
   auth: {
-    user: 'appointments.sugarmama@gmail.com',
-    pass: 'kewlio14'
+    user: 'deborah@sugarmamaskinsugartan.com',
+    pass: 'sugarmama'
   },
-  from: 'noreply@sugarmamaskinsugartan.com',
   testMode: false
 }
