@@ -13,7 +13,8 @@ module.exports = {
                     })
             })
             .then(function (appt) {
-                sendClientConfirmationEmail(appt);
+                if (appt.emailAddress)
+                    sendClientConfirmationEmail(appt);
                 sendEstheticianAppointmentNotification(appt);
             })
 

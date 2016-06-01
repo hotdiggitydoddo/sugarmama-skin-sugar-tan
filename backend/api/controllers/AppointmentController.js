@@ -21,7 +21,8 @@ module.exports = {
 
         AppointmentService.create(appt)
             .then(function (newAppt) {
-                return res.json(200, newAppt);
+                res.json(200, newAppt);
+                SmsEmailService.sendNewAppointmentCorrespondence(newAppt.id);
             })
             .catch(function (err) {
                 return res.negotiate(err);
