@@ -13,6 +13,7 @@
         'ui.bootstrap',
         'ui.mask',
         'environment',
+        'ngSails',
 
         /* Reusable cross-app modules */
         'blocks.logger',
