@@ -122,7 +122,7 @@ function sendClientAppointmentReminderText(appt) {
         var mmsClient = new sails.twilio.RestClient(accountSid, authToken);
 
         mmsClient.messages.create({
-            body: '----SugarMaMa Appointment Reminder----\nDate: ' + sails.moment(appt.startTime).format('l') + '\n' + 'Time: ' + sails.moment(appt.startTime).format('h:mm a') + ' - ' + sails.moment(appt.endTime).format('h:mm a') + '\nLocation: ' + appt.location.streetAddress + ' - ' + appt.location.city + ' ' + appt.location.state + ' ' + appt.location.zipCode + '\nYour esthetician: ' + appt.esthetician.userInfo.firstName + '\nYour services: ' + appt.services.toString(),
+            body: '----SugarMaMa Appointment Reminder----\nDate: ' + sails.moment(appt.startTime).format('l') + '\n' + 'Time: ' + sails.moment(appt.startTime).format('h:mm a') + ' - ' + sails.moment(appt.endTime).format('h:mm a') + '\nLocation: ' + appt.location.streetAddress + ' - ' + appt.location.city + ' ' + appt.location.state + ' ' + appt.location.zipCode + '\nYour esthetician: ' + appt.esthetician.userInfo.firstName + '\nYour services: ' + appt.services.toString() + '\n---This phone number does not receive texts or calls---',
             to: '+1' + appt.phoneNumber,  // Text this number
             from: '+17143160399' // From a valid Twilio number
         }, function (err, message) {
