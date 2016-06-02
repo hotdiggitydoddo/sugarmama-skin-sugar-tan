@@ -15,17 +15,17 @@
         activate();
 
         function activate() {
-            $sails.get('/appointment/sync')
-                .then(function (res) {
-                    vm.res = res;
-                }, function (err) {
-                    logger.error('Error trying to sync for real-time updates.');
-                });
+            // $sails.get('/appointment/sync')
+            //     .then(function (res) {
+            //         vm.res = res;
+            //     }, function (err) {
+            //         logger.error('Error trying to sync for real-time updates.');
+            //     });
                 
-                $sails.on('refresh', function(message) {
-                        var schedulerEl = $("iframe").contents().find("#scheduler");
-                        schedulerEl.trigger('refreshCal');
-                });
+            //     $sails.on('refresh', function(message) {
+            //             var schedulerEl = $("iframe").contents().find("#scheduler");
+            //             schedulerEl.trigger('refreshCal');
+            //     });
         }
 
         function openBlockoutModal() {

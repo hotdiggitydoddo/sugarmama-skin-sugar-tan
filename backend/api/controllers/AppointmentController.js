@@ -25,7 +25,7 @@ module.exports = {
                 } else {
                     AppointmentService.create(appt)
                         .then(function (newAppt) {
-                            sails.sockets.broadcast('apptUpdates', 'refresh', 'hello');
+                            //sails.sockets.broadcast('apptUpdates', 'refresh', 'hello');
                             res.json(200, newAppt);
                             SmsEmailService.sendNewAppointmentCorrespondence(newAppt.id);
                         })
