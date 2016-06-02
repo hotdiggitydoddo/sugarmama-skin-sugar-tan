@@ -56,7 +56,7 @@
 		});
         envServiceProvider.check();
         
-        $sailsProvider.url = 'http://localhost:1337';
+        //$sailsProvider.url = 'http://localhost:1337';
         
         //exceptionHandlerProvider.configure(config.appErrorPrefix);
         configureStateHelper();
