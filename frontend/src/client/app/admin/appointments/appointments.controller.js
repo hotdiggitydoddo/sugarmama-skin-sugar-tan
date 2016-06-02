@@ -24,7 +24,7 @@
                 
                 $sails.on('refresh', function(message) {
                         var schedulerEl = $("iframe").contents().find("#scheduler");
-                        schedulerEl.trigger('contextmenu');
+                        schedulerEl.trigger('refreshCal');
                 });
         }
 
