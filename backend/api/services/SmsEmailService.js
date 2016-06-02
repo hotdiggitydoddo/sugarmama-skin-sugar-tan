@@ -143,7 +143,7 @@ function sendEstheticianAppointmentNotification(appt) {
     var client = new sails.twilio.RestClient(accountSid, authToken);
 
     client.messages.create({
-        body: '----SugarMaMa New Appointment----\nDate: ' + sails.moment(appt.startTime).format('l') + '\n' + 'Time: ' + sails.moment(appt.startTime).format('h:mm a') + ' - ' + sails.moment(appt.endTime).format('h:mm a') + '\nLocation: ' + appt.location.city + '\nClient Name: ' + appt.name + '\nClient Phone: ' + appt.phoneNumber + '\nServices: ' + appt.services.toString(),
+        body: '----SugarMaMa New Appointment----\nDate: ' + sails.moment(appt.startTime).format('l') + '\n' + 'Time: ' + sails.moment(appt.startTime).format('h:mm a') + ' - ' + sails.moment(appt.endTime).format('h:mm a') + '\nLocation: ' + appt.location.city + '\nClient Name: ' + appt.name + '\nServices: ' + appt.services.toString(),
 
         to: '+1' + appt.esthetician.userInfo.phoneNumber,  // Text this number
         from: '+17143160399' // From a valid Twilio number
