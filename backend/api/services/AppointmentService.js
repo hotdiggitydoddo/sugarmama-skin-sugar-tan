@@ -68,6 +68,30 @@ module.exports = {
         return deferred.promise;
     },
 
+    intersects: function (appt) {
+        var deferred = sails.q.defer();
+        var start = new Date(appt.start);
+        var end = new Date(appt.end);
+         Appointment.find({ startTime: { '<=': start }, endTime: { '>=': start } })
+            .then(function (appts) {
+                if (appts.length > 0) {
+                    deferred.resolve(true);
+                }
+            })
+            .then(function () {
+                return Appointment.find({ startTime: { '<=': end }, endTime: { '>=': end } })
+                    .then(function (appts) {
+                        if (appts.length > 0) {
+                            deferred.resolve(true);
+                        }
+                    })
+            })
+            .then(function() {
+                deferred.resolve(false);
+            })
+        return deferred.promise;
+    },
+
     create: function (appt) {
         var serviceIds = [];
         var deferred = sails.q.defer();
@@ -688,13 +712,13 @@ function getOpenings(apptRequest, item) {
                         qualifiedEstheticiansAvailable = true;
 
                         if (!apptRequest.selectedEsthetician || apptRequest.selectedEsthetician == op.esthetician.id)
-                            op.esthetician = op.esthetician.firstName.toLowerCase();
+                            op.esthetician = { id: op.esthetician.id, name: op.esthetician.firstName.toLowerCase() };
                         else {
                             //esthetician was qualified but was not preferred.
-                            op.esthetician = op.esthetician.firstName.toLowerCase();
+                            op.esthetician = { id: op.esthetician.id, name: op.esthetician.firstName.toLowerCase() };
                             openingsToRemove.push(op);
                         }
-                            
+
                     }
                     else {
                         //no estheticians qualified
@@ -751,13 +775,14 @@ function saveAppt(apptToSave) {
     return deferred.promise;
 }
 
-function getEsthetician(estheticianName) {
+function getEsthetician(esthetician) {
     var deferred = sails.q.defer();
 
-    User.findOne({ firstName: estheticianName.capitalize() })
-        .exec(function (err, user) {
-            Esthetician.findOne({ user: user.id })
-                .exec(function (err, esth) {
+    Esthetician.findOne({ id: esthetician.id })
+        .exec(function (err, esth) {
+            User.findOne({ id: esth.user })
+                .exec(function (err, user) {
+                    esth.user = user;
                     deferred.resolve(esth);
                 })
         })

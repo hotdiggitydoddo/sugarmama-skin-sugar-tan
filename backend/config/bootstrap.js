@@ -15,6 +15,7 @@ module.exports.bootstrap = function(cb) {
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   sails.q = require('q');
   sails.moment = require('moment');
-  
+  sails.fs = require('fs');
+  sails.twilio = require('twilio');
   cb();
 };

@@ -3,9 +3,9 @@
 
     angular.module('app.admin.appointments').controller('Appointments', Appointments);
 
-    Appointments.$inject = ['$state', '$uibModal',  'logger', 'envService', 'appointmentService'];
+    Appointments.$inject = ['$state', '$uibModal', '$sails', 'logger', 'envService', 'appointmentService'];
 
-    function Appointments($state, $uibModal,  logger, envService, appointmentService) {
+    function Appointments($state, $uibModal, $sails, logger, envService, appointmentService) {
         var vm = this;
         vm.estheticians = [];
         vm.title = 'appointments';
@@ -15,6 +15,17 @@
         activate();
 
         function activate() {
+            $sails.get('/appointment/sync')
+                .then(function (res) {
+                    vm.res = res;
+                }, function (err) {
+                    logger.error('Error trying to sync for real-time updates.');
+                });
+                
+                $sails.on('refresh', function(message) {
+                        var schedulerEl = $("iframe").contents().find("#scheduler");
+                        schedulerEl.trigger('refreshCal');
+                });
         }
 
         function openBlockoutModal() {

@@ -236,6 +236,11 @@
                     move: false
                 },
                 dataSource: {
+                     
+                        error: function(e) {
+                            alert(e.xhr.responseText);
+                        },
+                    
                     batch: true,
                     transport: {
                         read: {
@@ -279,6 +284,7 @@
                             }
                         }
                     },
+                   
               },
         
                 resources: [  
@@ -403,6 +409,11 @@
                     });
                 }
             });
+            
+            $("#scheduler").on('refreshCal', function(e) {
+                debugger;
+                scheduler.refresh();
+            })
             
             $("#people :checkbox").change(function(e) {
                  var checked = $.map($("#people :checked"), function(checkbox) {

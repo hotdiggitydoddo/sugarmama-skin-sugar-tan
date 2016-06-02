@@ -29,6 +29,7 @@
                 .then(function (data) {
                     vm.data = data;
                     $state.go('appointment.chooseServices');
+                    vm.ready = true;
                 })
         }
 
@@ -39,7 +40,7 @@
             appointmentService.book(vm.appointmentRequest)
                 .then(function (confirmation) {
                     vm.bookingComplete = true;
-                    vm.header = "it's a date!"
+                    vm.header = "done."
                     
                     confirmation.esthetician = vm.data.estheticians.find(function(esth) { return esth.id == confirmation.esthetician;}).name;
                     confirmation.location = vm.data.locations.find(function(loc) { return loc.id == confirmation.location;}).city;

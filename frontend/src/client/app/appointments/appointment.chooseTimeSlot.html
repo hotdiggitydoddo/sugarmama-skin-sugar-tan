@@ -90,7 +90,7 @@
     }
     
     .inner-bg {
-        background: url('images/pink-lillies.png');
+        background: url('images/tan-bg-right-accent.jpeg');
         background-size: cover;
     }
     
@@ -137,7 +137,11 @@
                 <table ng-if="vm.bsTableControls[$index].options.data.length > 0" bs-table-control="vm.bsTableControls[$index]"></table>
                 <div ng-if="vm.bsTableControls[$index].options.data.length == 0" class="row mb-small">
                     <div class="alert alert-warning">
+<<<<<<< HEAD
                         <p style="font-size:14px" class="text-center">it looks like we're unable to fit you in on the services and day that you selected.  please <strong>call to book</strong> or select from a different day above.</p>
+=======
+                        <p style="font-size:14px" class="text-center">there are no more openings in the system for this day.<br/>if you would still like to try to come in, please call us at 562.484.8653 as someone may have canceled or rescheduled last-minute!  otherwise, feel free to choose a different day from above or click below to go back and choose fewer services.</p>
+>>>>>>> email-mms
                         <p class="text-center"><a onclick="window.history.back();" class="btn btn-toranj btn-icon"><i class="fa fa-mail-reply"></i>Go Back</a></p>
                     </div>
                 </div>
@@ -168,7 +172,7 @@
                             <li>
                                 <div class="list-label">Esthetician</div>
                                 <div class="list-des">
-                                    <span ng-show="vm.appointmentRequest.timeSlotSelected">{{ vm.appointmentRequest.esthetician }}</span>
+                                    <span ng-show="vm.appointmentRequest.timeSlotSelected">{{ vm.appointmentRequest.esthetician.name }}</span>
                                     <span ng-show="!vm.appointmentRequest.timeSlotSelected"><em>~</em></span>
                                 </div>
                             </li>

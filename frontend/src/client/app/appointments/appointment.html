@@ -221,6 +221,10 @@
         font-size: 20px;
         line-height: 12px;
     }
+     .loading  {
+        height: 75px;
+        display: block;
+    }
 </style>
 
 <div class="container">
@@ -239,6 +243,9 @@
             <a ui-sref-active="current" ui-sref=".chooseServices" class="left-arrow">CHOOSE YOUR SERVICES</a>
             <a ui-sref-active="current" ui-sref=".chooseTimeSlot" class="left-arrow">SELECT A TIME</a>
             <a ui-sref-active="current" ui-sref=".clientInfo" class="left-arrow">PROVIDE YOUR INFO</a>
+        </div>
+        <div class="row mb-small" ng-show="!vm.ready">
+            <img class="loading" src="images/loading-75x75.gif" style="margin: 0 auto;" />
         </div>
         <form ng-submit="vm.submitForm()" name="bookingForm" novalidate>
             <div id="form-views" ui-view></div>

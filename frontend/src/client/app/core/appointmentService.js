@@ -5,9 +5,9 @@
         .module('app.core')
         .factory('appointmentService', appointmentService);
 
-    appointmentService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
+    appointmentService.$inject = ['$http', '$location', '$sails', '$q', '$window', 'exception', 'logger', 'envService'];
 
-    function appointmentService($http, $location, $q, $window, exception, logger, envService) {
+    function appointmentService($http, $location, $sails, $q, $window, exception, logger, envService) {
 
         var apiUrl = envService.read('apiUrl');
         var service = {
@@ -15,7 +15,7 @@
             checkAvailableOpenings: checkAvailableOpenings,
             submitApptRequest: submitApptRequest,
             submitBlockout: submitBlockout,
-            book: book
+            book: book,
         };
 
         return service;
@@ -31,9 +31,9 @@
         }
 
         function checkAvailableOpenings(apptRequest) {
-             return $http.post(apiUrl + '/appointment/checkavailableopenings', apptRequest)
+            return $http.post(apiUrl + '/appointment/checkavailableopenings', apptRequest)
                 .then(function (data, status, headers, config) {
-                    
+
                     return data.data;
                 })
                 .catch(function (message) {
@@ -70,6 +70,8 @@
                     logger.error(message.data);
                 })
         }
+
+       
 
         // function getById(id) {
         //     return $http.get('http://localhost:1337/esthetician/getById?id=' + id)

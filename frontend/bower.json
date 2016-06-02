@@ -30,6 +30,7 @@
     "angular-bootstrap": "~1.2.1",
     "angular-ui-mask": "~1.8.3",
     "bootstrap-table": "~1.10.1",
-    "angular-environment": "^1.0.4"
+    "angular-environment": "^1.0.4",
+    "angular-sails": "^1.1.4"
   }
 }

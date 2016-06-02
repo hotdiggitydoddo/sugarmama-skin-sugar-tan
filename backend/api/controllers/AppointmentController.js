@@ -18,14 +18,23 @@ module.exports = {
 
     create: function (req, res) {
         var appt = req.query.models[0];
-
-        AppointmentService.create(appt)
-            .then(function (newAppt) {
-                return res.json(200, newAppt);
+        AppointmentService.intersects(appt)
+            .then(function (result) {
+                if (result) {
+                    res.status(403).send('Another appointment has been booked during this time.  Refresh your browser!');
+                } else {
+                    AppointmentService.create(appt)
+                        .then(function (newAppt) {
+                            sails.sockets.broadcast('apptUpdates', 'refresh', 'hello');
+                            res.json(200, newAppt);
+                            SmsEmailService.sendNewAppointmentCorrespondence(newAppt.id);
+                        })
+                        .catch(function (err) {
+                            return res.negotiate(err);
+                        });
+                }
             })
-            .catch(function (err) {
-                return res.negotiate(err);
-            });
+
     },
 
     update: function (req, res) {
@@ -51,7 +60,14 @@ module.exports = {
                 return res.negotiate(err);
             });
     },
-
+    
+    sync: function (req, res) {
+        if (!req.isSocket) return res.badRequest();
+        
+        sails.sockets.join(req, 'apptUpdates'); 
+        return res.ok();
+    },
+    
     getEstheticians: function (req, res) {
         var results = [];
         EstheticianService.getEstheticians()
@@ -93,8 +109,8 @@ module.exports = {
     },
 
     checkAvailableOpenings: function (req, res) {
-         var apptRequest = req.body;
-         AppointmentService.checkOpenings1(apptRequest)
+        var apptRequest = req.body;
+        AppointmentService.checkOpenings1(apptRequest)
             .then(function (results) {
                 return res.json(200, results);
             })
@@ -102,7 +118,7 @@ module.exports = {
                 return res.negotiate(err);
             });
     },
-    
+
     submitBlockout: function (req, res) {
         var blockout = req.body;
 
@@ -120,7 +136,8 @@ module.exports = {
 
         AppointmentService.book(apptForm)
             .then(function (results) {
-                return res.json(200, results);
+                res.json(200, results);
+                SmsEmailService.sendNewAppointmentCorrespondence(results.id);
             })
             .catch(function (err) {
                 return res.negotiate(err);
@@ -135,7 +152,7 @@ module.exports = {
                 data.services = groupServices(services);
                 EstheticianService.getEstheticians()
                     .then(function (estheticians) {
-                        data.estheticians = estheticians.map(esth => ({ id: esth.id, name: esth.firstName, services: esth.services.map(svc => (svc.id))}));
+                        data.estheticians = estheticians.map(esth => ({ id: esth.id, name: esth.firstName, services: esth.services.map(svc => (svc.id)) }));
                         LocationService.getAll()
                             .then(function (locations) {
                                 data.locations = locations;
