@@ -760,6 +760,7 @@ function saveAppt(apptToSave) {
         phoneNumber: apptToSave.userInfo.phoneNumber,
         emailAddress: apptToSave.userInfo.emailAddress,
         name: apptToSave.userInfo.firstName,
+        lastName: apptToSave.userInfo.lastName,
         notifyByText: apptToSave.userInfo.remindViaText,
         notifyByEmail: apptToSave.userInfo.remindViaEmail,
         isBlockout: false,

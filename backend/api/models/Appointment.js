@@ -40,6 +40,11 @@ module.exports = {
       maxLength: 50
     },
 
+    lastName: {
+      type: 'string',
+      maxLength: 50
+    },
+
     phoneNumber: {
       type: 'string',
       size: 10,
@@ -71,6 +76,10 @@ module.exports = {
 
     duration: function (startTime) {
       return this.endTime - startTime;
+    },
+
+    bookedByClient: function () {
+      return this.emailAddress != null;
     },
 
     isNoShow: {

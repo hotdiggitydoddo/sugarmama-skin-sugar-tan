@@ -18,22 +18,25 @@ module.exports = {
 
     create: function (req, res) {
         var appt = req.query.models[0];
-        AppointmentService.intersects(appt)
-            .then(function (result) {
-                if (result) {
-                    res.status(403).send('Another appointment has been booked during this time.  Refresh your browser!');
-                } else {
-                    AppointmentService.create(appt)
-                        .then(function (newAppt) {
-                            //sails.sockets.broadcast('apptUpdates', 'refresh', 'hello');
-                            res.json(200, newAppt);
-                            SmsEmailService.sendNewAppointmentCorrespondence(newAppt.id);
-                        })
-                        .catch(function (err) {
-                            return res.negotiate(err);
-                        });
-                }
+
+        AppointmentService.create(appt)
+            .then(function (newAppt) {
+                //sails.sockets.broadcast('apptUpdates', 'refresh', 'hello');
+                res.json(200, newAppt);
+                SmsEmailService.sendNewAppointmentCorrespondence(newAppt.id);
             })
+            .catch(function (err) {
+                return res.negotiate(err);
+            });
+
+        // AppointmentService.intersects(appt)
+        //     .then(function (result) {
+        //         if (result) {
+        //             res.status(403).send('Another appointment has been booked during this time.  Refresh your browser!');
+        //         } else {
+
+        //         }
+        //     })
 
     },
 
@@ -60,14 +63,14 @@ module.exports = {
                 return res.negotiate(err);
             });
     },
-    
+
     sync: function (req, res) {
         if (!req.isSocket) return res.badRequest();
-        
-        sails.sockets.join(req, 'apptUpdates'); 
+
+        sails.sockets.join(req, 'apptUpdates');
         return res.ok();
     },
-    
+
     getEstheticians: function (req, res) {
         var results = [];
         EstheticianService.getEstheticians()
