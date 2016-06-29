@@ -23,6 +23,11 @@
         function initiateBooking() {
             return $http.get(apiUrl + '/appointment/start')
                 .then(function (data, status, headers, config) {
+                    var results = data.data;
+                    
+                    var brows = results.services.hairRemoval.find(function(x) { return x.name == 'Eyebrow Shaping' })
+					results.services.hairRemoval.splice(results.services.hairRemoval.indexOf(brows), 1)
+
                     return data.data;
                 })
                 .catch(function (message) {

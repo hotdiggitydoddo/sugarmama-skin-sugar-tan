@@ -76,6 +76,9 @@
 		function getServices() {
 			spaServiceService.getServices(true)
 				.then(function (results) {
+					var brows = results.hairRemoval.find(function(x) { return x.name == 'Eyebrow Shaping' })
+					results.hairRemoval.splice(results.hairRemoval.indexOf(brows), 1)
+
 					vm.services = results;
 					vm.services.facial.push(vm.services.hairRemoval.find(function (svc) { return svc.name.indexOf('Bold') != -1; }))
 					vm.services.hairRemoval.premium = vm.services.hairRemoval.filter(function (svc) { return svc.premium });
