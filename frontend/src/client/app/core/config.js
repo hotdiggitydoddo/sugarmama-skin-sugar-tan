@@ -44,7 +44,7 @@
 			},
 			vars: {
 				development: {
-					apiUrl: 'http://localhost:1337',
+					apiUrl: 'http://localhost:2135/api',
 				},
                 staging: {
                    apiUrl: 'https://dev.sugarmamaskinsugartan.com/api',

@@ -81,7 +81,7 @@
 
 					vm.services = results;
 					vm.services.facial.push(vm.services.hairRemoval.find(function (svc) { return svc.name.indexOf('Bold') != -1; }))
-					vm.services.hairRemoval.premium = vm.services.hairRemoval.filter(function (svc) { return svc.premium });
+					vm.services.hairRemoval.premium = vm.services.hairRemoval.filter(function (svc) { return svc.isPremium });
 					return vm.services;
 				})
 				.catch(function (err) {

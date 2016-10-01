@@ -19,44 +19,20 @@
         return service;
 
         function getServices(byType) {
-            return $http.get(apiUrl + '/service/getAll/')
+            return $http.get(apiUrl + '/spaservices?byType=' + byType)
                 .then(function (data, status, headers, config) {
                     if (!byType)
                         return data.data;
-                        
-                    var hairRemoval = [];
-                    var chemicalPeel = [];
-                    var sprayTan = [];
-                    var microderm = [];
-                    var tinting = [];
-                    var facial = [];
                     
                     var services = data.data;
                     
-                    services.forEach(function(svc) {
-                        svc.isSelected = false;
-                        switch(svc.serviceType)
-                        {
-                            case "hairRemoval": 
-                                hairRemoval.push(svc);
-                                break;
-                            case "facial":
-                                facial.push(svc);
-                                break;
-                            case "sprayTan":
-                                sprayTan.push(svc);
-                                break;
-                            case "chemicalPeel":
-                                chemicalPeel.push(svc);
-                                break;
-                            case "microderm":
-                                microderm.push(svc);
-                                break;
-                            case "tinting":
-                                tinting.push(svc);
-                                break;
-                        }
-                    })
+                    var hairRemoval = services.hairRemoval;
+                    var chemicalPeel = services.peels;
+                    var sprayTan = services.tanning;
+                    var microderm = services.microderm;
+                    var tinting = services.tinting;
+                    var facial = services.facials;
+
                     return {
                         hairRemoval: hairRemoval,
                         facial: facial,
