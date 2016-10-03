@@ -56,7 +56,7 @@
                     <img src="images/fancy-lines-sm.png" style="display:block; margin:auto;">
                 </div>
                 <div ng-repeat="service in vm.services.hairRemoval">
-                    <div ng-if="!service.premium" class="row col-md-12 mb-small">
+                    <div ng-if="!service.isPremium" class="row col-md-12 mb-small">
                         <span class="pull-left">{{service.name | lowercase}}<span ng-if="service.description"> - <em>{{service.description | lowercase}}</em></span></span>
                         <span class="pull-right">{{service.cost}}</span>
                     </div>

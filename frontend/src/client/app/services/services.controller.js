@@ -89,7 +89,6 @@
 				});
 		}
 
-
 		function gotoService(s) {
 			$state.go('services.' + s);
 		}

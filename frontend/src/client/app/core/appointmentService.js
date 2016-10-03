@@ -5,9 +5,10 @@
         .module('app.core')
         .factory('appointmentService', appointmentService);
 
-    appointmentService.$inject = ['$http', '$location', '$sails', '$q', '$window', 'exception', 'logger', 'envService'];
+    //appointmentService.$inject = ['$http', '$location', '$sails', '$q', '$window', 'exception', 'logger', 'envService'];
+    appointmentService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
 
-    function appointmentService($http, $location, $sails, $q, $window, exception, logger, envService) {
+    function appointmentService($http, $location, $q, $window, exception, logger, envService) {
 
         var apiUrl = envService.read('apiUrl');
         var service = {
