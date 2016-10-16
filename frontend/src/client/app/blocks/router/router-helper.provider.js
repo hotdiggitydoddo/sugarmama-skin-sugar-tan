@@ -22,9 +22,9 @@
         };
 
         this.$get = RouterHelper;
-        RouterHelper.$inject = ['$location', '$rootScope', '$state', 'logger', 'authService'];
+        RouterHelper.$inject = ['$location', '$rootScope', '$state', '$http', 'logger', 'authService', 'envService'];
         /* @ngInject */
-        function RouterHelper($location, $rootScope, $state, logger, authService) {
+        function RouterHelper($location, $rootScope, $state, $http, logger, authService, envService) {
             var handlingStateChangeError = false;
             var hasOtherwise = false;
             var stateCounts = {
@@ -90,12 +90,55 @@
                         }
                     }
 
-                    if (!authService.isAuthenticated) {
-                        if (next.name !== 'login') {
-                            event.preventDefault();
-                            $state.go('login');
-                        }
+                    if (!authService.isAuthenticated()) {
+                        var token = authService.getToken();
+                        if (token) {
+                            var apiUrl = envService.read('apiUrl');
+                            var refreshToken = authService.getRefreshToken();
+                            return $http({
+                                url: apiUrl + '/token',
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                                transformRequest: function(obj) {
+                                    var str = [];
+                                    for(var p in obj)
+                                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                    return str.join("&");
+                                },
+                                data: {
+                                    grant_type: 'refresh_token',
+                                    refresh_token: refreshToken 
+                                }
+                            }).then(function(response) {
+
+                            }).catch(function(err) {
+                                if (next.name !== 'login') {
+                                event.preventDefault();
+                                $state.go('login');
+                            }
+                            })
+                        } 
                     }
+
+
+
+                    // if ('data' in next && 'authorizedRoles' in next.data) {
+                    //     var authorizedRoles = next.data.authorizedRoles;
+                    //     if (!authService.isAuthorized(authorizedRoles)) {
+                    //         event.preventDefault();
+                    //         $state.go('home', {}, { reload: true });
+                    //        // $state.go($state.current, {}, { reload: true });
+                    //         logger.warning('You are not authorized to access that area.')
+                    //         //$rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                    //     }
+                    // }
+
+                    // if (!authService.isAuthenticated) {
+                    //     if (next.name !== 'login') {
+                    //         event.preventDefault();
+                    //         $state.go('login');
+                    //     }
+                    // }
                 });
             }
 

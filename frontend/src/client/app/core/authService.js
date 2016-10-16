@@ -5,113 +5,87 @@
         .module('app.core')
         .factory('authService', authService);
 
-    authService.$inject = ['$http', '$window', '$location', '$q', 'exception', 'logger', 'authToken', 'envService', 'user_roles'];
+    authService.$inject = ['$window', '$location', '$q', 'exception', 'logger', 'envService', 'user_roles'];
 
-    function authService($http, $window, $location, $q, exception, logger, authToken, envService, user_roles) {
+    function authService($window, $location, $q, exception, logger, envService, user_roles) {
         var apiUrl = envService.read('apiUrl');
-        var username = '';
-        var firstName = '';
-        var _isAuthenticated = false;
-        var role = '';
-        var estheticianId;
-        var authToken;
-        var LOCAL_TOKEN_KEY = '$4m2m';
+        //var username = '';
+        //var firstName = '';
+        //var estheticianId;
         var _storage = $window.localStorage;
 
         var service = {
-            login: login,
-            logout: logout,
-            isAuthenticated: function () { return _isAuthenticated },
+            isAuthenticated: isAuthenticated,
             isAuthorized: isAuthorized,
-            estheticianId: function () { return estheticianId },
-            username: function() { return username },
-            firstName: function() { return firstName }
+            saveToken: saveToken,
+            getToken: getToken,
+            getRefreshToken: getRefreshToken,
+            logout: logout,
+            //estheticianId: function () { return estheticianId },
+            username: function() { return isAuthenticated() ? parseJwt(getToken(), "username") : null},
+            firstName: function() { return isAuthenticated() ? parseJwt(getToken(), "firstName") : null }
         };
-
-        loadUserCredentials();
-
         return service;
 
-        function loadUserCredentials() {
-            var token = _storage.getItem(LOCAL_TOKEN_KEY);
-            if (token)
-                useCredentials(token);
-        }
-
-        function storeUserCredentials(token) {
-            _storage.setItem(LOCAL_TOKEN_KEY, token);
-            useCredentials(token);
-        }
-
-        function useCredentials(token) {
-            var tokenized = token.split('|');
-            firstName = tokenized[0]
-            username = tokenized[1];
-            var roleFromServer = tokenized[2];
-            var esthId = tokenized[3];
-            var enc = tokenized[4]
-            _isAuthenticated = true;
-            authToken = token;
-
-            if (roleFromServer == 'admin')
-                role = user_roles.admin;
-            if (roleFromServer == 'esthetician')
-                role = user_roles.esthetician;
-            if (roleFromServer == 'owner')
-                role = user_roles.owner;
-
-            if (esthId != '*')
-                estheticianId = esthId;
-
-            $http.defaults.headers.common.Authorization = 'Bearer ' + enc;
-        }
-
-        function destroyUserCredentials() {
-            authToken = undefined;
-            username = '';
-            _isAuthenticated = false;
-            estheticianId = undefined;
-            role = '';
-            $http.defaults.headers.common.Authorization = undefined;
-            _storage.removeItem(LOCAL_TOKEN_KEY);
-        }
-
-        function login(loginData) {
-            return $http.post(apiUrl + '/auth/login', loginData)
-                .then(function (data, status, headers, config) {
-                    var authInfo = data.data;
-                    if (authInfo.estheticianId) {
-                        storeUserCredentials(authInfo.firstName + '|' + authInfo.userName + '|' + authInfo.role + '|' +
-                            authInfo.estheticianId + '|' + authInfo.token);
-                    } else {
-                        storeUserCredentials(authInfo.firstName + '|' + authInfo.userName + '|' + authInfo.role + '|' + '*' + '|' + authInfo.token);
-                    }
-
-                    logger.success('Welcome back, ' + authInfo.firstName + '!');
-
-                    if (authInfo.estheticianId)
-                        return authInfo.estheticianId;
-                })
-                .catch(function (message) {
-                    if (message.status === -1) {
-                        logger.error("Unable to communicate with the server.  Please notify tech support.");
-                        return -1;
-                    } else {
-                        logger.error(message.data);
-                        return -1;
-                    }
-                });
-        }
-
         function logout() {
-            destroyUserCredentials();
+            _storage.removeItem('smidt');
+            _storage.removeItem('smrt');
+        }
+
+        function saveToken(authObj) {
+            _storage['smidt'] = authObj.id_token;
+            _storage['smrt'] = authObj.refresh_token;
+        }
+
+        function getToken() {
+            return _storage['smidt'];
+        }
+
+        function getRefreshToken() {
+            return _storage['smrt'];
+        }
+
+        function isAuthenticated() {
+            var token = getToken();
+            
+            if (!token) return false;
+
+            var values = parseJwt(token);
+            return Math.round(new Date().getTime() / 1000) <= values.exp;
         }
 
         function isAuthorized(authorizedRoles) {
             if (!angular.isArray(authorizedRoles))
                 authorizedRoles = [authorizedRoles];
+            if (!isAuthenticated())
+                return false;
+            var authorized = false;
+            authorizedRoles.forEach(function(role) {
+                if (isInRole(role))
+                    authorized = true
+            })
 
-            return (_isAuthenticated && authorizedRoles.indexOf(role) != -1);
+            return authorized;
         }
+
+        function parseJwt(token, key) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace('-', '+').replace('_', '/');
+            var json =  JSON.parse($window.atob(base64));
+            
+            if (!key)
+                return json;
+
+            return json[key];
+        }
+
+        function isInRole(role) {
+            var roles = parseJwt(getToken(), 'role');
+            roles.forEach(function(part, index, roles) {
+                 roles[index] = roles[index].toLowerCase();
+            });
+            return roles.indexOf(role.toLowerCase()) != -1; 
+        }
+
     };
 })();

@@ -3,9 +3,9 @@
 
     angular.module('app.accounts').controller('Login', Login);
 
-    Login.$inject = ['$scope', '$state', 'logger', 'authService'];
+    Login.$inject = ['$scope', '$state', 'logger', 'accountService'];
 
-    function Login($scope, $state, logger, authService) {
+    function Login($scope, $state, logger, accountService) {
         var vm = this;
 
         vm.loginForm = {
@@ -30,7 +30,7 @@
 
             vm.loginForm.loading = true;
 
-            authService.login(vm.loginForm)
+            accountService.login(vm.loginForm)
                 .then(function (data) {
                     console.log(data);
                     if (data && data != -1)

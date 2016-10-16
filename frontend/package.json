@@ -42,6 +42,6 @@
     "yargs": "^3.30.0"
   },
   "dependencies": {
-    "angular-sails-socket": "^0.3.4"
+   
   }
 }

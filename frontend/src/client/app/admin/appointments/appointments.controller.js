@@ -3,9 +3,9 @@
 
     angular.module('app.admin.appointments').controller('Appointments', Appointments);
 
-    Appointments.$inject = ['$state', '$uibModal', '$sails', 'logger', 'envService', 'appointmentService'];
+    Appointments.$inject = ['$state', '$uibModal', 'logger', 'envService', 'appointmentService'];
 
-    function Appointments($state, $uibModal, $sails, logger, envService, appointmentService) {
+    function Appointments($state, $uibModal, logger, envService, appointmentService) {
         var vm = this;
         vm.estheticians = [];
         vm.title = 'appointments';

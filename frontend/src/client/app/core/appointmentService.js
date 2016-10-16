@@ -5,7 +5,6 @@
         .module('app.core')
         .factory('appointmentService', appointmentService);
 
-    //appointmentService.$inject = ['$http', '$location', '$sails', '$q', '$window', 'exception', 'logger', 'envService'];
     appointmentService.$inject = ['$http', '$location', '$q', '$window', 'exception', 'logger', 'envService'];
 
     function appointmentService($http, $location, $q, $window, exception, logger, envService) {
@@ -32,7 +31,7 @@
                     return data.data;
                 })
                 .catch(function (message) {
-                    logger.error(message.data);
+                    handleError(message);
                 })
         }
 
@@ -43,7 +42,7 @@
                     return data.data;
                 })
                 .catch(function (message) {
-                    logger.error(message.data);
+                    handleError(message);
                 })
         }
 
@@ -53,7 +52,7 @@
                     return data.data;
                 })
                 .catch(function (message) {
-                    logger.error(message.data);
+                    handleError(message);
                 })
         }
 
@@ -63,7 +62,7 @@
                     return data.data;
                 })
                 .catch(function (message) {
-                    logger.error(message.data);
+                    handleError(message);
                 })
         }
 
@@ -73,10 +72,15 @@
                     return data.data;
                 })
                 .catch(function (message) {
-                    logger.error(message.data);
+                    handleError(message);
                 })
         }
 
+        function handleError(message) {
+            if (message.status && message.status == 404) {
+                logger.error('Service not available at this time.  Please try again later.')
+            }
+        }
        
 
         // function getById(id) {

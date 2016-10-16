@@ -20,10 +20,10 @@
 	core.config(configure);
 
     configure.$inject = ['$compileProvider', '$logProvider',
-                         'routerHelperProvider', '$httpProvider', '$sailsProvider', 'envServiceProvider'];
+                         'routerHelperProvider', '$httpProvider', 'envServiceProvider'];
     /* @ngInject */
     function configure ($compileProvider, $logProvider,
-                         routerHelperProvider, $httpProvider, $sailsProvider, envServiceProvider) {
+                         routerHelperProvider, $httpProvider, envServiceProvider) {
         
         $compileProvider.debugInfoEnabled(false);
         
@@ -56,7 +56,6 @@
 		});
         envServiceProvider.check();
         
-        //$sailsProvider.url = 'http://localhost:1337';
         
         //exceptionHandlerProvider.configure(config.appErrorPrefix);
         configureStateHelper();
