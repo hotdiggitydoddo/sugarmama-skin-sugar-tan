@@ -16,6 +16,9 @@
             submitApptRequest: submitApptRequest,
             submitBlockout: submitBlockout,
             book: book,
+            bookAdmin: bookAdmin,
+            update: update,
+            getAppointmentsAdmin: getAppointmentsAdmin,
         };
 
         return service;
@@ -67,7 +70,7 @@
         }
 
         function book(appointment) {
-            return $http.post(apiUrl + '/appointment/book', appointment)
+            return $http.post(apiUrl + '/appointments', appointment)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })
@@ -75,6 +78,37 @@
                     handleError(message);
                 })
         }
+
+         function bookAdmin(appointment) {
+            return $http.post(apiUrl + '/appointments/admin', appointment)
+                .then(function (data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function (message) {
+                    handleError(message);
+                })
+        }
+
+        function update(appointment) {
+            return $http.put(apiUrl + '/appointments', appointment)
+                .then(function (data, status, headers, config) {
+                        return data.data;
+                    })
+                .catch(function (message) {
+                    handleError(message);
+                })
+        }
+
+        function getAppointmentsAdmin() {
+            return $http.get(apiUrl + '/appointments/admin')
+                .then(function(data) {
+                    return data.data;
+                })
+                .catch(function(message) {
+                    handleError(message);
+                })
+        }
+
 
         function handleError(message) {
             if (message.status && message.status == 404) {

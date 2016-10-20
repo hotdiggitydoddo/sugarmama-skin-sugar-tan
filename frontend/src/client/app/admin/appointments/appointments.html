@@ -1,46 +1,3 @@
-<style>
-    html,
-    body {
-        height: 100%;
-    }
-    
-    .wrapper {
-        width: 100%;
-        height: 100%;
-        margin: 0 auto;
-    }
-    
-    .h_iframe {
-        position: relative;
-    }
-    
-    .h_iframe .ratio {
-        display: block;
-        width: 100%;
-        height: auto;
-    }
-    
-    .h_iframe iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 102%;
-    }
-    
-    .stanton {
-        color: #0041B9;
-    }
-    
-    .brea {
-        color: #7D0202;
-    }
-    
-     .datepicker {
-        background-color: white;
-    }
-</style>
-
 <div class="container">
     <ol class="breadcrumb">
         <li><a href="/">home</a></li>
@@ -58,12 +15,110 @@
     <p style="padding-bottom:22px; margin-bottom:15px;">
         <button ng-click="vm.openBlockoutModal()" class="btn btn-toranj pull-right">Add Blockout Time...</button>
     </p>
+   
     <div class="wrapper">
-        <div class="h_iframe">
-            <img class="ratio" src="/images/4x3.png" />
-            <iframe ng-if="vm.env == 'development'" src="/scheduler.html" frameborder="0" allowfullscreen></iframe>
-            <iframe ng-if="vm.env == 'production'" src="/scheduler.prod.html" frameborder="0" allowfullscreen></iframe>
-            <iframe ng-if="vm.env == 'staging'" src="/scheduler.staging.html" frameborder="0" allowfullscreen></iframe>
+        <div id="example">
+            <div id="people">
+                <span class="stanton locations"><input checked type="checkbox" id="stanton" value="1"> <label style="margin-right: 5px; cursor: pointer;" for="stanton"><strong>  stanton</strong></label></span>
+                <span class="brea locations"><input checked type="checkbox" id="brea" value="2"><label for="brea" style="margin-right: 5px; cursor: pointer;"><strong>  brea</strong></label></span>
+            </div>
+            <div kendo-scheduler id="scheduler" k-options="vm.schedulerOptions"></div>
         </div>
     </div>
-</div>
+     <script id="customEditorTemplate" type="text/x-kendo-template">
+        <div class="k-edit-label">
+            <label for="firstName">Name</label>
+        </div>
+        <div data-container-for="firstName" class="k-edit-field">
+            <input type="text" class="k-input k-textbox" name="firstName" required="required" data-bind="value:firstName">
+            <span data-for="firstName" class="k-invalid-msg" style="display: none;"></span>
+        </div>
+        <div class="k-edit-label">
+            <label for="start">Start</label>
+        </div>
+        <div data-container-for="start" class="k-edit-field">
+            <input type="text" data-role="datetimepicker" data-interval="15" data-type="date" data-bind="value:start,invisible:isAllDay"
+                name="start" />
+            <input type="text" data-type="date" data-role="datepicker" data-bind="value:start,visible:isAllDay" name="start" />
+            <span data-bind="text: startTimezone"></span>
+            <span data-for="start" class="k-invalid-msg" style="display: none;"></span>
+        </div>
+        <div class="k-edit-label">
+            <label for="end">End</label>
+        </div>
+        <div data-container-for="end" class="k-edit-field">
+            <input type="text" required="required" data-type="date" data-role="datetimepicker" data-bind="value:end,invisible:isAllDay"
+                name="end" data-datecompare-msg="End date should be greater than or equal to the start date" />
+            <input type="text" required="required" data-type="date" data-role="datepicker" data-bind="value:end,visible:isAllDay" name="end"
+                data-datecompare-msg="End date should be greater than or equal to the start date" />
+            <span data-bind="text: endTimezone"></span>
+            <span data-bind="text: startTimezone, invisible: endTimezone"></span>
+            <span data-for="end" class="k-invalid-msg" style="display: none;"></span>
+        </div>
+
+        <div class="k-edit-label">
+            <label for="phoneNumber">Phone Number</label>
+        </div>
+        <div data-container-for="phoneNumber" class="k-edit-field">
+            <input type="text" name="phoneNumber" class="k-textbox" required="required" data-bind="value:phoneNumber" />
+            <span data-for="phoneNumber" class="k-invalid-msg" style="display: none;"></span>
+        </div>
+        <div class="k-edit-label">
+            <label for="gender">Gender</label>
+        </div>
+        <div data-container-for="gender" class="k-edit-field">
+            <select id="genderId" data-bind="value:gender" data-role="dropdownlist" data-value-field="value" data-text-field="text">
+            </select>
+        </div>
+        <div class="k-edit-label">
+            <label for="services">Services</label>
+        </div>
+        <div data-container-for="services" class="k-edit-field">
+            <select id="services" data-bind="value:services" multiple="multiple" data-value-field="value" data-text-field="text"></select>
+        </div>
+        <div class="k-edit-label">
+            <label for="esthetician">Esthetician</label>
+        </div>
+        <div data-container-for="esthetician" class="k-edit-field">
+            <select id="estheticianId" data-bind="value:estheticianId" data-role="dropdownlist" data-value-field="value" data-text-field="text"
+                data-color-field="color">
+            </select>
+        </div>
+        <div class="k-edit-label">
+            <label for="location">Location</label>
+        </div>
+        <div data-container-for="location" class="k-edit-field">
+            <select id="locationId" data-bind="value:locationId" data-role="dropdownlist" data-value-field="id" data-text-field="city">
+            </select>
+        </div>
+        <div class="k-edit-label">
+            <label for="isNoShow">No Show</label>
+        </div>
+        <div data-container-for="isNoShow" class="k-edit-field">
+            <input type="checkbox" id="isNoShow" data-bind="checked:isNoShow" data-role="checkbox">
+        </div>
+    </script>
+
+    <script id="event-template" type="text/x-kendo-template">
+        <div class="appointment-template #if(isBlockout){# blockout #}#    #if(locationId % 2 == 0){# red-background #}else{# blue-background #}#">
+            <p>
+                <h3 style="margin-top: -15px"class="#if(isNoShow){# no-show #} else {# reg #}#">#: title #</h3>
+            </p>
+
+        </div>
+    </script>
+    
+    <script>
+         $("#people :checkbox").change(function(e) {
+                var checked = $.map($("#people :checked"), function(checkbox) { 
+                    return parseInt($(checkbox).val());
+                });
+                var scheduler = $("#scheduler").data("kendoScheduler");
+
+                scheduler.dataSource.filter({
+                    operator: function(appointment) {
+                        return $.inArray(parseInt(appointment.locationId), checked) >= 0;
+                    }
+                });
+            });
+    </script>

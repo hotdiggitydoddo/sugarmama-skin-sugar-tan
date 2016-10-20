@@ -16,9 +16,9 @@
         return service;
         
         function request(config) {
-            if (!authService.isAuthenticated())
+            if (authService.isAuthenticated())
             {
-                var token = authService.getToken();
+                var token = authService.getAccessToken();
             }
             if (token) {
                 config.headers.Authorization = 'Bearer ' + token;

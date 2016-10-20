@@ -13,6 +13,8 @@
         'ui.bootstrap',
         'ui.mask',
         'environment',
+        'angularCSS',
+        'kendo.directives',
 
         /* Reusable cross-app modules */
         'blocks.logger',

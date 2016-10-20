@@ -23,7 +23,7 @@
         return service;
 
         function getAll() {
-            return $http.get(apiUrl + '/location/get/')
+            return $http.get(apiUrl + '/locations')
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })

@@ -26,7 +26,18 @@
                     data: {
                         authRequired: true,
                         authorizedRoles: [user_roles.admin, user_roles.owner]
-                    }
+                    },
+                    css: [
+                        {
+                            href: 'http://kendo.cdn.telerik.com/2016.1.226/styles/kendo.common-material.min.css',
+                        },
+                        {
+                            href: 'http://kendo.cdn.telerik.com/2016.1.226/styles/kendo.material.min.css'
+                        },
+                        {
+                            href: 'app/admin/appointments/scheduler.css'
+                        }
+                    ]
                 }
             }];
     }

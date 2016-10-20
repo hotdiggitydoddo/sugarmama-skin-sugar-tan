@@ -20,6 +20,7 @@
             saveToken: saveToken,
             getToken: getToken,
             getRefreshToken: getRefreshToken,
+            getAccessToken: getAccessToken,
             logout: logout,
             //estheticianId: function () { return estheticianId },
             username: function() { return isAuthenticated() ? parseJwt(getToken(), "username") : null},
@@ -30,11 +31,17 @@
         function logout() {
             _storage.removeItem('smidt');
             _storage.removeItem('smrt');
+            _storage.removeItem('smat');
         }
 
         function saveToken(authObj) {
             _storage['smidt'] = authObj.id_token;
             _storage['smrt'] = authObj.refresh_token;
+            _storage['smat'] = authObj.access_token;
+        }
+
+        function getAccessToken() {
+            return _storage['smat'];
         }
 
         function getToken() {

@@ -29,7 +29,7 @@
         return service;
 
         function getEstheticians() {
-            return $http.get(apiUrl + '/esthetician/get/')
+            return $http.get(apiUrl + '/estheticians')
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })

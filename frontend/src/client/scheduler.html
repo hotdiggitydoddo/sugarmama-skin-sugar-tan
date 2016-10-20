@@ -244,19 +244,18 @@
                     batch: true,
                     transport: {
                         read: {
-                            url: "//localhost:1337/appointment/get",
-                            dataType: "json"
+                            url: "//localhost:2135/api/appointments",
                         },
                         update: {
-                            url: "//localhost:1337/appointment/update",
+                            url: "//localhost:2135/appointment/update",
                             dataType: "json"
                         },
                         create: {
-                            url: "//localhost:1337/appointment/create",
+                            url: "//localhost:2135/appointment/create",
                             dataType: "json"
                         },
                         destroy: {
-                            url: "//localhost:1337/appointment/destroy",
+                            url: "//localhost:2135/appointment/destroy",
                             dataType: "json"
                         },
                     },
@@ -292,7 +291,7 @@
                         dataSource: {  
                             transport: {  
                                 read: {  
-                                    url: "//localhost:1337/appointment/getEstheticians"
+                                    url: "//localhost:2135/appointment/getEstheticians"
                                 },
                             prefix : ""
                             },
@@ -311,7 +310,7 @@
                         dataSource: {  
                             transport: {  
                                 read: {  
-                                    url: "//localhost:1337/service/get"
+                                    url: "//localhost:2135/service/get"
                                 },
                             prefix : ""
                             },
@@ -329,7 +328,7 @@
                          dataSource: {  
                             transport: {  
                                 read: {  
-                                    url: "//localhost:1337/location/get"
+                                    url: "//localhost:2135/location/get"
                                 },
                             prefix : ""
                             },

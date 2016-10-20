@@ -30,6 +30,11 @@
         
         $httpProvider.interceptors.push('authInterceptor');
        
+        // $httpProvider.defaults.headers.common = {};
+        // $httpProvider.defaults.headers.post = {};
+        // $httpProvider.defaults.headers.put = {};
+        // $httpProvider.defaults.headers.patch = {};
+
         // turn debugging off/on (no info or warn)
         if ($logProvider.debugEnabled) {
             $logProvider.debugEnabled(true);

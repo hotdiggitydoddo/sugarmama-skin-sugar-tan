@@ -79,17 +79,6 @@
                 );
 
                 $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
-                    if ('data' in next && 'authorizedRoles' in next.data) {
-                        var authorizedRoles = next.data.authorizedRoles;
-                        if (!authService.isAuthorized(authorizedRoles)) {
-                            event.preventDefault();
-                            $state.go('home', {}, { reload: true });
-                           // $state.go($state.current, {}, { reload: true });
-                            logger.warning('You are not authorized to access that area.')
-                            //$rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                        }
-                    }
-
                     if (!authService.isAuthenticated()) {
                         var token = authService.getToken();
                         if (token) {
@@ -110,7 +99,16 @@
                                     refresh_token: refreshToken 
                                 }
                             }).then(function(response) {
-
+                                if ('data' in next && 'authorizedRoles' in next.data) {
+                                    var authorizedRoles = next.data.authorizedRoles;
+                                    if (!authService.isAuthorized(authorizedRoles)) {
+                                        event.preventDefault();
+                                        $state.go('home', {}, { reload: true });
+                                    // $state.go($state.current, {}, { reload: true });
+                                        logger.warning('You are not authorized to access that area.')
+                                        //$rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                                    }   
+                                }
                             }).catch(function(err) {
                                 if (next.name !== 'login') {
                                 event.preventDefault();
@@ -118,27 +116,18 @@
                             }
                             })
                         } 
+                    } else {
+                        if ('data' in next && 'authorizedRoles' in next.data) {
+                            var authorizedRoles = next.data.authorizedRoles;
+                            if (!authService.isAuthorized(authorizedRoles)) {
+                                event.preventDefault();
+                                $state.go('home', {}, { reload: true });
+                            // $state.go($state.current, {}, { reload: true });
+                                logger.warning('You are not authorized to access that area.')
+                                //$rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                            }
+                        }
                     }
-
-
-
-                    // if ('data' in next && 'authorizedRoles' in next.data) {
-                    //     var authorizedRoles = next.data.authorizedRoles;
-                    //     if (!authService.isAuthorized(authorizedRoles)) {
-                    //         event.preventDefault();
-                    //         $state.go('home', {}, { reload: true });
-                    //        // $state.go($state.current, {}, { reload: true });
-                    //         logger.warning('You are not authorized to access that area.')
-                    //         //$rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                    //     }
-                    // }
-
-                    // if (!authService.isAuthenticated) {
-                    //     if (next.name !== 'login') {
-                    //         event.preventDefault();
-                    //         $state.go('login');
-                    //     }
-                    // }
                 });
             }
 
