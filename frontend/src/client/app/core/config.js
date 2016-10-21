@@ -60,7 +60,7 @@
 			}
 		});
         envServiceProvider.check();
-        
+        console
         
         //exceptionHandlerProvider.configure(config.appErrorPrefix);
         configureStateHelper();

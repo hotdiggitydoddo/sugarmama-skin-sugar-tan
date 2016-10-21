@@ -15,7 +15,7 @@
          //   updateService: updateService,
             getById: getById
         };
-
+         logger.info(apiUrl);
         return service;
 
         function getServices(byType) {

@@ -1,3 +1,126 @@
+<style>
+     .k-scheduler-toolbar>.k-scheduler-views>li.k-state-selected {
+            border-bottom-color: #D68117;
+        }
+        
+        .k-block,
+        .k-button,
+        .k-draghandle,
+        .k-grid-header,
+        .k-grouping-header,
+        .k-header,
+        .k-pager-wrap,
+        .k-toolbar,
+        .k-treemap-tile,
+        html .km-pane-wrapper .k-header {
+            background-color: #67320B;
+        }
+        
+        .k-gantt-toolbar .k-button,
+        .k-gantt>.k-header .k-link,
+        .k-gantt>.k-header li,
+        .k-grid .k-header .k-button,
+        .k-scheduler .k-header .k-button,
+        .k-scheduler .k-header .k-link,
+        .k-scheduler .k-header li,
+        .km-pane-wrapper .k-header .k-button {
+            background-color: #67320B;
+            border-color: #67320B;
+        }
+        
+        .k-grid .k-header .k-button:hover,
+        .k-scheduler .k-header .k-button:hover,
+        .k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-hover,
+        .k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-hover .k-link,
+        .k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-hover,
+        .k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-hover .k-link,
+        .k-gantt .k-gantt-toolbar .k-button:hover,
+        .km-pane-wrapper .k-header .k-button:hover {
+            background-color: #CCB37A;
+            border-color: #CCB37A;
+        }
+        
+        .k-event {
+            border-color: #000000;
+            background: #000000;
+            border-radius: 5px;
+        }
+        
+        .k-scheduler-table .k-today {
+            background: #F7F5EB;
+        }
+        
+        .appointment-template {
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            height: 100%;
+            margin-top: -5px;
+        }
+        
+        .red-background {
+            border: 5px solid #7D0202;
+        }
+        
+        .blue-background {
+            border: 5px solid #0041B9;
+        }
+        
+        .appointment-template p {
+            padding: 0 3px 0px;
+            font-size: 13px;
+        }
+        
+        .appointment-template h3 {
+            padding: 0 3px 0px;
+            font-size: 13px;
+        }
+        
+        .no-show {
+            color: #960000 !important;
+        }
+        
+        .reg {
+            color: white !important;
+        }
+
+        .locations {
+            border-radius: 3px !important;
+            padding: 3px !important;
+        }
+        .locations strong {
+             color: white !important;
+        }
+        .locations input[type=checkbox] {
+            height: 12px;
+        }
+        .stanton {
+            background-color: #0041B9;
+        }
+        
+        .brea {
+            background-color: #7D0202;
+        }
+        
+        #people {
+            margin-bottom: 7px;
+        }
+        .k-multiselect-wrap > .k-i-close {
+            display: none;
+        }
+
+        .k-nav-current > .k-link span + span {
+            display: inline-block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            vertical-align: top;
+        }
+
+        #isNoShow {
+            height: 20px
+        }
+</style>
 <div class="container">
     <ol class="breadcrumb">
         <li><a href="/">home</a></li>

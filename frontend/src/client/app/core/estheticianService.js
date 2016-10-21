@@ -39,7 +39,7 @@
         }
 
         function getById(id) {
-            return $http.get(apiUrl + '/esthetician/getById?id=' + id)
+            return $http.get(apiUrl + '/estheticians/' + id)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })
@@ -96,7 +96,7 @@
         }
 
         function getShift(shiftId) {
-            return $http.get(apiUrl + '/shift/getShift?shiftId=' + shiftId)
+            return $http.get(apiUrl + '/shifts/' + shiftId)
                 .then(function (data, status, headers, config) {
                     var shift = data.data;
                     return shift;
@@ -107,7 +107,7 @@
         }
 
         function getShifts(id) {
-            return $http.get(apiUrl + '/shift/getByEsthetician?id=' + id)
+            return $http.get(apiUrl + '/shifts/esthetician/' + id)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })

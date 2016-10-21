@@ -20,7 +20,6 @@
             update: update,
             getAppointmentsAdmin: getAppointmentsAdmin,
         };
-
         return service;
 
         function initiateBooking() {
