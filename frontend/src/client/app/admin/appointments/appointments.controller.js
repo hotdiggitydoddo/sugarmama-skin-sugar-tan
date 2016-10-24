@@ -315,7 +315,8 @@
             ],
     
         edit: function(e) {
-        
+             var recurrenceEditor = e.container.find("[data-role=recurrenceeditor]").data("kendoRecurrenceEditor");
+
             $("#estheticianId").kendoDropDownList({
                 dataSource: e.sender.resources[0].dataSource,
                 dataTextField: "text",
@@ -365,6 +366,8 @@
                 dataSource: times,
                 change: checkTimes,
             });
+            
+            $('.k-multiselect-wrap >.k-input').attr('readonly', "readonly");
         }
     }
 
@@ -448,7 +451,7 @@
                     });
                 }
             });
-
+           
             touchEventsInitialized = true;
         }
         
