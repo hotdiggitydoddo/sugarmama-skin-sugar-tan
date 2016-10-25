@@ -12,23 +12,23 @@
             formSubmitted: false
         }
         vm.editMode = false;
-         vm.passwordMode = false;
+        vm.passwordMode = false;
         vm.isDirty = false;
         vm.toggleEditMode = toggleEditMode;
-          vm.togglePasswordMode = togglePasswordMode;
+        vm.togglePasswordMode = togglePasswordMode;
         vm.updating = false;
         vm.save = save;
-          vm.changePassword = changePassword;
+        vm.changePassword = changePassword;
         activate();
 
         function activate() {
             $state.params.id = authService.estheticianId();
             $state.params.isAdmin = false
-            return (getEstheticianById(authService.estheticianId()));
+            return (getEstheticianProfile());
         }
 
-        function getEstheticianById(id) {
-            estheticianService.getById(id)
+        function getEstheticianProfile() {
+            estheticianService.getProfile()
                 .then(function (data) {
                     vm.esthetician = data;
                 })

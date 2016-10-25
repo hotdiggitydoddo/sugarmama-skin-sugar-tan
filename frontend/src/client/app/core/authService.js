@@ -9,9 +9,6 @@
 
     function authService($window, $location, $q, exception, logger, envService, user_roles) {
         var apiUrl = envService.read('apiUrl');
-        //var username = '';
-        //var firstName = '';
-        //var estheticianId;
         var _storage = $window.localStorage;
 
         var service = {
@@ -22,9 +19,9 @@
             getRefreshToken: getRefreshToken,
             getAccessToken: getAccessToken,
             logout: logout,
-            //estheticianId: function () { return estheticianId },
             username: function() { return isAuthenticated() ? parseJwt(getToken(), "username") : null},
-            firstName: function() { return isAuthenticated() ? parseJwt(getToken(), "firstName") : null }
+            firstName: function() { return isAuthenticated() ? parseJwt(getToken(), "firstName") : null },
+            estheticianId: function () { return isAuthenticated() ? parseInt(parseJwt(getToken(), "estheticianId")) : null },
         };
         return service;
 

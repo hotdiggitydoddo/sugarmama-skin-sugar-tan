@@ -14,6 +14,7 @@
             createEsthetician: createEsthetician,
             updateEsthetician: updateEsthetician,
             deleteEsthetician: deleteEsthetician,
+            getProfile: getProfile,
             getById: getById,
             getByEmail: getByEmail,
             getShift: getShift,
@@ -38,6 +39,16 @@
                 })
         }
 
+        function getProfile() {
+             return $http.get(apiUrl + '/estheticians/profile')
+                .then(function (data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function (message) {
+                    logger.error(message.data);
+                })
+        }
+
         function getById(id) {
             return $http.get(apiUrl + '/estheticians/' + id)
                 .then(function (data, status, headers, config) {
@@ -49,7 +60,7 @@
         }
 
         function getByEmail(email) {
-            return $http.get(apiUrl + '/esthetician/getByEmail?email=' + email)
+            return $http.get(apiUrl + '/estheticians/' + email)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })

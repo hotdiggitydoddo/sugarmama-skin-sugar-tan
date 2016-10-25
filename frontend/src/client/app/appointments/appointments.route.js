@@ -11,19 +11,19 @@
 
     function getStates(user_roles) {
         return [
-            {
-                state: 'appointment',
-                config: {
-                    url: '/book',
-                    templateUrl: 'app/appointments/appointment.html',
-                    controller: 'ClientAppointments',
-                    controllerAs: 'vm',
-                    settings: {
-                        nav: 1,
-                        content: 'book'
-                    },
-                }
-            },
+            // {
+            //     state: 'appointment',
+            //     config: {
+            //         url: '/book',
+            //         templateUrl: 'app/appointments/appointment.html',
+            //         controller: 'ClientAppointments',
+            //         controllerAs: 'vm',
+            //         settings: {
+            //             nav: 1,
+            //             content: 'book'
+            //         },
+            //     }
+            // },
             {
                 state: 'appointment.chooseServices',
                 config: {

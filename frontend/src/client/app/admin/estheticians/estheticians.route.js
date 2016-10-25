@@ -82,6 +82,7 @@
                     },
                     params: {
                         id: null,
+                        esthetician: null,
                         isAdmin: null
                     },
                     data: {
@@ -109,7 +110,7 @@
                             parent: 'estheticians_profile',
                             title: 'Details',
                             params: {
-                                id: null
+                                esthetician: null
                             }
                         }
                     }

@@ -11,11 +11,8 @@
         var apiUrl = envService.read('apiUrl');
         var service = {
             getServices: getServices,
-         //   createService: createService,
-         //   updateService: updateService,
             getById: getById
         };
-         logger.info(apiUrl);
         return service;
 
         function getServices(byType) {
@@ -56,27 +53,5 @@
                     logger.error(message.data);
                 })
         }
-
-        // function createEsthetician(serviceData) {
-        //     return $http.post(apiUrl + '/service/create', serviceData)
-        //         .then(function (data, status, headers, config) {
-        //             return data.data;
-        //         })
-        //         .catch(function (message) {
-        //             exception.catcher('XHR Failed for createService')(message);
-        //             //$location.url('/');
-        //         })
-        // }
-        
-        // function updateEsthetician(serviceData) {
-        //    return $http.post(apiUrl + '/service/update', serviceData)
-        //         .then(function (data, status, headers, config) {
-        //             return data.data;
-        //         })
-        //         .catch(function (message) {
-        //             exception.catcher('XHR Failed for updateService')(message);
-        //             //$location.url('/');
-        //         })
-        // }
     }
 })();
