@@ -52,9 +52,9 @@
                 // } else {
                 //     storeUserCredentials(authInfo.firstName + '|' + authInfo.userName + '|' + authInfo.role + '|' + '*' + '|' + authInfo.token);
                 // }
-
-                // if (authInfo.estheticianId)
-                //     return authInfo.estheticianId;
+                var estheticianId = authService.estheticianId();
+                if (estheticianId)
+                    return estheticianId;
                 })
             .catch(function (message) {
                 if (message.status === -1) {

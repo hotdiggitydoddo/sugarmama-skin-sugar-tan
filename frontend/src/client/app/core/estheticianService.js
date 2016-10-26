@@ -158,7 +158,7 @@
         }
 
         function getAppointments(id) {
-            return $http.get(apiUrl + '/appointment/getByEsthetician?id=' + id)
+            return $http.get(apiUrl + '/estheticians/appointments?id=' + id)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })

@@ -85,6 +85,11 @@
 
         function isInRole(role) {
             var roles = parseJwt(getToken(), 'role');
+            if (!Array.isArray(roles)) {
+                var arr = [];
+                arr.push(roles);
+                roles = arr;
+            }
             roles.forEach(function(part, index, roles) {
                  roles[index] = roles[index].toLowerCase();
             });
