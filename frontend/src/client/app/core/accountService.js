@@ -17,6 +17,7 @@
             login: login,
             logout: logout,
             register: register,
+            changePassword: changePassword,
             username: function() { return isAuthenticated() ? parseJwt(getToken(), "username") : null},
             firstName: function() { return isAuthenticated() ? parseJwt(getToken(), "firstName") : null }
         };
@@ -75,6 +76,20 @@
             
         }
 
+        function changePassword(changePasswordForm) {
+            var pwForm = {
+                currentPassword: changePasswordForm.password,
+                email: changePasswordForm.email,
+                newPassword: changePasswordForm.newPassword
+            };
+              return $http.put(apiUrl + '/accounts/password', pwForm)
+                .then(function (data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function (message) {
+                     logger.error(message.data[0].description);
+                })
+        }
         
 
         // function loadUserCredentials() {

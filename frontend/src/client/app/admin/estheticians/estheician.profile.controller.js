@@ -3,9 +3,9 @@
 
     angular.module('app.admin.estheticians').controller('EstheticianProfile', EstheticianProfile);
 
-    EstheticianProfile.$inject = ['$state', 'logger', 'estheticianService', 'authService'];
+    EstheticianProfile.$inject = ['$state', 'logger', 'estheticianService', 'accountService', 'authService'];
 
-    function EstheticianProfile($state, logger, estheticianService, authService) {
+    function EstheticianProfile($state, logger, estheticianService, accountService, authService) {
         var vm = this;
         vm.esthetician = {}
         vm.passwordForm = {
@@ -37,7 +37,7 @@
    function togglePasswordMode() {
             vm.passwordMode = !vm.passwordMode;
             vm.passwordForm = {
-                userId: vm.esthetician.userId,
+                email: vm.esthetician.email,
                 formSubmitted: false
             };
         }
@@ -56,7 +56,7 @@
             if (!valid)
                 return;
             vm.updating = true;
-            estheticianService.changePassword(vm.passwordForm)
+            accountService.changePassword(vm.passwordForm)
                 .then(function (data) {
                     if (data) {
                         vm.togglePasswordMode();

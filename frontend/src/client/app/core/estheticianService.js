@@ -83,7 +83,7 @@
         }
 
         function updateEsthetician(estheticianData) {
-            return $http.post(apiUrl + '/esthetician/update', estheticianData)
+            return $http.put(apiUrl + '/estheticians', estheticianData)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })
