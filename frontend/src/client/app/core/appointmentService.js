@@ -89,7 +89,7 @@
         }
 
         function update(appointment) {
-            return $http.put(apiUrl + '/appointments', appointment)
+            return $http.put(apiUrl + '/appointments/admin', appointment)
                 .then(function (data, status, headers, config) {
                         return data.data;
                     })

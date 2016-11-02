@@ -149,8 +149,11 @@
         </div>
     </div>
      <script id="customEditorTemplate" type="text/x-kendo-template">
-        <div class="alert alert-danger" id="errors" style="margin:0 20px 20px 20px; display: none">
+        <div class="alert alert-danger" id="time-errors" style="margin:0 20px 20px 20px; display: none">
             End time can't be greater than or equal to the start time.
+        </div>
+         <div class="alert alert-danger" id="service-errors" style="margin:0 20px 20px 20px; display: none">
+            Please select at least one service.
         </div>
         <div class="k-edit-label">
             <label for="firstName">Name</label>
@@ -198,6 +201,7 @@
         </div>
         <div data-container-for="services" class="k-edit-field">
             <select id="services" data-bind="value:services" multiple="multiple" data-value-field="value" data-text-field="text"></select>
+            <span data-for="services" class="k-invalid-msg" ></span>
         </div>
         <div class="k-edit-label">
             <label for="esthetician">Esthetician</label>

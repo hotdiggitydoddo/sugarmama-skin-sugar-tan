@@ -132,7 +132,7 @@
                         appt.end.setMinutes(appt.endT.substr(3, 2));
 
                         appt.isBlockout = false;
-                        if (!checkTimes())
+                        if (!checkServices() || !checkTimes())
                             return;
                         appointmentService.update(o.data.models[0])
                         .then(function(saved) {
@@ -166,7 +166,7 @@
                         appt.isNoShow = false;
                         appt.isBlockout = false;
                         
-                        if (!checkTimes())
+                        if (!checkTimes() || !checkServices())
                             return;
                         
                         appointmentService.bookAdmin(o.data.models[0])
@@ -368,6 +368,7 @@
             });
             
             $('.k-multiselect-wrap >.k-input').attr('readonly', "readonly");
+
         }
     }
 
@@ -385,18 +386,32 @@
             //             var schedulerEl = $("iframe").contents().find("#scheduler");
             //             schedulerEl.trigger('refreshCal');
             //     });
-            return locationService.getAll().then(function(locations) {
-                logger.info('locs');
-            });
+           
+            // return locationService.getAll().then(function(locations) {
+               
+            // });
+            
+          
         }
 
         function checkTimes() {
             if ($("#startT").val() >= $("#endT").val()) { 
-                $("#errors").show();
+                $("#time-errors").show();
                 return false;
             }
             else {
-                $("#errors").hide();
+                $("#time-errors").hide();
+                return true;
+            }
+        }
+
+        function checkServices() {
+            if (!$("#services").val())  { 
+                $("#service-errors").show();
+                return false;
+            }
+            else {
+                $("#service-errors").hide();
                 return true;
             }
         }
@@ -453,6 +468,7 @@
             });
            
             touchEventsInitialized = true;
+             
         }
         
     }
