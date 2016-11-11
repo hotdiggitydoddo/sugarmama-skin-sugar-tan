@@ -18,6 +18,7 @@
             book: book,
             bookAdmin: bookAdmin,
             update: update,
+            destroy: destroy,
             getAppointmentsAdmin: getAppointmentsAdmin,
         };
         return service;
@@ -93,6 +94,16 @@
                 .then(function (data, status, headers, config) {
                         return data.data;
                     })
+                .catch(function (message) {
+                    handleError(message);
+                })
+        }
+
+        function destroy(appointment) {
+            return $http.delete(apiUrl + '/appointments/' + appointment.id)
+                .then(function(data, status, headers, config) {
+                    return data.id;
+                })
                 .catch(function (message) {
                     handleError(message);
                 })

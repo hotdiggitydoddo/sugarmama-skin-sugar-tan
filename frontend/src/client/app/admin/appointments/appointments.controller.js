@@ -184,9 +184,12 @@
                         })
 
                     },
-                    destroy: {
-                        url: apiUrl + "/appointment",
-                        dataType: "json"
+                    destroy: function(o) {
+                        var appt = o.data.models[0];
+                        appointmentService.destroy(appt)
+                        .then(function(deleted) {
+                            o.success(deleted);
+                        })
                     },
                 },
                 schema: {
